@@ -9,6 +9,7 @@ on:
 jobs:
   analyze_code:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -30,42 +31,72 @@ jobs:
             ./gradlew compileJava --continue || true
           fi
 
-      - name: Analyze Commit Code Diff via Gemini AI
+            - name: Analyze Commit Code Diff via Gemini AI
         id: ai_analyser
         run: |
-          # Safely fetch the main branch to execute a true baseline comparison
-          git fetch origin main:main || true
+          set -euo pipefail
 
-          # Compare the candidate's current branch against the main branch template baseline
-          GIT_DIFF=$(git diff main HEAD -- '**.java' | head -c 4000)
+          GIT_DIFF=$(git diff HEAD~1 HEAD -- '**.java')
 
           if [ -z "$GIT_DIFF" ]; then
             echo "No Java source file changes detected in this commit." > AI_REVIEW.txt
             exit 0
           fi
 
-          # Safe multi-line handling for the API payload
-          CLEAN_DIFF=$(echo "$GIT_DIFF" | jq -aR .)
+          PAYLOAD=$(jq -n \
+            --arg diff "$GIT_DIFF" \
+            '{
+              contents: [
+                {
+                  parts: [
+                    {
+                      text: (
+                        "You are an encouraging but strict Senior Java Developer reviewing a fresher's daily code changes.\n\n" +
+                        "Analyze this Git diff and generate a clean, brief, bulleted report.\n\n" +
+                        "Rules:\n" +
+                        "1. If code is clean, give brief appreciation.\n" +
+                        "2. If issues exist, classify under:\n" +
+                        "[CRITICAL LOGIC BUGS]\n" +
+                        "[NAMING & STYLE CONVENTIONS]\n" +
+                        "[CLEAN CODE SUGGESTIONS]\n\n" +
+                        "Keep bullets under 15 words.\n\n" +
+                        "Git Diff:\n" + $diff
+                      )
+                    }
+                  ]
+                }
+              ]
+            }')
 
-          # Query the Gemini API using an updated structure to handle the parsed text object
-          RESPONSE=$(curl -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${{secrets.AI_API_KEY}}" \
+          echo "===== PAYLOAD DEBUG ====="
+          echo "$PAYLOAD" | jq .
+
+          RESPONSE=$(curl -s -X POST \
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${{ secrets.AI_API_KEY }}" \
             -H "Content-Type: application/json" \
-            -d "{\"contents\": [{\"parts\": [{\"text\": \"You are an encouraging but strict Senior Java Developer reviewing a fresher's daily code changes. Analyze this Git diff and generate a clean, brief, bulleted report. Follow these rules: 1. If the code is well-written and has no notable errors, output a brief, highly appreciative and encouraging message praising their clean work. 2. If errors exist, skip the praise and list the critical flaws under these specific headers: [CRITICAL LOGIC BUGS] (resource leaks, broken loops, bad logic), [NAMING & STYLE CONVENTIONS] (violations of camelCase, PascalCase, or bad variable names like x, y, temp), and [CLEAN CODE SUGGESTIONS] (redundant code, better ways to write it). Keep every bullet point under 15 words. Git Diff: $CLEAN_DIFF\"}]}]}")
+            -d "$PAYLOAD")
 
-          # Use the exact correct array index tracking to pull the text content flawlessly
-          AI_TEXT=$(echo "$RESPONSE" | jq -r '.candidates[0].content.parts[0].text // "No response from AI engine."')
+          echo "===== RAW RESPONSE ====="
+          echo "$RESPONSE" | jq . || echo "$RESPONSE"
 
-          # Create a structured text report file
-          echo "=========================================" > AI_REVIEW.txt
-          echo "   NMS BATCH 2026 AI CODE EVALUATION     " >> AI_REVIEW.txt
-          echo "=========================================" >> AI_REVIEW.txt
-          echo "Candidate Git User: ${{ github.actor }}" >> AI_REVIEW.txt
-          echo "Commit Message: ${{ github.event.head_commit.message }}" >> AI_REVIEW.txt
-          echo "Timestamp: $(date)" >> AI_REVIEW.txt
-          echo "-----------------------------------------" >> AI_REVIEW.txt
-          echo "" >> AI_REVIEW.txt
-          echo -e "$AI_TEXT" >> AI_REVIEW.txt
-          
+          AI_TEXT=$(echo "$RESPONSE" | jq -r '
+            .candidates[0].content.parts[0].text //
+            .error.message //
+            "NO_TEXT_RETURNED"
+          ')
+
+          {
+            echo "========================================="
+            echo "   NMS BATCH 2026 AI CODE EVALUATION     "
+            echo "========================================="
+            echo "Candidate Git User: ${{ github.actor }}"
+            echo "Commit Message: ${{ github.event.head_commit.message }}"
+            echo "Timestamp: $(date)"
+            echo "-----------------------------------------"
+            echo ""
+            echo "$AI_TEXT"
+          } > AI_REVIEW.txt
+      
       - name: Dispatch Evaluation Email to Trainer and Candidate
         uses: dawidd6/action-send-mail@v3
         with:
@@ -74,19 +105,18 @@ jobs:
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: "[NMS Code Review] Commit Activity by ${{ github.actor }}"
-          # Sends to your inbox and auto-resolves the candidate's Git email address
-          to: sanjeev@nmsworks.co.in, ${{ github.event.head_commit.author.email }} 
+          to: sanjeev@nmsworks.co.in, ${{ github.event.head_commit.author.email }}
           from: "NMS AI-Automated Reviewer"
           body: |
             Hello,
 
             A new commit push has been evaluated by the automated review system.
-            
+
             Commiter Account: ${{ github.actor }}
             Branch: ${{ github.ref_name }}
-            
+
             Please find the detailed code analysis attached as 'AI_REVIEW.txt'.
-            
+
             You can view the raw code changes here:
             ${{ github.event.head_commit.url }}
           attachments: AI_REVIEW.txt
