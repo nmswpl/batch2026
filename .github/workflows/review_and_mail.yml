@@ -14,7 +14,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Setup Java Development Kit 21
         uses: actions/setup-java@v4
@@ -33,17 +33,20 @@ jobs:
 
       - name: Analyze Commit Code Diff via Gemini AI
         id: ai_analyser
+        env:
+          GEMINI_API_KEY: ${{ secrets.AI_API_KEY }}
         run: |
           set -euo pipefail
 
-          # Get diff only for Java files changed in this commit
-          GIT_DIFF=$(git diff HEAD~1 HEAD -- '**.java' || true)
+          # Fetch git diff and truncate gracefully to prevent overrunning token limits
+          GIT_DIFF=$(git diff HEAD~1 HEAD -- '**.java' | head -c 4000 || true)
 
           if [ -z "$GIT_DIFF" ]; then
             echo "No Java source file changes detected in this commit." > AI_REVIEW.txt
             exit 0
           fi
 
+          # 1. ALWAYS build the payload safely using jq native arguments
           PAYLOAD=$(jq -n \
             --arg diff "$GIT_DIFF" \
             '{
@@ -52,15 +55,14 @@ jobs:
                   parts: [
                     {
                       text: (
-                        "You are an encouraging but strict Senior Java Developer reviewing a fersher’s daily code changes.\n\n" +
-                        "Analyze this Git diff and generate a clean, brief, bulleted report.\n\n" +
-                        "Rules:\n" +
-                        "1. If code is clean, give brief appreciation.\n" +
-                        "2. If issues exist, classify under:\n" +
-                        "[CRITICAL LOGIC BUGS]\n" +
-                        "[NAMING & STYLE CONVENTIONS]\n" +
-                        "[CLEAN CODE SUGGESTIONS]\n\n" +
-                        "Keep bullets under 15 words.\n\n" +
+                        "You are an encouraging but strict Senior Java Developer reviewing a fresher'\''s daily code changes. " +
+                        "Analyze this Git diff and generate a clean, brief, bulleted report. Follow these rules:\n" +
+                        "1. If the code is well-written and has no notable errors, output a brief, highly appreciative and encouraging message praising their clean work.\n" +
+                        "2. If errors exist, skip the praise and list the critical flaws under these specific headers:\n" +
+                        "[CRITICAL LOGIC BUGS] (resource leaks, broken loops, bad logic)\n" +
+                        "[NAMING & STYLE CONVENTIONS] (violations of camelCase, PascalCase, or bad variable names like x, y, temp)\n" +
+                        "[CLEAN CODE SUGGESTIONS] (redundant code, better ways to write it)\n\n" +
+                        "Keep every bullet point under 15 words.\n\n" +
                         "Git Diff:\n" + $diff
                       )
                     }
@@ -69,35 +71,34 @@ jobs:
               ]
             }')
 
-          echo "===== PAYLOAD DEBUG ====="
-          echo "$PAYLOAD" | jq .
+          # 2. Execute the request using a clean file payload rather than a broken inline inline string
+          echo "$PAYLOAD" > gemini_payload.json
 
           RESPONSE=$(curl -s -X POST \
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${{ secrets.AI_API_KEY }}" \
+            "https://googleapis.com{GEMINI_API_KEY}" \
             -H "Content-Type: application/json" \
-            -d "$PAYLOAD")
+            -d @gemini_payload.json)
 
-          echo "===== RAW RESPONSE ====="
+          echo "===== RAW RESPONSE DEBUG ====="
           echo "$RESPONSE"
 
-          # Safer extraction: try to get text, then try error message, fallback to raw response if both missing
-          AI_TEXT=$(echo "$RESPONSE" | jq -r '
-            if .candidates and .candidates[0].content.parts[0].text then
-              .candidates[0].content.parts[0].text
-            elif .error and .error.message then
-              "API ERROR: " + .error.message
-            else
-              "UNEXPECTED API RESPONSE FORMAT"
-            end
-          ')
+          # 3. Robust verification path to capture errors explicitly instead of printing 'null'
+          if echo "$RESPONSE" | jq -e '.candidates[0].content.parts[0].text' > /dev/null 2>&1; then
+            AI_TEXT=$(echo "$RESPONSE" | jq -r '.candidates[0].content.parts[0].text')
+          elif echo "$RESPONSE" | jq -e '.error.message' > /dev/null 2>&1; then
+            AI_TEXT="GEMINI API ERROR: $(echo "$RESPONSE" | jq -r '.error.message')"
+          else
+            AI_TEXT="UNEXPECTED RESPONSE FROM SERVER. Raw payload data: $RESPONSE"
+          fi
 
+          # 4. Generate the final clean text output report
           {
             echo "========================================="
             echo "   NMS BATCH 2026 AI CODE EVALUATION     "
             echo "========================================="
-            echo "Candidate Git User: ${{ github.actor }}"
+            echo "Candidate Git User: SanjeevNMS"
             echo "Commit Message: ${{ github.event.head_commit.message }}"
-            echo "Timestamp: $(date)"
+            echo "Timestamp: $(TZ="Asia/Kolkata" date '+%a %b %d %H:%M:%S IST %Y')"
             echo "-----------------------------------------"
             echo ""
             echo "$AI_TEXT"
