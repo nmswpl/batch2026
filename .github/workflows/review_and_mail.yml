@@ -31,12 +31,13 @@ jobs:
             ./gradlew compileJava --continue || true
           fi
 
-            - name: Analyze Commit Code Diff via Gemini AI
+      - name: Analyze Commit Code Diff via Gemini AI
         id: ai_analyser
         run: |
           set -euo pipefail
 
-          GIT_DIFF=$(git diff HEAD~1 HEAD -- '**.java')
+          # Get diff only for Java files changed in this commit
+          GIT_DIFF=$(git diff HEAD~1 HEAD -- '**.java' || true)
 
           if [ -z "$GIT_DIFF" ]; then
             echo "No Java source file changes detected in this commit." > AI_REVIEW.txt
@@ -51,7 +52,7 @@ jobs:
                   parts: [
                     {
                       text: (
-                        "You are an encouraging but strict Senior Java Developer reviewing a fresher's daily code changes.\n\n" +
+                        "You are an encouraging but strict Senior Java Developer reviewing a fersher’s daily code changes.\n\n" +
                         "Analyze this Git diff and generate a clean, brief, bulleted report.\n\n" +
                         "Rules:\n" +
                         "1. If code is clean, give brief appreciation.\n" +
@@ -77,12 +78,17 @@ jobs:
             -d "$PAYLOAD")
 
           echo "===== RAW RESPONSE ====="
-          echo "$RESPONSE" | jq . || echo "$RESPONSE"
+          echo "$RESPONSE"
 
+          # Safer extraction: try to get text, then try error message, fallback to raw response if both missing
           AI_TEXT=$(echo "$RESPONSE" | jq -r '
-            .candidates[0].content.parts[0].text //
-            .error.message //
-            "NO_TEXT_RETURNED"
+            if .candidates and .candidates[0].content.parts[0].text then
+              .candidates[0].content.parts[0].text
+            elif .error and .error.message then
+              "API ERROR: " + .error.message
+            else
+              "UNEXPECTED API RESPONSE FORMAT"
+            end
           ')
 
           {
