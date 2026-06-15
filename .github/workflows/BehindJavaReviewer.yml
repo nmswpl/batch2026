@@ -26,15 +26,33 @@ jobs:
           java-version: '21.0.1'
           distribution: 'temurin'
 
-      - name: Detect Changed Java Files (This Push Only)
+      - name: Detect Changed Java Files (Robust Multi-Commit Safe)
         id: changes
         run: |
-          set -e
+          set -euo pipefail
 
           echo "Detecting changes in this push..."
 
-          # Get changed files between last commit and current commit
-          git diff --name-status HEAD^ HEAD > changed_files.txt
+          BASE="${{ github.event.before }}"
+          HEAD="${{ github.sha }}"
+
+          # Case 1: First commit in repo OR invalid base
+          if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
+            echo "First commit detected - listing all files in HEAD"
+
+            git ls-tree -r --name-status HEAD > changed_files.txt
+
+          else
+            echo "Normal / multi-commit push detected"
+
+            # Ensure full history is available
+            git fetch --no-tags --prune --depth=50 origin ${{ github.ref_name }} || true
+
+            # Case 2 & 3: normal commit OR multi-commit push
+            BASE_COMMIT=$(git merge-base "$BASE" "$HEAD")
+
+            git diff --name-status "$BASE_COMMIT" "$HEAD" > changed_files.txt
+          fi
 
           echo "===== CHANGED FILES ====="
           cat changed_files.txt || true
@@ -47,14 +65,16 @@ jobs:
           echo "DELETED=$DELETED"
 
           # Save for next steps
-          echo "ADDED_OR_MODIFIED<<EOF" >> $GITHUB_ENV
-          echo "$ADDED_OR_MODIFIED" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          {
+            echo "ADDED_OR_MODIFIED<<EOF"
+            printf "%s\n" "$ADDED_OR_MODIFIED"
+            echo "EOF"
 
-          echo "DELETED<<EOF" >> $GITHUB_ENV
-          echo "$DELETED" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-          
+            echo "DELETED<<EOF"
+            printf "%s\n" "$DELETED"
+            echo "EOF"
+          } >> "$GITHUB_ENV"
+
       - name: Run AI Review on Changed Java Files
         id: ai_review
         env:
@@ -62,8 +82,6 @@ jobs:
           GEMINI_MODEL: "gemini-flash-latest"
         run: |
           set -euo pipefail
-          
-          echo "{}" > ai_results.json
           
           process_file () {
             FILE=$1
@@ -121,7 +139,8 @@ jobs:
               -H "Content-Type: application/json" \
               -d "$PAYLOAD")
           
-            echo "$RESPONSE" > "ai_${FILE//\//_}.json"
+            FILE_OUT="ai_${FILE//\//_}.json"
+            echo "$RESPONSE" | tee "$FILE_OUT"
           
             echo "$RESPONSE" | jq -r '.candidates[0].content.parts[0].text' \
               > "ai_${FILE//\//_}.txt" || true
@@ -131,15 +150,46 @@ jobs:
           for file in $ADDED_OR_MODIFIED; do
             process_file "$file"
           done
+
+      
+
+      - name: Aggregate AI Output for Email
+        run: |
+          set -eo pipefail
+      
+          echo "=========================================" > AI_REVIEW.txt
+          echo "   NMS BATCH 2026 AI CODE EVALUATION" >> AI_REVIEW.txt
+          echo "=========================================" >> AI_REVIEW.txt
+          echo "" >> AI_REVIEW.txt
+      
+          FOUND=false
+          shopt -s nullglob
+          files=(ai_*.json)
           
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No Java files were modified in this commit." >> AI_REVIEW.txt
+          else
+            for f in "${files[@]}"; do
+              FOUND=true
+
+              echo "FILE: ${f}" >> AI_REVIEW.txt
+                echo "----------------------------------------" >> AI_REVIEW.txt
+                
+                jq -r '.candidates[0].content.parts[0].text // empty' "$f" >> AI_REVIEW.txt || true
+                echo "" >> AI_REVIEW.txt
+                echo "" >> AI_REVIEW.txt
+            done
+          fi
+
+
       - name: Manage GitHub Issues
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            
+
             const actor = context.actor;
-            
+
             let changed;
             try {
               changed = fs.readFileSync('changed_files.txt', 'utf8')
@@ -150,55 +200,70 @@ jobs:
               console.log("No changed files found");
               return;
             }
-            
+
             let aiData = {};
-            
-            // Load all AI outputs
             const files = fs.readdirSync('.');
-            
+
             for (const f of files) {
               if (f.startsWith('ai_') && f.endsWith('.json')) {
                 try {
                   const data = JSON.parse(fs.readFileSync(f, 'utf8'));
-                  const fileName = f.replace('ai_', '').replace('.json', '').replace(/_/g, '/');
+                  const fileName = f
+                    .replace(/^ai_/, '')
+                    .replace(/\.json$/, '');
+
                   aiData[fileName] = data;
-                } catch (e) {}
+                } catch (e) {
+                  console.log(`Failed parsing ${f}`);
+                }
               }
             }
-            
-            const extractStatus = (data) => {
-              try {
-                return data.candidates[0].content.parts[0].text.includes('"PASS"')
-                  ? "PASS" : "FAIL";
-              } catch {
-                return "ERROR";
-              }
-            };
-            
+
             const issues = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: "open"
             });
-            
+
             const findIssue = (file) =>
               issues.data.find(i =>
-                i.title.includes(file)
+                i.title === `AI Review - ${actor} - ${file}`
               );
             
+            const deletedFiles = fs.readFileSync('changed_files.txt', 'utf8')
+              .split('\n')
+              .filter(l => l.startsWith('D '))
+              .map(l => l.split(' ').slice(1).join(' ').trim());
+              
+            // Close issues for deleted files first
+            for (const file of deletedFiles) {
+              const existing = findIssue(file);
+            
+              if (existing) {
+                await github.rest.issues.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: existing.number,
+                  state: "closed"
+                });
+              }
+            }
+
             for (const file of changed) {
-            
-              const isDeleted = file.startsWith("D ");
-              const cleanFile = file.replace(/^A\s|^M\s|^D\s/, '').trim();
-            
-              const aiFile = aiData[cleanFile];
-            
-              // -----------------------------------
-              // CASE 1: DELETED FILE
-              // -----------------------------------
-              if (file.startsWith("D")) {
+
+              const [status, ...parts] = file.trim().split(/\s+/);
+              const cleanFile = parts.join(' ').trim();
+
+              const normalizedKey = Object.keys(aiData).find(k =>
+                k.replace(/ai_/, '').replace(/\.json$/, '').replace(/_/g, '/')
+                  === cleanFile
+              );
+
+              const aiFile = normalizedKey ? aiData[normalizedKey] : null;
+
+              if (status === "D") {
                 const existing = findIssue(cleanFile);
-            
+
                 if (existing) {
                   await github.rest.issues.update({
                     owner: context.repo.owner,
@@ -206,29 +271,66 @@ jobs:
                     issue_number: existing.number,
                     state: "closed"
                   });
-            
-                  console.log(`Closed issue for deleted file: ${cleanFile}`);
                 }
+
                 continue;
               }
-            
+
               if (!aiFile) continue;
+
+              let raw = aiFile.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
             
-              const statusText = aiFile.candidates?.[0]?.content?.parts?.[0]?.text || "";
-              const isPass = statusText.includes('"status": "PASS"');
-            
+              let parsed;
+              try {
+                parsed = JSON.parse(raw);
+              } catch (e) {
+                console.log("JSON parse failed, falling back", cleanFile);
+                parsed = { status: "ERROR", files: [] };
+              }
+
+              const isPass = parsed.status === "PASS";
+              let files = [];
+  
+              if (Array.isArray(parsed.files)) {
+                files = parsed.files;
+              } else if (parsed.file) {
+                files = [parsed];
+              }
               const issueTitle = `AI Review - ${actor} - ${cleanFile}`;
+
+              const commit = context.payload.head_commit;
+  
+              let formatted =
+              `GitHub Username: ${actor}
+              Commit Author: ${commit?.author?.name || "N/A"}
+              Commit Email: ${commit?.author?.email || "N/A"}
+              Commit Message: ${commit?.message || "N/A"}
+              Timestamp: ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}
+              `;
+              
+              for (const f of files) {
+                if (f.criticalLogicBugs?.length) {
+                  formatted += `[CRITICAL LOGIC BUGS]\n\n`;
+                  f.criticalLogicBugs.forEach(i => formatted += `    ${i}\n`);
+                  formatted += `\n`;
+                }
             
-              const commentBody =
-                `FILE: ${cleanFile}\n\n` +
-                `LATEST AI REVIEW:\n\n` +
-                statusText;
+                if (f.namingStyleIssues?.length) {
+                  formatted += `[NAMING & STYLE CONVENTIONS]\n\n`;
+                  f.namingStyleIssues.forEach(i => formatted += `    ${i}\n`);
+                  formatted += `\n`;
+                }
             
+                if (f.cleanCodeSuggestions?.length) {
+                  formatted += `[CLEAN CODE SUGGESTIONS]\n\n`;
+                  f.cleanCodeSuggestions.forEach(i => formatted += `    ${i}\n`);
+                  formatted += `\n`;
+                }
+              }
+  
+              const commentBody = formatted;
               const existing = findIssue(cleanFile);
-            
-              // -----------------------------------
-              // CASE 2: PASS → CLOSE ISSUE
-              // -----------------------------------
+
               if (isPass) {
                 if (existing) {
                   await github.rest.issues.update({
@@ -240,23 +342,15 @@ jobs:
                 }
                 continue;
               }
-            
-              // -----------------------------------
-              // CASE 3: FAIL → CREATE OR UPDATE ISSUE
-              // -----------------------------------
+
               if (existing) {
-            
                 await github.rest.issues.update({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: existing.number,
                   body: commentBody
                 });
-            
-                console.log(`Updated issue: ${cleanFile}`);
-            
               } else {
-            
                 await github.rest.issues.create({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
@@ -264,69 +358,106 @@ jobs:
                   body: commentBody,
                   assignees: [actor]
                 });
-            
-                console.log(`Created issue: ${cleanFile}`);
               }
             }
-            
+
       - name: Build Email Body
         run: |
-            STATUS=$(grep -o '"status": *"[^"]*"' raw_ai.json | head -1 | cut -d'"' -f4)
-            
-            if [ "$STATUS" = "PASS" ]; then
-            
-              EMAIL=$(cat <<EOF
-              Hello,
-              
-              A new commit push has been evaluated by the automated review system.
-              
-              Commiter Account: ${{ github.actor }}
-              Branch: ${{ github.ref_name }}
-              
-              ✔ CODE REVIEW PASSED
-              
-              Great job! Clean and correct implementation.
-              
-              Please find the detailed code analysis attached as 'AI_REVIEW.txt'.
-              
-              You can view the raw code changes here:
-              ${{ github.event.head_commit.url }}
-              
-              EOF
-              )
-              
-              else
-              
-              EMAIL=$(cat <<EOF
-              Hello,
-              
-              A new commit push has been evaluated by the automated review system.
-              
-              Commiter Account: ${{ github.actor }}
-              Branch: ${{ github.ref_name }}
-              
-              ❌ CODE REVIEW COMPLETED
-              
-              Please find the detailed code analysis attached as 'AI_REVIEW.txt'.
-              
-              You can view the raw code changes here:
-              ${{ github.event.head_commit.url }}
-              
-              -----------------------------------------
-              ATTACHMENT: AI_REVIEW.txt
-              -----------------------------------------
+          set -euo pipefail
+      
+          EMAIL=$(cat <<EOF
+          Hello,
+          
+          A new commit push has been evaluated by the automated review system.
+        
+          Committer Account: ${{ github.actor }}
+          Branch: ${{ github.ref_name }}
+          
+          Please find the detailed code analysis attached as 'AI_REVIEW.txt'.
+        
+          You can view the raw code changes here:
+            ${{ github.event.head_commit.url }}
+          
+          EOF
+          )
+          
+          {
+            echo "EMAIL<<EOF"
+            echo "$EMAIL"
+            echo "EOF"
+          } >> "$GITHUB_ENV"  
 
-              $(cat AI_REVIEW.txt)
-              EOF
-              )
-              
-              fi
-              
-              {
-                echo "EMAIL<<EOF"
-                echo "$EMAIL"
-                echo "EOF"
-              } >> $GITHUB_ENV
+      - name: Generate AI Review Report
+        run: |
+          set -euo pipefail
+  
+          {
+            echo "========================================="
+            echo "   NMS BATCH 2026 AI CODE EVALUATION"
+            echo "========================================="
+            echo "GitHub Username: ${{ github.actor }}"
+            echo "Commit Author: ${{ github.event.head_commit.author.name }}"
+            echo "Commit Email: ${{ github.event.head_commit.author.email }}"
+            echo "Commit Message: ${{ github.event.head_commit.message }}"
+            echo "Timestamp: $(TZ=Asia/Kolkata date)"
+             echo "-----------------------------------------"
+             echo ""
+          } > AI_REVIEW.txt
+          
+          PASS_FILES=""
+          FAIL_BLOCK=""
+          
+          shopt -s nullglob
+          files=(ai_*.json)
+          
+          # CASE 1: No Java files
+          if [ -z "${ADDED_OR_MODIFIED:-}" ]; then
+            echo "No Java files were modified in this commit." >> AI_REVIEW.txt
+            exit 0
+          fi
+          
+          # CASE 2: No AI output
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No AI analysis was generated." >> AI_REVIEW.txt
+            exit 0
+          fi
+          
+          for f in "${files[@]}"; do
+        
+            RAW=$(jq -r '.candidates[0].content.parts[0].text' "$f")
+          
+            FILE_NAME=$(echo "$f" | sed 's/ai_//;s/\.json//;s/_/\//g')
+          
+            STATUS=$(echo "$RAW" | jq -r '.status' 2>/dev/null || echo "FAIL")
+          
+            if [ "$STATUS" = "PASS" ]; then
+              PASS_FILES="${PASS_FILES}- ${FILE_NAME} → Clean code, well structured, good naming\n"
+              continue
+            fi
+          
+            FAIL_BLOCK="${FAIL_BLOCK}
+            FILE: ${FILE_NAME}
+          
+            FAIL_BLOCK="${FAIL_BLOCK}$(echo "$RAW" | jq -r '
+            .files[] |
+            "[CRITICAL LOGIC BUGS]\n" +
+            ((.criticalLogicBugs // []) | map("    - " + .) | join("\n")) + "\n\n" +
+          
+            "[NAMING & STYLE CONVENTIONS]\n" +
+            ((.namingStyleIssues // []) | map("    - " + .) | join("\n")) + "\n\n" +
+          
+            "[CLEAN CODE SUGGESTIONS]\n" +
+            ((.cleanCodeSuggestions // []) | map("    - " + .) | join("\n")) + "\n\n"
+            ' 2>/dev/null || echo "")
+          
+          done
+          
+          echo "[CLEAN FILES]" >> AI_REVIEW.txt
+          echo -e "$PASS_FILES" >> AI_REVIEW.txt
+          
+          echo "" >> AI_REVIEW.txt
+          echo "[DETAILED ISSUES]" >> AI_REVIEW.txt
+          echo -e "$FAIL_BLOCK" >> AI_REVIEW.txt
 
       - name: Send Email
         uses: dawidd6/action-send-mail@v3
