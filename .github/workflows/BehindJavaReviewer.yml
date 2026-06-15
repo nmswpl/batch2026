@@ -205,14 +205,18 @@ jobs:
               }
             }
 
-            const issues = await github.rest.issues.listForRepo({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: "all"
-            });
-
+            const issues = await github.paginate(
+              github.rest.issues.listForRepo,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: "open",
+                per_page: 100
+              }
+            );
+              
             const findIssue = (file) =>
-              issues.data.find(i =>
+              issues.find(i =>
                 i.title === `AI Review - ${actor} - ${file}`
               );
 
