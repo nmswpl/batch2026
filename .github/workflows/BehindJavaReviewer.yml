@@ -255,13 +255,21 @@ jobs:
               if (!aiFile) continue;
 
               let raw = aiFile.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
+              // remove markdown fences if present
+              raw = raw
+                .replace(/```json/g, "")
+                .replace(/```/g, "")
+                .trim();
 
               let parsed;
               try {
                 parsed = JSON.parse(raw);
               } catch (e) {
                 console.log("JSON parse failed", cleanFile);
-                parsed = { status: "ERROR", files: [] };
+                parsed = {
+                  status: "FAIL",
+                  files: []
+                };
               }
 
               const isPass = parsed.status === "PASS";
@@ -405,7 +413,7 @@ jobs:
             echo "Commit Email: ${{ github.event.head_commit.author.email }}"
             echo "Commit Message: ${{ github.event.head_commit.message }}"
             echo "Timestamp: $(TZ=Asia/Kolkata date)"
-             echo ""
+            echo ""
           } > AI_REVIEW.txt
           
           PASS_COUNT=0
@@ -427,7 +435,44 @@ jobs:
           
           PASS_SECTION=""
           FAIL_SECTION=""
-
+      
+          format_block() {
+            local file="$1"
+            local status="$2"
+            local critical="$3"
+            local style="$4"
+            local clean="$5"
+      
+            {
+              echo ""
+              echo "File: ${file}"
+              echo ""
+              echo "Status: ${status}"
+              echo ""
+      
+              if [ -n "${critical}" ]; then
+                echo "[CRITICAL LOGIC BUGS]"
+                echo "${critical}"
+                echo ""
+              fi
+      
+              if [ -n "${style}" ]; then
+                echo "[NAMING & STYLE CONVENTIONS]"
+                echo "${style}"
+                echo ""
+              fi
+      
+              if [ -n "${clean}" ]; then
+                echo "[CLEAN CODE SUGGESTIONS]"
+                echo "${clean}"
+                echo ""
+              fi
+      
+              echo "-----------------------------------------"
+              echo ""
+            }
+          }
+      
           for f in "${files[@]}"; do
         
             TOTAL_COUNT=$((TOTAL_COUNT + 1))
@@ -456,13 +501,9 @@ jobs:
             fi
           
             FAIL_COUNT=$((FAIL_COUNT + 1))
-        
-            FILE_BLOCK="File: ${FILE_NAME}
-        
-              Status: FAIL
-        
-            "
-        
+      
+            FILE_BLOCK=""
+      
             while IFS= read -r FILE_JSON; do
         
               CRITICAL=$(echo "$FILE_JSON" | jq -r '
@@ -482,68 +523,42 @@ jobs:
                 | map("- " + .)
                 | join("\n")
               ')
-              
-              if [ -n "$CRITICAL" ]; then
-                FILE_BLOCK="${FILE_BLOCK}[CRITICAL LOGIC BUGS]
-                  ${CRITICAL}
-        
-                "
-              fi
-        
-              if [ -n "$STYLE" ]; then
-                FILE_BLOCK="${FILE_BLOCK}[NAMING & STYLE CONVENTIONS]
-                  ${STYLE}
-          
-                "
-              fi
-        
-              if [ -n "$CLEAN" ]; then
-                FILE_BLOCK="${FILE_BLOCK}[CLEAN CODE SUGGESTIONS]
-                  ${CLEAN}
-              
-                "
-              fi
-        
+      
+              FILE_BLOCK+=$(format_block "$FILE_NAME" "FAIL" "$CRITICAL" "$STYLE" "$CLEAN")
+      
             done < <(
-                echo "$RAW" | jq -c '.files[]?' 2>/dev/null || true
+              echo "$RAW" | jq -c '.files[]?' 2>/dev/null || true
             )
-          
-            FILE_BLOCK="${FILE_BLOCK}-----------------------------------------
-          
-            "
-        
+      
             FAIL_SECTION="${FAIL_SECTION}${FILE_BLOCK}"
           
           done
-          
-          if [ "$PASS_COUNT" -gt 0 ]; then
-            {
+      
+          {
+            if [ "$PASS_COUNT" -gt 0 ]; then
               echo "-----------------------------------------"
               echo "FILES PASSED"
               echo "-----------------------------------------"
               echo ""
               printf "%b" "$PASS_SECTION"
-            } >> AI_REVIEW.txt
-          fi
-          
-          if [ "$FAIL_COUNT" -gt 0 ]; then
-            {
-            echo "-----------------------------------------"
-            echo "FILES WITH ISSUES"
-            echo "-----------------------------------------"
-            echo ""
-            printf "%b" "$FAIL_SECTION"
-            } >> AI_REVIEW.txt
-          fi
+            fi
       
-          {
-              echo ""
-              echo "SUMMARY"
+            if [ "$FAIL_COUNT" -gt 0 ]; then
               echo "-----------------------------------------"
-              echo "Files Reviewed : $TOTAL_COUNT"
-              echo "Files Passed   : $PASS_COUNT"
-              echo "Files Failed   : $FAIL_COUNT"
+              echo "FILES WITH ISSUES"
+              echo "-----------------------------------------"
+              echo ""
+              printf "%b" "$FAIL_SECTION"
+            fi
+      
+            echo ""
+            echo "SUMMARY"
+            echo "-----------------------------------------"
+            echo "Files Reviewed : $TOTAL_COUNT"
+            echo "Files Passed   : $PASS_COUNT"
+            echo "Files Failed   : $FAIL_COUNT"
           } >> AI_REVIEW.txt
+
 
       - name: Send Email
         uses: dawidd6/action-send-mail@v3
