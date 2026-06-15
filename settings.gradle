@@ -1,8 +1,0 @@
-rootProject.name = 'batch2026'
-
-// Dynamically registers any candidate folder that contains its own build.gradle file
-rootDir.eachDir { dir ->
-    if (new File(dir, "build.gradle").exists()) {
-        include dir.name
-    }
-}
