@@ -274,10 +274,47 @@ jobs:
             
             LAST_CALL_TIME=$(date +%s)
             
-            RESPONSE=$(curl -s -X POST \
-              "https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}" \
-              -H "Content-Type: application/json" \
-              -d "$PAYLOAD")
+            MODELS=(
+              "gemini-flash-latest"
+              "gemini-2.5-flash"
+              "gemini-2.5-pro"
+            )
+            
+            RESPONSE=""
+            
+            for MODEL in "${MODELS[@]}"; do
+              echo "Trying model: $MODEL"
+              SUCCESS=false
+              
+              for ATTEMPT in 1 2; do
+                echo "Attempt $ATTEMPT"
+                RESPONSE=$(curl -s -X POST \
+                  "https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${GEMINI_API_KEY}" \
+                  -H "Content-Type: application/json" \
+                  -d "$PAYLOAD")
+                
+                # success if candidate exists
+                if echo "$RESPONSE" | jq -e '.candidates[0]' >/dev/null 2>&1; then
+                  SUCCESS=true
+                  break
+                fi
+                
+                echo "API failed. Retrying..."
+                sleep 5
+          
+              done
+          
+              if [ "$SUCCESS" = true ]; then
+                break
+              fi
+          
+              echo "Switching to next model..."
+            done
+            
+            if [ "$SUCCESS" != true ]; then
+              echo "All Gemini models failed"
+              exit 1
+            fi
           
             FILE_OUT="ai_${FILE//\//_}.json"
             echo "$RESPONSE" | tee "$FILE_OUT"
