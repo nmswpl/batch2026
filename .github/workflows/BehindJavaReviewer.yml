@@ -1,18 +1,148 @@
 name: BehindJava Reviewer
 
 on:
-  push:
-    branches:
-      - '**'
-      - '!main'
+  schedule:
+    - cron: "*/5 * * * *"
 
 concurrency:
   group: ai-review-global
   cancel-in-progress: false
 
 jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.check.outputs.run }}
+
+    steps:
+      - name: Time Gate Only
+        id: check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const hour = new Date().toLocaleString("en-US", {
+              timeZone: "Asia/Kolkata",
+              hour: "2-digit",
+              hour12: false
+            });
+
+            const day = new Date().toLocaleString("en-US", {
+              timeZone: "Asia/Kolkata",
+              weekday: "short"
+            });
+
+            const isWeekday = !["Sat", "Sun"].includes(day);
+            const isWorkingHours = hour >= 9 && hour < 20;
+
+            core.setOutput("run", isWeekday && isWorkingHours);
+
+  claim:
+    runs-on: ubuntu-latest
+    needs: gate
+
+    if: ${{ needs.gate.outputs.run == 'true' }}
+
+    outputs:
+      count: ${{ steps.claim.outputs.count }}
+      jobs: ${{ steps.claim.outputs.jobs }}
+
+    steps:
+      - name: Find AI review queue issue (by label)
+        id: find_issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issues = await github.paginate(
+              github.rest.issues.listForRepo,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: "open",
+                labels: "ai-review-queue"
+              }
+            );
+
+            const queue = issues.find(i => i.title === "AI_REVIEW_QUEUE");
+
+            if (!queue) {
+              throw new Error("AI_REVIEW_QUEUE issue not found");
+            }
+
+            core.setOutput("issue_number", queue.number);
+
+      - name: Fetch Queue Comments
+        id: fetch
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = Number("${{ steps.find_issue.outputs.issue_number }}");
+
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber
+            });
+
+            core.setOutput("comments", JSON.stringify(comments.data));
+
+      - name: Claim Queue Items
+        id: claim
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const comments = JSON.parse(`${{ steps.fetch.outputs.comments }}`);
+
+            async function hasEyes(commentId) {
+              const reactions = await github.rest.reactions.listForIssueComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: commentId
+              });
+
+              return reactions.data.some(r => r.content === "eyes");
+            }
+
+            const unclaimed = [];
+
+            for (const c of comments) {
+              const locked = await hasEyes(c.id);
+              if (!locked) unclaimed.push(c);
+            }
+
+            unclaimed.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+
+            const selected = unclaimed.slice(0, 5);
+
+            if (selected.length === 0) {
+              core.setOutput("count", 0);
+              core.setOutput("jobs", "[]");
+              return;
+            }
+
+            const jobs = [];
+
+            for (const c of selected) {
+              await github.rest.reactions.createForIssueComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: c.id,
+                content: "eyes"
+              });
+
+              jobs.push({
+                id: c.id,
+                body: c.body
+              });
+            }
+
+            core.setOutput("count", jobs.length);
+            core.setOutput("jobs", JSON.stringify(jobs));
+  
+
   analyze_code:
     runs-on: ubuntu-latest
+    needs: claim
+    if: ${{ needs.claim.outputs.count != '0' }}
 
     steps:
       - name: Checkout Source Code
@@ -20,60 +150,53 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Java Development Kit 21
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21.0.1'
-          distribution: 'temurin'
-
-      - name: Detect Changed Java Files (Robust Multi-Commit Safe)
-        id: changes
+      - name: Prepare AI Input
         run: |
           set -euo pipefail
-
-          echo "Detecting changes in this push..."
-
-          BASE="${{ github.event.before }}"
-          HEAD="${{ github.sha }}"
-
-          # Case 1: First commit in repo OR invalid base
-          if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
-            echo "First commit detected - listing all files in HEAD"
-
-            git ls-tree -r --name-status HEAD > changed_files.txt
-
-          else
-            echo "Normal / multi-commit push detected"
-
-            # Ensure full history is available
-            git fetch --no-tags --prune --depth=50 origin ${{ github.ref_name }} || true
-
-            # Case 2 & 3: normal commit OR multi-commit push
-            BASE_COMMIT=$(git merge-base "$BASE" "$HEAD")
-
-            git diff --name-status "$BASE_COMMIT" "$HEAD" > changed_files.txt
-          fi
-
-          echo "===== CHANGED FILES ====="
-          cat changed_files.txt || true
-
-          # Extract only Java files
-          ADDED_OR_MODIFIED=$(awk '$1 != "D" && $2 ~ /\.java$/ {print $2}' changed_files.txt)
-          DELETED=$(awk '$1 == "D" && $2 ~ /\.java$/ {print $2}' changed_files.txt)
-
-          echo "ADDED_OR_MODIFIED=$ADDED_OR_MODIFIED"
-          echo "DELETED=$DELETED"
-
-          # Save for next steps
+  
+          echo '${{ needs.claim.outputs.jobs }}' > jobs.json
+          
+          ADDED_OR_MODIFIED=""
+          DELETED=""
+          
+          for row in $(jq -c '.[]' jobs.json); do
+            BODY=$(echo "$row" | jq -r '.body')
+          
+            # DIRECT JSON parse (NO markdown extraction)
+            ADD=$(echo "$BODY" | jq -r '.addedOrModified[]?')
+            DEL=$(echo "$BODY" | jq -r '.deleted[]?')
+          
+            ADDED_OR_MODIFIED+="$ADD"$'\n'
+            DELETED+="$DEL"$'\n'
+          done
+          
           {
             echo "ADDED_OR_MODIFIED<<EOF"
             printf "%s\n" "$ADDED_OR_MODIFIED"
             echo "EOF"
-
+            
             echo "DELETED<<EOF"
             printf "%s\n" "$DELETED"
             echo "EOF"
-          } >> "$GITHUB_ENV"
+          } >> $GITHUB_ENV
+          
+      - name: Checkout Exact Commit from Queue
+        run: |
+          set -euo pipefail
+          
+          echo '${{ needs.claim.outputs.jobs }}' > jobs.json
+  
+          FIRST_BODY=$(jq -r '.[0].body' jobs.json)
+          
+          BRANCH=$(echo "$FIRST_BODY" | jq -r '.branch')
+          COMMIT=$(echo "$FIRST_BODY" | jq -r '.commit')
+        
+          echo "Branch: $BRANCH"
+          echo "Commit: $COMMIT"
+          
+          git fetch origin "$BRANCH"
+          git checkout "$BRANCH"
+          git reset --hard "$COMMIT"
 
       - name: Run AI Review on Changed Java Files
         id: ai_review
@@ -172,204 +295,226 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const fs = require('fs');
-
-            const actor = context.actor;
-
-            let changed;
             try {
-              changed = fs.readFileSync('changed_files.txt', 'utf8')
-                .trim()
-                .split('\n')
-                .filter(Boolean);
-            } catch (e) {
-              console.log("No changed files found");
-              return;
-            }
-
-            let aiData = {};
-            const files = fs.readdirSync('.');
-
-            for (const f of files) {
-              if (f.startsWith('ai_') && f.endsWith('.json')) {
-                try {
-                  const data = JSON.parse(fs.readFileSync(f, 'utf8'));
-                  const fileName = f
-                    .replace(/^ai_/, '')
-                    .replace(/\.json$/, '');
-
-                  aiData[fileName] = data;
-                } catch (e) {
-                  console.log(`Failed parsing ${f}`);
+              const fs = require('fs');
+  
+              const actor = context.actor;
+  
+              let changed;
+              try {
+                changed = fs.readFileSync('changed_files.txt', 'utf8')
+                  .trim()
+                  .split('\n')
+                  .filter(Boolean);
+              } catch (e) {
+                console.log("No changed files found");
+                return;
+              }
+  
+              let aiData = {};
+              const files = fs.readdirSync('.');
+  
+              for (const f of files) {
+                if (f.startsWith('ai_') && f.endsWith('.json')) {
+                  try {
+                    const data = JSON.parse(fs.readFileSync(f, 'utf8'));
+                    const fileName = f
+                      .replace(/^ai_/, '')
+                      .replace(/\.json$/, '');
+  
+                    aiData[fileName] = data;
+                  } catch (e) {
+                    console.log(`Failed parsing ${f}`);
+                  }
                 }
               }
-            }
-
-            const issues = await github.paginate(
-              github.rest.issues.listForRepo,
-              {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                state: "open",
-                per_page: 100
-              }
-            );
-              
-            const findIssue = (file) =>
-              issues.find(i =>
-                i.title === `AI Review - ${actor} - ${file}`
+  
+              const issues = await github.paginate(
+                github.rest.issues.listForRepo,
+                {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  state: "open",
+                  per_page: 100
+                }
               );
-
-            const deletedFiles = fs.readFileSync('changed_files.txt', 'utf8')
-              .split('\n')
-              .filter(l => l.startsWith('D '))
-              .map(l => l.split(' ').slice(1).join(' ').trim());
-
-            // Close issues for deleted files
-            for (const file of deletedFiles) {
-              const existing = findIssue(file);
-
-              if (existing) {
+                
+              const findIssue = (file) =>
+                issues.find(i =>
+                  i.title === `AI Review - ${actor} - ${file}`
+                );
+  
+              const deletedFiles = fs.readFileSync('changed_files.txt', 'utf8')
+                .split('\n')
+                .filter(l => l.startsWith('D '))
+                .map(l => l.split(' ').slice(1).join(' ').trim());
+  
+              // Close issues for deleted files
+              for (const file of deletedFiles) {
+                const existing = findIssue(file);
+  
+                if (existing) {
+                  await github.rest.issues.update({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: existing.number,
+                    state: "closed"
+                  });
+                }
+              }
+  
+              for (const file of changed) {
+  
+                const [status, ...parts] = file.trim().split(/\s+/);
+                const cleanFile = parts.join(' ').trim();
+  
+                const normalizedKey = Object.keys(aiData).find(k =>
+                  k.replace(/ai_/, '').replace(/\.json$/, '').replace(/_/g, '/')
+                    === cleanFile
+                );
+  
+                const aiFile = normalizedKey ? aiData[normalizedKey] : null;
+  
+                if (status === "D") continue;
+                if (!aiFile) continue;
+  
+                let raw = aiFile.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
+                // remove markdown fences if present
+                raw = raw
+                  .replace(/```json/g, "")
+                  .replace(/```/g, "")
+                  .trim();
+  
+                let parsed;
+                try {
+                  parsed = JSON.parse(raw);
+                } catch (e) {
+                  console.log("JSON parse failed", cleanFile);
+                  parsed = {
+                    status: "FAIL",
+                    files: []
+                  };
+                }
+  
+                const isPass = parsed.status === "PASS";
+                const issueTitle = `AI Review - ${actor} - ${cleanFile}`;
+  
+                const studentLabel = `student:${actor.toLowerCase()}`;
+                const statusLabel = isPass ? "status:pass" : "status:fail";
+                const labels = [studentLabel, statusLabel];
+  
+                const commit = context.payload.head_commit;
+  
+                let formatted =
+                  `GitHub Username: ${actor}
+                  Commit Author: ${commit?.author?.name || "N/A"}
+                  Commit Email: ${commit?.author?.email || "N/A"}
+                  Commit Message: ${commit?.message || "N/A"}
+                  Timestamp:
+                    ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}
+                  `;
+        
+                for (const f of parsed.files || []) {
+                  if (f.criticalLogicBugs?.length) {
+                    formatted += `[CRITICAL LOGIC BUGS]\n\n`;
+                    f.criticalLogicBugs.forEach(i => formatted += `    ${i}\n`);
+                    formatted += `\n`;
+                  }
+  
+                  if (f.namingStyleIssues?.length) {
+                    formatted += `[NAMING & STYLE CONVENTIONS]\n\n`;
+                    f.namingStyleIssues.forEach(i => formatted += `    ${i}\n`);
+                    formatted += `\n`;
+                  }
+  
+                  if (f.cleanCodeSuggestions?.length) {
+                    formatted += `[CLEAN CODE SUGGESTIONS]\n\n`;
+                    f.cleanCodeSuggestions.forEach(i => formatted += `    ${i}\n`);
+                    formatted += `\n`;
+                  }
+                }
+  
+                const existing = findIssue(cleanFile);
+                
+                // =========================
+                // FIRST TIME FAIL → CREATE ISSUE
+                // =========================
+                if (!existing) {
+                
+                  if (isPass) continue; // no issue needed for PASS
+                
+                  const issue = await github.rest.issues.create({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    title: issueTitle,
+                    body: formatted, // FIRST FAIL ONLY
+                    labels: labels,
+                    assignees: [ actor ]
+                  });
+      
+                  continue;
+                }
+      
+                // =========================
+                // EXISTING ISSUE PATH
+                // =========================
+                
+                // update labels only
                 await github.rest.issues.update({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: existing.number,
-                  state: "closed"
+                  labels: labels
                 });
-              }
-            }
-
-            for (const file of changed) {
-
-              const [status, ...parts] = file.trim().split(/\s+/);
-              const cleanFile = parts.join(' ').trim();
-
-              const normalizedKey = Object.keys(aiData).find(k =>
-                k.replace(/ai_/, '').replace(/\.json$/, '').replace(/_/g, '/')
-                  === cleanFile
-              );
-
-              const aiFile = normalizedKey ? aiData[normalizedKey] : null;
-
-              if (status === "D") continue;
-              if (!aiFile) continue;
-
-              let raw = aiFile.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
-              // remove markdown fences if present
-              raw = raw
-                .replace(/```json/g, "")
-                .replace(/```/g, "")
-                .trim();
-
-              let parsed;
-              try {
-                parsed = JSON.parse(raw);
-              } catch (e) {
-                console.log("JSON parse failed", cleanFile);
-                parsed = {
-                  status: "FAIL",
-                  files: []
-                };
-              }
-
-              const isPass = parsed.status === "PASS";
-              const issueTitle = `AI Review - ${actor} - ${cleanFile}`;
-
-              const studentLabel = `student:${actor.toLowerCase()}`;
-              const statusLabel = isPass ? "status:pass" : "status:fail";
-              const labels = [studentLabel, statusLabel];
-
-              const commit = context.payload.head_commit;
-
-              let formatted =
-                `GitHub Username: ${actor}
-                Commit Author: ${commit?.author?.name || "N/A"}
-                Commit Email: ${commit?.author?.email || "N/A"}
-                Commit Message: ${commit?.message || "N/A"}
-                Timestamp:
-                  ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}
-                `;
-      
-              for (const f of parsed.files || []) {
-                if (f.criticalLogicBugs?.length) {
-                  formatted += `[CRITICAL LOGIC BUGS]\n\n`;
-                  f.criticalLogicBugs.forEach(i => formatted += `    ${i}\n`);
-                  formatted += `\n`;
+                
+                if (isPass) {
+                  // final comment before close
+                  await github.rest.issues.createComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: existing.number,
+                    body: "Final status: PASS. Closing issue."
+                  });
+                
+                  await github.rest.issues.update({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: existing.number,
+                    state: "closed"
+                  });
+                
+                  continue;
                 }
-
-                if (f.namingStyleIssues?.length) {
-                  formatted += `[NAMING & STYLE CONVENTIONS]\n\n`;
-                  f.namingStyleIssues.forEach(i => formatted += `    ${i}\n`);
-                  formatted += `\n`;
-                }
-
-                if (f.cleanCodeSuggestions?.length) {
-                  formatted += `[CLEAN CODE SUGGESTIONS]\n\n`;
-                  f.cleanCodeSuggestions.forEach(i => formatted += `    ${i}\n`);
-                  formatted += `\n`;
-                }
-              }
-
-              const existing = findIssue(cleanFile);
-              
-              // =========================
-              // FIRST TIME FAIL → CREATE ISSUE
-              // =========================
-              if (!existing) {
-              
-                if (isPass) continue; // no issue needed for PASS
-              
-                const issue = await github.rest.issues.create({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  title: issueTitle,
-                  body: formatted, // FIRST FAIL ONLY
-                  labels: labels,
-                  assignees: [ actor ]
-                });
-    
-                continue;
-              }
-    
-              // =========================
-              // EXISTING ISSUE PATH
-              // =========================
-              
-              // update labels only
-              await github.rest.issues.update({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: existing.number,
-                labels: labels
-              });
-              
-              if (isPass) {
-                // final comment before close
+            
+                // =========================
+                // SUBSEQUENT FAIL → COMMENT ONLY
+                // =========================
                 await github.rest.issues.createComment({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: existing.number,
-                  body: "Final status: PASS. Closing issue."
+                  body: formatted
                 });
-              
-                await github.rest.issues.update({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: existing.number,
-                  state: "closed"
-                });
-              
-                continue;
               }
-          
-              // =========================
-              // SUBSEQUENT FAIL → COMMENT ONLY
-              // =========================
-              await github.rest.issues.createComment({
+              
+              core.setOutput("status", "SUCCESS");
+            } catch (e) {
+              core.setOutput("status", "FAIL");
+              throw e;
+            }
+
+      - name: Delete Processed Queue Items
+        if: ${{ needs.claim.outputs.count != '0' && steps.manage_issues.outputs.status == 'SUCCESS' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const jobs = JSON.parse(`${{ needs.claim.outputs.jobs }}`);
+            
+            for (const job of jobs) {
+              await github.rest.issues.deleteComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: existing.number,
-                body: formatted
+                comment_id: job.id
               });
             }
 
