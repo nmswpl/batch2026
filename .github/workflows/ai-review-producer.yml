@@ -48,6 +48,11 @@ jobs:
           echo "ADDED_OR_MODIFIED=$ADDED_OR_MODIFIED"
           echo "DELETED=$DELETED"
 
+          HAS_JAVA_CHANGES="false"
+          if [ -n "$ADDED_OR_MODIFIED" ] || [ -n "$DELETED" ]; then
+            HAS_JAVA_CHANGES="true"
+          fi
+
           {
             echo "ADDED_OR_MODIFIED<<EOF"
             printf "%s\n" "$ADDED_OR_MODIFIED"
@@ -56,16 +61,12 @@ jobs:
             echo "DELETED<<EOF"
             printf "%s\n" "$DELETED"
             echo "EOF"
-          } >> "$GITHUB_ENV"
+          } >> "$GITHUB_ENV"  
 
-      - name: Skip if no Java changes
-        run: |
-          if [ -z "$ADDED_OR_MODIFIED" ] && [ -z "$DELETED" ]; then
-            echo "No Java changes detected. Skipping AI review enqueue."
-            exit 0
-          fi
+          echo "has_java_changes=$HAS_JAVA_CHANGES" >> "$GITHUB_OUTPUT"
 
       - name: Find AI review queue issue (by label)
+        if: steps.changes.outputs.has_java_changes == 'true'
         id: find_issue
         uses: actions/github-script@v7
         with:
@@ -89,6 +90,7 @@ jobs:
             core.setOutput("issue_number", queue.number);
 
       - name: Enqueue review request
+        if: steps.changes.outputs.has_java_changes == 'true'
         uses: actions/github-script@v7
         with:
           script: |
