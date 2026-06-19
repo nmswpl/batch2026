@@ -1,44 +1,16 @@
 name: BehindJava Reviewer
 
 on:
-  schedule:
-    - cron: "0 * * * *"
+  repository_dispatch:
+    types: [trigger-ai-review] # Only runs when this exact event type is sent
 
 concurrency:
   group: ai-review-global
   cancel-in-progress: false
 
 jobs:
-  gate:
-    runs-on: ubuntu-latest
-    outputs:
-      run: ${{ steps.check.outputs.run }}
-
-    steps:
-      - name: Time Gate Only
-        id: check
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const hour = new Date().toLocaleString("en-US", {
-              timeZone: "Asia/Kolkata",
-              hour: "2-digit",
-              hour12: false
-            });
-
-            const day = new Date().toLocaleString("en-US", {
-              timeZone: "Asia/Kolkata",
-              weekday: "short"
-            });
-
-            const isWeekday = !["Sat", "Sun"].includes(day);
-            const isWorkingHours = hour >= 9 && hour < 21;
-
-            core.setOutput("run", isWeekday && isWorkingHours);
-
   claim:
     runs-on: ubuntu-latest
-    needs: gate
 
     if: ${{ needs.gate.outputs.run == 'true' }}
 
@@ -88,55 +60,62 @@ jobs:
       - name: Claim Queue Items
         id: claim
         uses: actions/github-script@v7
+        env:
+          FETCHED_COMMENTS: ${{ steps.fetch.outputs.comments }}
         with:
           script: |
-            const comments = JSON.parse(`${{ steps.fetch.outputs.comments }}`);
-
-            async function hasEyes(commentId) {
-              const reactions = await github.rest.reactions.listForIssueComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: commentId
-              });
-
-              return reactions.data.some(r => r.content === "eyes");
-            }
+            const comments = JSON.parse(process.env.FETCHED_COMMENTS);
+            core.info(`Total comments fetched from issue: ${comments.length}`);
 
             const unclaimed = [];
 
             for (const c of comments) {
-              const locked = await hasEyes(c.id);
-              if (!locked) unclaimed.push(c);
+              const reactions = c.reactions || {};
+              const hasEyes = reactions.eyes > 0;
+            
+              if (hasEyes) {
+                core.info(`Skipping comment #${c.id}: Already has 👀 reaction.`);
+              } else {
+                unclaimed.push(c);
+              }
             }
 
+            core.info(`Found ${unclaimed.length} unclaimed comments.`);
+
+            // Sort by oldest first
             unclaimed.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
 
+            // Take the top 25
             const selected = unclaimed.slice(0, 25);
+            core.info(`Selected ${selected.length} oldest comments to process.`);
 
             if (selected.length === 0) {
+              core.info("No items to claim. Setting outputs to zero.");
               core.setOutput("count", 0);
               core.setOutput("jobs", "[]");
-              return;
+            } else {
+              const jobs = [];
+
+              for (const c of selected) {
+                core.info(`Claiming comment #${c.id}...`);
+            
+                await github.rest.reactions.createForIssueComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: c.id,
+                  content: "eyes"
+                });
+
+                jobs.push({
+                  id: c.id,
+                  body: c.body
+                });
+              }
+
+              core.info(`Successfully claimed ${jobs.length} jobs.`);
+              core.setOutput("count", jobs.length);
+              core.setOutput("jobs", JSON.stringify(jobs));
             }
-
-            const jobs = [];
-
-            for (const c of selected) {
-              await github.rest.reactions.createForIssueComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: c.id,
-                content: "eyes"
-              });
-
-              jobs.push({
-                id: c.id,
-                body: c.body
-              });
-            }
-
-            core.setOutput("count", jobs.length);
-            core.setOutput("jobs", JSON.stringify(jobs));
   
 
   analyze_code:
