@@ -2,7 +2,7 @@ name: BehindJava Reviewer
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "0 * * * *"
 
 concurrency:
   group: ai-review-global
@@ -32,7 +32,7 @@ jobs:
             });
 
             const isWeekday = !["Sat", "Sun"].includes(day);
-            const isWorkingHours = hour >= 9 && hour < 20;
+            const isWorkingHours = hour >= 9 && hour < 21;
 
             core.setOutput("run", isWeekday && isWorkingHours);
 
@@ -111,7 +111,7 @@ jobs:
 
             unclaimed.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
 
-            const selected = unclaimed.slice(0, 5);
+            const selected = unclaimed.slice(0, 25);
 
             if (selected.length === 0) {
               core.setOutput("count", 0);
