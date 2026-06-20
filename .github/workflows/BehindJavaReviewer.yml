@@ -416,7 +416,6 @@ jobs:
                 const statusLabel = isPass ? "status:pass" : "status:fail";
                 const labels = [studentLabel, statusLabel];
   
-                const author = `${{ steps.commit_meta.outputs.author }}`;
                 const email = `${{ steps.commit_meta.outputs.email }}`;
                 const message = `${{ steps.commit_meta.outputs.message }}`;
                 
