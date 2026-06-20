@@ -28,7 +28,7 @@ jobs:
 
           if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
             echo "First commit detected - listing all files in HEAD"
-            git ls-tree -r --name-status HEAD > changed_files.txt
+            git ls-tree -r --name-status HEAD | sed 's/^/A\t/' > changed_files.txt
           else
             echo "Normal / multi-commit push detected"
 
