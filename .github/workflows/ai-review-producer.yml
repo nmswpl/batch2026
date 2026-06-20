@@ -99,6 +99,12 @@ jobs:
             const payload = {
               branch: context.ref.replace("refs/heads/", ""),
               commit: context.sha,
+              githubUsername: context.actor,
+              commitAuthor: context.payload.head_commit?.author?.name,
+              commitEmail: context.payload.head_commit?.author?.email,
+              commitMessage: context.payload.head_commit?.message,
+              commitTimeIST: new Date(context.payload.head_commit?.timestamp)
+                .toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
               addedOrModified: (process.env.ADDED_OR_MODIFIED || "")
                 .split("\n")
                 .filter(Boolean),
