@@ -64,56 +64,46 @@ jobs:
           script: |
             const comments = JSON.parse(process.env.FETCHED_COMMENTS);
             core.info(`Total comments fetched from issue: ${comments.length}`);
-
-            const unclaimed = [];
-
-            for (const c of comments) {
-              const reactions = c.reactions || {};
-              const hasEyes = reactions.eyes > 0;
-            
-              if (hasEyes) {
-                core.info(`Skipping comment #${c.id}: Already has 👀 reaction.`);
-              } else {
+              
+              const unclaimed = [];
+              
+              // Treat ALL comments as unclaimed (ignore reactions completely)
+              for (const c of comments) {
                 unclaimed.push(c);
               }
-            }
-
-            core.info(`Found ${unclaimed.length} unclaimed comments.`);
-
-            // Sort by oldest first
-            unclaimed.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
-
-            // Take the top 5
-            const selected = unclaimed.slice(0, 5);
-            core.info(`Selected ${selected.length} oldest comments to process.`);
-
-            if (selected.length === 0) {
-              core.info("No items to claim. Setting outputs to zero.");
-              core.setOutput("count", 0);
-              core.setOutput("jobs", "[]");
-            } else {
-              const jobs = [];
-
-              for (const c of selected) {
-                core.info(`Claiming comment #${c.id}...`);
+              
+              core.info(`Found ${unclaimed.length} unclaimed comments.`);
+              
+              // Sort by oldest first
+              unclaimed.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+              
+              // Take the top 5
+              const selected = unclaimed.slice(0, 5);
+              core.info(`Selected ${selected.length} oldest comments to process.`);
+              
+              if (selected.length === 0) {
+                core.info("No items to claim. Setting outputs to zero.");
+                core.setOutput("count", 0);
+                core.setOutput("jobs", "[]");
+              } else {
+                const jobs = [];
+              
+                for (const c of selected) {
+                  core.info(`Processing comment #${c.id}...`);
+                
+                  // NOTE: intentionally disabled "👀 claim reaction" logic
+                  // so comments are not marked/filtered via reactions.
+                  
+                  jobs.push({
+                    id: c.id,
+                    body: c.body
+                  });
+                }
             
-                await github.rest.reactions.createForIssueComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  comment_id: c.id,
-                  content: "eyes"
-                });
-
-                jobs.push({
-                  id: c.id,
-                  body: c.body
-                });
+                core.info(`Successfully prepared ${jobs.length} jobs.`);
+                core.setOutput("count", jobs.length);
+                core.setOutput("jobs", JSON.stringify(jobs));
               }
-
-              core.info(`Successfully claimed ${jobs.length} jobs.`);
-              core.setOutput("count", jobs.length);
-              core.setOutput("jobs", JSON.stringify(jobs));
-            }
   
 
   analyze_code:
