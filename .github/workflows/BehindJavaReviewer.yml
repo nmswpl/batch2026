@@ -83,8 +83,8 @@ jobs:
             // Sort by oldest first
             unclaimed.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
 
-            // Take the top 25
-            const selected = unclaimed.slice(0, 25);
+            // Take the top 5
+            const selected = unclaimed.slice(0, 5);
             core.info(`Selected ${selected.length} oldest comments to process.`);
 
             if (selected.length === 0) {
@@ -119,34 +119,41 @@ jobs:
   analyze_code:
     runs-on: ubuntu-latest
     needs: claim
-    if: ${{ needs.claim.result == 'success' && needs.claim.outputs.count != '0' }}
+    if: ${{ needs.claim.outputs.count != '0' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        job: ${{ fromJson(needs.claim.outputs.jobs) }}
 
     steps:
-      - name: Checkout Source Code
+      - name: Checkout Exact Commit from Queue
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ fromJson(matrix.job.body).branch }}
+
+      - name: Reset to exact commit
+        run: |
+          git reset --hard ${{ fromJson(matrix.job.body).commit }}
 
       - name: Prepare AI Input
         run: |
           set -euo pipefail
-  
-          echo '${{ needs.claim.outputs.jobs }}' > jobs.json
+          
+          echo '${{ toJson(matrix.job) }}' > job.json
           
           ADDED_OR_MODIFIED=""
           DELETED=""
           
-          for row in $(jq -c '.[]' jobs.json); do
-            BODY=$(echo "$row" | jq -r '.body')
-          
-            # DIRECT JSON parse (NO markdown extraction)
-            ADD=$(echo "$BODY" | jq -r '.addedOrModified[]?')
-            DEL=$(echo "$BODY" | jq -r '.deleted[]?')
-          
-            ADDED_OR_MODIFIED+="$ADD"$'\n'
-            DELETED+="$DEL"$'\n'
-          done
-          
+          BODY='${{ matrix.job.body }}'
+        
+          # DIRECT JSON parse (NO markdown extraction)
+          ADD=$(echo "$BODY" | jq -r '.addedOrModified[]?')
+          DEL=$(echo "$BODY" | jq -r '.deleted[]?')
+        
+          ADDED_OR_MODIFIED+="$ADD"$'\n'
+          DELETED+="$DEL"$'\n'
+        
           {
             echo "ADDED_OR_MODIFIED<<EOF"
             printf "%s\n" "$ADDED_OR_MODIFIED"
@@ -156,24 +163,6 @@ jobs:
             printf "%s\n" "$DELETED"
             echo "EOF"
           } >> $GITHUB_ENV
-          
-      - name: Checkout Exact Commit from Queue
-        run: |
-          set -euo pipefail
-          
-          echo '${{ needs.claim.outputs.jobs }}' > jobs.json
-  
-          FIRST_BODY=$(jq -r '.[0].body' jobs.json)
-          
-          BRANCH=$(echo "$FIRST_BODY" | jq -r '.branch')
-          COMMIT=$(echo "$FIRST_BODY" | jq -r '.commit')
-        
-          echo "Branch: $BRANCH"
-          echo "Commit: $COMMIT"
-          
-          git fetch origin "$BRANCH"
-          git checkout "$BRANCH"
-          git reset --hard "$COMMIT"
 
       - name: Run AI Review on Changed Java Files
         id: ai_review
@@ -186,14 +175,16 @@ jobs:
           
           process_file () {
             FILE=$1
-          
+            
             echo "Reviewing $FILE"
           
             if [ ! -f "$FILE" ]; then
               echo "File deleted or missing: $FILE"
               return
             fi
-          
+            
+            JOB_ID=$(echo '${{ toJson(matrix.job) }}' | jq -r '.id')
+            
             FILE_CONTENT=$(cat "$FILE")
           
             PAYLOAD=$(jq -n \
@@ -293,11 +284,11 @@ jobs:
               exit 1
             fi
           
-            FILE_OUT="ai_${FILE//\//_}.json"
+            FILE_OUT="ai_${JOB_ID}_${FILE//\//_}.json"
             echo "$RESPONSE" | tee "$FILE_OUT"
           
             echo "$RESPONSE" | jq -r '.candidates[0].content.parts[0].text' \
-              > "ai_${FILE//\//_}.txt" || true
+              > "ai_${JOB_ID}_${FILE//\//_}.txt" || true
           }
           
           # Process added/modified files
@@ -308,23 +299,26 @@ jobs:
       - name: Manage GitHub Issues
         id: manage_issues
         uses: actions/github-script@v7
+        env:
+          JOB: ${{ toJson(matrix.job) }}
         with:
           script: |
             try {
               const fs = require('fs');
   
-              const actor = context.actor;
-  
-              let changed;
-              try {
-                changed = fs.readFileSync('changed_files.txt', 'utf8')
-                  .trim()
-                  .split('\n')
-                  .filter(Boolean);
-              } catch (e) {
-                console.log("No changed files found");
-                return;
-              }
+              const job = JSON.parse(process.env.JOB);
+              const body = JSON.parse(job.body);
+              
+              const commitData = await github.rest.repos.getCommit({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: body.commit
+              });
+              
+              const branch = body.branch;
+              
+              const changed = body.addedOrModified || [];
+              const deletedFiles = body.deleted || [];
   
               let aiData = {};
               const files = fs.readdirSync('.');
@@ -354,15 +348,12 @@ jobs:
                 }
               );
                 
-              const findIssue = (file) =>
-                issues.find(i =>
-                  i.title === `AI Review - ${actor} - ${file}`
-                );
+              const commentId = job.id;
   
-              const deletedFiles = fs.readFileSync('changed_files.txt', 'utf8')
-                .split('\n')
-                .filter(l => l.startsWith('D '))
-                .map(l => l.split(' ').slice(1).join(' ').trim());
+              const findIssue = () =>
+                issues.find(i =>
+                i.title === `AI Review - ${branch} - ${file}`
+              );
   
               // Close issues for deleted files
               for (const file of deletedFiles) {
@@ -412,7 +403,7 @@ jobs:
                 }
   
                 const isPass = parsed.status === "PASS";
-                const issueTitle = `AI Review - ${actor} - ${cleanFile}`;
+                const issueTitle = `AI Review - ${branch} - ${cleanFile}`;
   
                 const studentLabel = `student:${actor.toLowerCase()}`;
                 const statusLabel = isPass ? "status:pass" : "status:fail";
@@ -449,7 +440,7 @@ jobs:
                   }
                 }
   
-                const existing = findIssue(cleanFile);
+                const existing = findIssue();
                 
                 // =========================
                 // FIRST TIME FAIL → CREATE ISSUE
@@ -464,7 +455,7 @@ jobs:
                     title: issueTitle,
                     body: formatted, // FIRST FAIL ONLY
                     labels: labels,
-                    assignees: [ actor ]
+                    assignees: fallbackActor ? [fallbackActor] : []
                   });
       
                   continue;
@@ -519,36 +510,65 @@ jobs:
             }
 
       - name: Delete Processed Queue Items
-        if: ${{ needs.claim.outputs.count != '0' && steps.manage_issues.outputs.status == 'SUCCESS' }}
+        if: ${{ steps.manage_issues.outputs.status == 'SUCCESS' }}
         uses: actions/github-script@v7
+        env:
+          JOB: ${{ toJson(matrix.job) }}
         with:
           script: |
-            const jobs = JSON.parse(`${{ needs.claim.outputs.jobs }}`);
-            
-            for (const job of jobs) {
+            const job = JSON.parse(process.env.JOB);
+
+            // extra safety: ensure comment still exists
+            try {
               await github.rest.issues.deleteComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 comment_id: job.id
               });
+            } catch (e) {
+              console.log("Comment already deleted or inaccessible:", job.id);
             }
+
+      - name: Fetch Commit Metadata
+        id: commit_meta
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const job = ${{ toJson(matrix.job) }};
+            const body = JSON.parse(job.body);
+
+            const commit = await github.rest.repos.getCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: body.commit
+            });
+
+            core.setOutput("author", commit.data.commit.author.name);
+            core.setOutput("email", commit.data.commit.author.email);
+            core.setOutput("message", commit.data.commit.message);
 
       - name: Build Email Body
         run: |
           set -euo pipefail
-      
+          
+          echo '${{ toJson(matrix.job) }}' > job.json
+
+          BODY='${{ matrix.job.body }}'
+          BRANCH=$(echo "$BODY" | jq -r '.branch')
+          COMMIT=$(echo "$BODY" | jq -r '.commit')
+          
           EMAIL=$(cat <<EOF
           Hello,
           
           A new commit push has been evaluated by the automated review system.
-        
-          Committer Account: ${{ github.actor }}
-          Branch: ${{ github.ref_name }}
+          
+          Committer Account: ${{ steps.commit_meta.outputs.author }}
+          Branch: $BRANCH
           
           Please find the detailed code analysis attached as 'AI_REVIEW.txt'.
         
           You can view the raw code changes here:
-            ${{ github.event.head_commit.url }}
+            https://github.com/${{ github.repository }}/commit/$COMMIT
           
           EOF
           )
@@ -562,16 +582,17 @@ jobs:
       - name: Generate AI Review Report
         run: |
           set -euo pipefail
-  
+          JOB_ID=$(echo '${{ toJson(matrix.job) }}' | jq -r '.id')
+          
           {
             echo "========================================="
             echo "   NMS BATCH 2026 AI CODE EVALUATION"
             echo "========================================="
             echo ""
-            echo "GitHub Username: ${{ github.actor }}"
-            echo "Commit Author: ${{ github.event.head_commit.author.name }}"
-            echo "Commit Email: ${{ github.event.head_commit.author.email }}"
-            echo "Commit Message: ${{ github.event.head_commit.message }}"
+            echo "GitHub Username: ${{ steps.commit_meta.outputs.author }}
+            echo "Commit Author: ${{ steps.commit_meta.outputs.author }}
+            echo "Commit Email: ${{ steps.commit_meta.outputs.email }}
+            echo "Commit Message: ${{ steps.commit_meta.outputs.message }}
             echo "Timestamp: $(TZ=Asia/Kolkata date)"
             echo ""
           } > AI_REVIEW.txt
@@ -581,7 +602,7 @@ jobs:
           TOTAL_COUNT=0
           
           shopt -s nullglob
-          files=(ai_*.json)
+          files=(ai_${JOB_ID}_*.json)
           
           if [ -z "${ADDED_OR_MODIFIED:-}" ]; then
             echo "No Java files were modified in this commit." >> AI_REVIEW.txt
@@ -638,7 +659,11 @@ jobs:
             TOTAL_COUNT=$((TOTAL_COUNT + 1))
           
             RAW=$(jq -r '.candidates[0].content.parts[0].text // "{}"' "$f")
-
+            
+            PARSED=$(echo "$RAW" | jq -r '.')
+            STATUS=$(echo "$PARSED" | jq -r '.status')
+            AI_MESSAGE=$(echo "$PARSED" | jq -r '.message // ""')
+          
             FILE_NAME=$(basename "$f" .json)
             FILE_NAME=${FILE_NAME#ai_}
             FILE_NAME=$(basename "$FILE_NAME")
@@ -652,7 +677,7 @@ jobs:
               File: ${FILE_NAME}
         
               Status: PASS
-              Clean code. No significant issues detected.
+              ${AI_MESSAGE}
         
               -----------------------------------------
         
@@ -728,7 +753,7 @@ jobs:
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: "[NMS Code Review] Commit Activity by ${{ github.actor }}"
-          to: ${{ github.event.head_commit.author.email }}
+          to: ${{ steps.commit_meta.outputs.email }}
           cc: sanjeev@nmsworks.co.in
           from: "NMS AI-Automated Reviewer"
           body: ${{ env.EMAIL }}
