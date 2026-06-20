@@ -64,46 +64,64 @@ jobs:
           script: |
             const comments = JSON.parse(process.env.FETCHED_COMMENTS);
             core.info(`Total comments fetched from issue: ${comments.length}`);
-              
-              const unclaimed = [];
-              
-              // Treat ALL comments as unclaimed (ignore reactions completely)
-              for (const c of comments) {
+
+            const unclaimed = [];
+
+            for (const c of comments) {
+              const reactions = c.reactions || {};
+              const hasEyes = reactions.eyes > 0;
+            
+              if (hasEyes) {
+                core.info(`Skipping comment #${c.id}: Already has 👀 reaction.`);
+              } else {
                 unclaimed.push(c);
               }
-              
-              core.info(`Found ${unclaimed.length} unclaimed comments.`);
-              
-              // Sort by oldest first
-              unclaimed.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
-              
-              // Take the top 5
-              const selected = unclaimed.slice(0, 5);
-              core.info(`Selected ${selected.length} oldest comments to process.`);
-              
-              if (selected.length === 0) {
-                core.info("No items to claim. Setting outputs to zero.");
-                core.setOutput("count", 0);
-                core.setOutput("jobs", "[]");
-              } else {
-                const jobs = [];
-              
-                for (const c of selected) {
-                  core.info(`Processing comment #${c.id}...`);
-                
-                  // NOTE: intentionally disabled "👀 claim reaction" logic
-                  // so comments are not marked/filtered via reactions.
-                  
-                  jobs.push({
-                    id: c.id,
-                    body: c.body
-                  });
-                }
+            }
+
+            core.info(`Found ${unclaimed.length} unclaimed comments.`);
+
+            // Sort by oldest first
+            unclaimed.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+
+            // Take the top 5
+            const selected = unclaimed.slice(0, 5);
+            core.info(`Selected ${selected.length} oldest comments to process.`);
+
+            if (selected.length === 0) {
+              core.info("No items to claim. Setting outputs to zero.");
+              core.setOutput("count", 0);
+              core.setOutput("jobs", "[]");
+            } else {
+              const jobs = [];
+
+              for (const c of selected) {
+                core.info(`Claiming comment #${c.id}...`);
             
-                core.info(`Successfully prepared ${jobs.length} jobs.`);
-                core.setOutput("count", jobs.length);
-                core.setOutput("jobs", JSON.stringify(jobs));
+                await github.rest.reactions.createForIssueComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: c.id,
+                  content: "eyes"
+                });
+
+                let parsed;
+                try {
+                  parsed = JSON.parse(c.body);
+                } catch (e) {
+                core.info(`Skipping invalid JSON comment: ${c.id}`);
+                  continue;
+                }
+                  
+                jobs.push({
+                  id: c.id,
+                  body: JSON.stringify(parsed)
+                });
               }
+
+              core.info(`Successfully claimed ${jobs.length} jobs.`);
+              core.setOutput("count", jobs.length);
+              core.setOutput("jobs", JSON.stringify(jobs));
+            }
   
 
   analyze_code:
@@ -286,24 +304,6 @@ jobs:
             process_file "$file"
           done
 
-      - name: Fetch Commit Metadata
-        id: commit_meta
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const job = ${{ toJson(matrix.job) }};
-            const body = JSON.parse(job.body);
-
-            const commit = await github.rest.repos.getCommit({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: body.commit
-            });
-
-            core.setOutput("author", commit.data.commit.author.name);
-            core.setOutput("email", commit.data.commit.author.email);
-            core.setOutput("message", commit.data.commit.message);
-
       - name: Manage GitHub Issues
         id: manage_issues
         uses: actions/github-script@v7
@@ -316,12 +316,6 @@ jobs:
   
               const job = JSON.parse(process.env.JOB);
               const body = JSON.parse(job.body);
-              
-              const commitData = await github.rest.repos.getCommit({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: body.commit
-              });
               
               const branch = body.branch;
               
@@ -411,21 +405,23 @@ jobs:
                 const isPass = parsed.status === "PASS";
                 const issueTitle = `AI Review - ${branch} - ${cleanFile}`;
                 
-                const author = `${{ steps.commit_meta.outputs.author }}`;
+                const userName = body.githubUsername || "";
+                const author = body.commitAuthor || "";
                 const studentLabel = `student:${author.toLowerCase()}`;
                 const statusLabel = isPass ? "status:pass" : "status:fail";
                 const labels = [studentLabel, statusLabel];
   
-                const email = `${{ steps.commit_meta.outputs.email }}`;
-                const message = `${{ steps.commit_meta.outputs.message }}`;
+                const email = body.commitEmail || "";
+                const message = body.commitMessage || "";
+                const commitTime = body.commitTimeIST || "";
                 
                 let formatted =
-                `GitHub Username: ${author}
+                `GitHub Username: ${userName}
               Commit Author: ${author}
               Commit Email: ${email}
               Commit Message: ${message}
-              Timestamp:
-                ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}
+              Timestamp: ${commitTime}
+            
                 `;
         
                 for (const f of parsed.files || []) {
@@ -463,7 +459,7 @@ jobs:
                     title: issueTitle,
                     body: formatted, // FIRST FAIL ONLY
                     labels: labels,
-                    assignees: []
+                    assignees: [userName]
                   });
       
                   continue;
@@ -552,7 +548,7 @@ jobs:
           
           A new commit push has been evaluated by the automated review system.
           
-          Committer Account: ${{ steps.commit_meta.outputs.author }}
+          Committer Account: $(echo "$BODY" | jq -r '.githubUsername')
           Branch: $BRANCH
           
           Please find the detailed code analysis attached as 'AI_REVIEW.txt'.
@@ -573,17 +569,18 @@ jobs:
         run: |
           set -euo pipefail
           JOB_ID=$(echo '${{ toJson(matrix.job) }}' | jq -r '.id')
+          BODY='${{ matrix.job.body }}'
           
           {
             echo "========================================="
             echo "   NMS BATCH 2026 AI CODE EVALUATION"
             echo "========================================="
             echo ""
-            echo "GitHub Username: ${{ steps.commit_meta.outputs.author }}"
-            echo "Commit Author: ${{ steps.commit_meta.outputs.author }}"
-            echo "Commit Email: ${{ steps.commit_meta.outputs.email }}"
-            echo "Commit Message: ${{ steps.commit_meta.outputs.message }}"
-            echo "Timestamp: $(TZ=Asia/Kolkata date)""
+            echo "GitHub Username: $(echo "$BODY" | jq -r '.githubUsername')"
+            echo "Commit Author: $(echo "$BODY" | jq -r '.commitAuthor // .githubUsername')"
+            echo "Commit Email: $(echo "$BODY" | jq -r '.commitEmail')"
+            echo "Commit Message: $(echo "$BODY" | jq -r '.commitMessage')"
+            echo "Timestamp: $(TZ=Asia/Kolkata date)"
             echo ""
           } > AI_REVIEW.txt
           
@@ -743,8 +740,8 @@ jobs:
           server_port: 465
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: "[NMS AI Code Review] Commit Activity by ${{ steps.commit_meta.outputs.author }}"
-          to: ${{ steps.commit_meta.outputs.email }}
+          subject: "[NMS AI Code Review] Commit Activity by ${{ fromJson(matrix.job.body).githubUsername }}"
+          to: ${{ fromJson(matrix.job.body).commitEmail }}
           cc: sanjeev@nmsworks.co.in
           from: "NMS AI-Automated Reviewer"
           body: ${{ env.EMAIL }}
