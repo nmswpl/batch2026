@@ -463,7 +463,7 @@ jobs:
                     title: issueTitle,
                     body: formatted, // FIRST FAIL ONLY
                     labels: labels,
-                    assignees: author ? [author] : []
+                    assignees: []
                   });
       
                   continue;
