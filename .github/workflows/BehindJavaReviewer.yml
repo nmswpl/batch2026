@@ -193,7 +193,7 @@ jobs:
                           "[CRITICAL LOGIC BUGS] (resource leaks, broken loops, bad logic)\n" +
                           "[NAMING & STYLE CONVENTIONS] (violations of camelCase, PascalCase, or bad variable names like x, y, temp)\n" +
                           "[CLEAN CODE SUGGESTIONS] (redundant code, better ways to write it)\n\n" +
-                          "return VALID JSON only.\n\n" +
+                          "Return ONLY raw JSON. Do NOT use markdown. Do NOT wrap output in triple backticks. Do NOT add explanations. Output must start with { and end with }. Any extra text makes it invalid.\n\n" +
                           "JSON FORMAT:\n" +
                           "{\n" +
                           "  \"status\": \"PASS|FAIL\",\n" +
@@ -286,6 +286,24 @@ jobs:
             process_file "$file"
           done
 
+      - name: Fetch Commit Metadata
+        id: commit_meta
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const job = ${{ toJson(matrix.job) }};
+            const body = JSON.parse(job.body);
+
+            const commit = await github.rest.repos.getCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: body.commit
+            });
+
+            core.setOutput("author", commit.data.commit.author.name);
+            core.setOutput("email", commit.data.commit.author.email);
+            core.setOutput("message", commit.data.commit.message);
+
       - name: Manage GitHub Issues
         id: manage_issues
         uses: actions/github-script@v7
@@ -318,9 +336,9 @@ jobs:
                   try {
                     const data = JSON.parse(fs.readFileSync(f, 'utf8'));
                     const fileName = f
-                      .replace(/^ai_/, '')
+                      .replace(/^ai_\d+_/, '')
                       .replace(/\.json$/, '');
-  
+                    
                     aiData[fileName] = data;
                   } catch (e) {
                     console.log(`Failed parsing ${f}`);
@@ -340,7 +358,7 @@ jobs:
                 
               const commentId = job.id;
   
-              const findIssue = () =>
+              const findIssue = (file) =>
                 issues.find(i =>
                 i.title === `AI Review - ${branch} - ${file}`
               );
@@ -361,17 +379,15 @@ jobs:
   
               for (const file of changed) {
   
-                const [status, ...parts] = file.trim().split(/\s+/);
-                const cleanFile = parts.join(' ').trim();
+                const cleanFile = file.trim();
   
-                const normalizedKey = Object.keys(aiData).find(k =>
-                  k.replace(/ai_/, '').replace(/\.json$/, '').replace(/_/g, '/')
-                    === cleanFile
-                );
-  
+                const normalizedKey = Object.keys(aiData).find(k => {
+                const base = k.replace(/^ai_\d+_/, '').replace(/\.json$/, '');
+                  return base.replace(/_/g, '/') === cleanFile;
+                });
+                
                 const aiFile = normalizedKey ? aiData[normalizedKey] : null;
   
-                if (status === "D") continue;
                 if (!aiFile) continue;
   
                 let raw = aiFile.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
@@ -394,21 +410,24 @@ jobs:
   
                 const isPass = parsed.status === "PASS";
                 const issueTitle = `AI Review - ${branch} - ${cleanFile}`;
-  
-                const studentLabel = `student:${actor.toLowerCase()}`;
+                
+                const author = `${{ steps.commit_meta.outputs.author }}`;
+                const studentLabel = `student:${author.toLowerCase()}`;
                 const statusLabel = isPass ? "status:pass" : "status:fail";
                 const labels = [studentLabel, statusLabel];
   
-                const commit = context.payload.head_commit;
-  
+                const author = `${{ steps.commit_meta.outputs.author }}`;
+                const email = `${{ steps.commit_meta.outputs.email }}`;
+                const message = `${{ steps.commit_meta.outputs.message }}`;
+                
                 let formatted =
-                  `GitHub Username: ${actor}
-                  Commit Author: ${commit?.author?.name || "N/A"}
-                  Commit Email: ${commit?.author?.email || "N/A"}
-                  Commit Message: ${commit?.message || "N/A"}
-                  Timestamp:
-                    ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}
-                  `;
+                `GitHub Username: ${author}
+              Commit Author: ${author}
+              Commit Email: ${email}
+              Commit Message: ${message}
+              Timestamp:
+                ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}
+                `;
         
                 for (const f of parsed.files || []) {
                   if (f.criticalLogicBugs?.length) {
@@ -430,7 +449,7 @@ jobs:
                   }
                 }
   
-                const existing = findIssue();
+                const existing = findIssue(cleanFile);
                 
                 // =========================
                 // FIRST TIME FAIL → CREATE ISSUE
@@ -445,7 +464,7 @@ jobs:
                     title: issueTitle,
                     body: formatted, // FIRST FAIL ONLY
                     labels: labels,
-                    assignees: fallbackActor ? [fallbackActor] : []
+                    assignees: author ? [author] : []
                   });
       
                   continue;
@@ -519,24 +538,6 @@ jobs:
               console.log("Comment already deleted or inaccessible:", job.id);
             }
 
-      - name: Fetch Commit Metadata
-        id: commit_meta
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const job = ${{ toJson(matrix.job) }};
-            const body = JSON.parse(job.body);
-
-            const commit = await github.rest.repos.getCommit({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: body.commit
-            });
-
-            core.setOutput("author", commit.data.commit.author.name);
-            core.setOutput("email", commit.data.commit.author.email);
-            core.setOutput("message", commit.data.commit.message);
-
       - name: Build Email Body
         run: |
           set -euo pipefail
@@ -579,11 +580,11 @@ jobs:
             echo "   NMS BATCH 2026 AI CODE EVALUATION"
             echo "========================================="
             echo ""
-            echo "GitHub Username: ${{ steps.commit_meta.outputs.author }}
-            echo "Commit Author: ${{ steps.commit_meta.outputs.author }}
-            echo "Commit Email: ${{ steps.commit_meta.outputs.email }}
-            echo "Commit Message: ${{ steps.commit_meta.outputs.message }}
-            echo "Timestamp: $(TZ=Asia/Kolkata date)"
+            echo "GitHub Username: ${{ steps.commit_meta.outputs.author }}"
+            echo "Commit Author: ${{ steps.commit_meta.outputs.author }}"
+            echo "Commit Email: ${{ steps.commit_meta.outputs.email }}"
+            echo "Commit Message: ${{ steps.commit_meta.outputs.message }}"
+            echo "Timestamp: $(TZ=Asia/Kolkata date)""
             echo ""
           } > AI_REVIEW.txt
           
@@ -667,6 +668,7 @@ jobs:
               File: ${FILE_NAME}
         
               Status: PASS
+              
               ${AI_MESSAGE}
         
               -----------------------------------------
@@ -742,7 +744,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: "[NMS Code Review] Commit Activity by ${{ github.actor }}"
+          subject: "[NMS AI Code Review] Commit Activity by ${{ steps.commit_meta.outputs.author }}"
           to: ${{ steps.commit_meta.outputs.email }}
           cc: sanjeev@nmsworks.co.in
           from: "NMS AI-Automated Reviewer"
