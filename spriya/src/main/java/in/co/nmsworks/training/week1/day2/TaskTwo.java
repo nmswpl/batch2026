@@ -28,6 +28,7 @@ public class TaskTwo {
         checkAlpha();
         int res=recursion(5);
         System.out.println("The factorial using recursion is: "+res);
+        sc.close();
         }
     public static void add(){
         Scanner sc=new Scanner(System.in);
