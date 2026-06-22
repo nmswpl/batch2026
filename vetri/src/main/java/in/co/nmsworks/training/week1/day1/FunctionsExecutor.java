@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class FunctionsExecutor {
 
     // Scanner object for user input
-    Scanner inp = new Scanner(System.in);
+
 
     public static void main(String[] args) {
 
