@@ -83,8 +83,8 @@ jobs:
             // Sort by oldest first
             unclaimed.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
 
-            // Take the top 5
-            const selected = unclaimed.slice(0, 5);
+            // Take the top 3
+            const selected = unclaimed.slice(0, 3);
             core.info(`Selected ${selected.length} oldest comments to process.`);
 
             if (selected.length === 0) {
@@ -205,7 +205,7 @@ jobs:
                       {
                         text: (
                           "You are an encouraging but strict Senior Java Developer reviewing a fresher'\''s daily code changes. " +
-                          "Analyze this Git diff and generate a clean, brief, bulleted report. Follow these rules:\n" +
+                          "Analyze this java code and generate a clean, brief, bulleted report. Follow these rules:\n" +
                           "1. If the code is well-written and has no notable errors, output a brief, highly appreciative and encouraging message praising their clean work.\n" +
                           "2. If errors exist, skip the praise and list the critical flaws under these specific headers:\n" +
                           "[CRITICAL LOGIC BUGS] (resource leaks, broken loops, bad logic)\n" +
@@ -245,7 +245,7 @@ jobs:
             DIFF=$((CURRENT_TIME - LAST_CALL_TIME))
             
             if [ "$DIFF" -lt "$MIN_INTERVAL" ]; then
-            sleep $((MIN_INTERVAL - DIFF))
+              sleep $((MIN_INTERVAL - DIFF))
             fi
             
             LAST_CALL_TIME=$(date +%s)
@@ -262,7 +262,7 @@ jobs:
               echo "Trying model: $MODEL"
               SUCCESS=false
               
-              for ATTEMPT in 1 2; do
+              for ATTEMPT in 1 2 3; do
                 echo "Attempt $ATTEMPT"
                 RESPONSE=$(curl -s -X POST \
                   "https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${GEMINI_API_KEY}" \
@@ -275,8 +275,19 @@ jobs:
                   break
                 fi
                 
-                echo "API failed. Retrying..."
-                sleep 5
+                ERROR_MESSAGE=$(echo "$RESPONSE" | jq -r '.error.message // "Unknown error"' 2>/dev/null)
+                ERROR_CODE=$(echo "$RESPONSE" | jq -r '.error.code // "N/A"' 2>/dev/null)
+                ERROR_STATUS=$(echo "$RESPONSE" | jq -r '.error.status // "N/A"' 2>/dev/null)
+                
+                echo "API failed (Attempt $ATTEMPT)"
+                echo "Code   : $ERROR_CODE"
+                echo "Status : $ERROR_STATUS"
+                echo "Reason : $ERROR_MESSAGE"
+                
+                if [ "$ATTEMPT" -lt 3 ]; then
+                  echo "Retrying in 5 seconds..."
+                  sleep 5
+                fi
           
               done
           
