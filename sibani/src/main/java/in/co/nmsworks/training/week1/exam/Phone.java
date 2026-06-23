@@ -1,0 +1,56 @@
+package in.co.nmsworks.training.week1.exam;
+
+public class Phone {
+    private int id;
+    private String brand;
+    private String model;
+    private double price;
+    public Phone(){
+
+    }
+
+    public Phone(int id, String brand, String model, double price) {
+        this.id = id;
+        this.brand = brand;
+        this.model = model;
+        this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    public void printDetails(Phone phone){
+        System.out.println("ID = " + phone.getId());
+        System.out.println("Brand = " + phone.getBrand());
+        System.out.println("Model = " + phone.getModel());
+        System.out.println("Price = " + phone.getPrice());
+    }
+}
