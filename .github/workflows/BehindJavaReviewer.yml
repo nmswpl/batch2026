@@ -51,6 +51,8 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issueNumber
+              per_page: 10, // small batch window
+              page: 1
             });
 
             core.setOutput("comments", JSON.stringify(comments.data));
