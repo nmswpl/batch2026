@@ -24,13 +24,13 @@ public class Set2 {
     public static void gradeValue(int mark)
     {
         if (mark < 0 || mark > 100) {
-            System.out.println("Mark: " + mark + " -> Grade: Invalid Mark");
-            return; // Exits the method early since the mark is invalid
+            System.out.println("Mark: " + mark + " Grade: Invalid Mark");
+            return;
         }
 
         String grade;
 
-        // Grade Slab Logic
+
         if (mark >= 91 && mark <= 100) {
             grade = "S";
         } else if (mark >= 81 && mark <= 90) {
@@ -45,7 +45,7 @@ public class Set2 {
             grade = "F";
         }
 
-        // Print the final result directly from inside the method
+
         System.out.println("Mark: " + mark + " -> Grade: " + grade);
 
 
