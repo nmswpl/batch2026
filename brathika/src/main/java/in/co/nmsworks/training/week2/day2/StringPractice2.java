@@ -22,6 +22,7 @@ public class StringPractice2 {
                 answer += "X";
             }
         }
+
         System.out.println("The number is: "+answer);
     }
 

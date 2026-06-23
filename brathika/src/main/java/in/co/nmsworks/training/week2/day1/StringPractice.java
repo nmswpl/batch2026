@@ -20,6 +20,7 @@ public class StringPractice {
     private static void removeDuplicateCharacter() {
         String str = "aabbcc";
         String answer = "";
+
         for (int i = 0; i < str.length(); i++) {
             char ch = str.charAt(i);
             if (!answer.contains(String.valueOf(ch))) {
