@@ -87,7 +87,7 @@ jobs:
             unclaimed.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
 
             // Take the top 3
-            const selected = unclaimed.slice(0, 3);
+            const selected = unclaimed.slice(0, 1);
             core.info(`Selected ${selected.length} oldest comments to process.`);
 
             if (selected.length === 0) {
