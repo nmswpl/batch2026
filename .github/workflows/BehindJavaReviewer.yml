@@ -393,15 +393,21 @@ jobs:
   
               let aiData = {};
               const files = fs.readdirSync('.');
+            
+              console.log("===== FILES IN WORKING DIRECTORY =====");
+              console.log(files);
+              console.log("======================================");
   
               for (const f of files) {
                 if (f.startsWith('ai_') && f.endsWith('.json')) {
+                  console.log("RAW AI FILE:", f);
                   try {
                     const data = JSON.parse(fs.readFileSync(f, 'utf8'));
                     const fileName = f
                       .replace(/^ai_\d+_/, '')
                       .replace(/\.json$/, '');
                     
+                    console.log("DERIVED AI KEY:", fileName);
                     aiData[fileName] = data;
                   } catch (e) {
                     console.log(`Failed parsing ${f}`);
@@ -441,8 +447,9 @@ jobs:
               }
   
               for (const file of changed) {
-  
-                const cleanFile = file.trim();
+                console.log("CHANGED FILE (raw):", file);
+                const cleanFile = file.trim().split('/').pop();
+                console.log("CHANGED FILE (normalized):", cleanFile);
   
                 const normalizedKey = Object.keys(aiData).find(k => {
                 const base = k.replace(/^ai_\d+_/, '').replace(/\.json$/, '');
