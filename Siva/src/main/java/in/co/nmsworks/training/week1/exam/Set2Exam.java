@@ -5,14 +5,15 @@ import java.util.Scanner;
 public class Set2Exam {
 
     public static void main(String[] args) {
-        findMedian();
-        MobilePhone[] mobiles = new MobilePhone[6];
+//        findMedian();
+        MobilePhone[] mobiles = new MobilePhone[7];
         mobiles[0] = new MobilePhone(201,"Samsung","Galaxy S24",79999.0);
         mobiles[1] = new MobilePhone(202,"Apple","IPhone 17 Pro Max",149999.0);
         mobiles[2] = new MobilePhone(203,"Samsung","Galaxy S25",99999.0);
         mobiles[3] = new MobilePhone(204,"Vivo","Vivo 15",39999.0);
         mobiles[4] = new MobilePhone(205,"Oneplus","OnePlus 23",49999.0);
         mobiles[5] = new MobilePhone(205,"Oneplus","OnePlus 23",49999.0);
+
         printMobilePhoneDetails(mobiles);
         printHundredPositionNumber(777);
 

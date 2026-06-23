@@ -47,8 +47,13 @@ public class StringManipulation {
         String text = "the quick brown fox jumps over the lazy dog";
         String[] textArray = text.split(" ");
         for (int i = 0; i < textArray.length; i++) {
-            String first = textArray[i].substring(0,1).toUpperCase();
-            String second = textArray[i].substring(1).toLowerCase();
+            String first = "", second = "";
+            if (!textArray[i].isEmpty()) {
+                first = textArray[i].substring(0,1).toUpperCase();
+            }
+            if (textArray[i].length() >= 1) {
+                second = textArray[i].substring(1).toLowerCase();
+            }
             textArray[i] = first + second;
         }
         for (String s : textArray) {
@@ -84,7 +89,8 @@ public class StringManipulation {
     }
 
     private static boolean isVowel(char ch) {
-        ch -= 32;
+        if (ch >='a' && ch <= 'z')
+            ch -= 32;
         return ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U';
     }
 
@@ -102,7 +108,10 @@ public class StringManipulation {
         while (i < number.length() && number.charAt(i) == '0'){
             i++;
         }
-        if (i == number.length()) return;
+        if (i == number.length()) {
+            System.out.println("String is Empty ,after removing Leading Zeros");
+            return;
+        }
         System.out.println(number.substring(i));
     }
 

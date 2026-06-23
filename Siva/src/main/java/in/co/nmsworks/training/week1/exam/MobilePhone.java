@@ -6,7 +6,7 @@ public class MobilePhone {
     private String model;
     private double price;
 
-    public MobilePhone() {};
+//    public MobilePhone() {};
 
     public MobilePhone(int id, String brand, String model, double price){
         this.id = id;
