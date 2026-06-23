@@ -73,11 +73,12 @@ jobs:
               const reactions = c.reactions || {};
               const hasEyes = reactions.eyes > 0;
             
-              if (hasEyes) {
-                core.info(`Skipping comment #${c.id}: Already has 👀 reaction.`);
-              } else {
-                unclaimed.push(c);
-              }
+              // if (hasEyes) {
+              //   core.info(`Skipping comment #${c.id}: Already has 👀 reaction.`);
+              // } else {
+              //   unclaimed.push(c);
+              // }
+              unclaimed.push(c);
             }
 
             core.info(`Found ${unclaimed.length} unclaimed comments.`);
@@ -99,18 +100,18 @@ jobs:
               for (const c of selected) {
                 core.info(`Claiming comment #${c.id}...`);
             
-                await github.rest.reactions.createForIssueComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  comment_id: c.id,
-                  content: "eyes"
-                });
+                // await github.rest.reactions.createForIssueComment({
+                //  owner: context.repo.owner,
+                //  repo: context.repo.repo,
+                //  comment_id: c.id,
+                //  content: "eyes"
+                // });
 
                 let parsed;
                 try {
                   parsed = JSON.parse(c.body);
                 } catch (e) {
-                core.info(`Skipping invalid JSON comment: ${c.id}`);
+                  core.info(`Skipping invalid JSON comment: ${c.id}`);
                   continue;
                 }
                   
@@ -244,7 +245,7 @@ jobs:
                               "- Keep each point under 20 words in simple english\n" +
                               "- Use empty arrays when no issues exist\n\n" +
               
-                              "FILES:\n" + $content
+                              "FILES:\n" + ($content // "")
                             )
                     }
                   ]
@@ -289,8 +290,13 @@ jobs:
                   -H "Content-Type: application/json" \
                   -d "$PAYLOAD")
                 
+                if ! echo "$RESPONSE" | jq -e '.candidates[0].content.parts[0].text' >/dev/null 2>&1; then
+                  echo "==== GEMINI RAW RESPONSE ===="
+                  echo "$RESPONSE" | jq . || echo "$RESPONSE"
+                fi
+                
                 # success if candidate exists
-                if echo "$RESPONSE" | jq -e '.candidates[0]' >/dev/null 2>&1; then
+                if echo "$RESPONSE" | jq -e '.candidates[0].content.parts[0].text' >/dev/null 2>&1; then
                   SUCCESS=true
                   break
                 fi
