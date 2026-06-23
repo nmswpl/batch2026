@@ -50,7 +50,7 @@ jobs:
             const comments = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: issueNumber
+              issue_number: issueNumber,
               per_page: 10, // small batch window
               page: 1
             });
