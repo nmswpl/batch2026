@@ -1,4 +1,4 @@
-package in.co.nmsworks.training.week2;
+package in.co.nmsworks.training.week2.day1;
 
 public class StringManipulation {
     public static void main(String[] args) {
