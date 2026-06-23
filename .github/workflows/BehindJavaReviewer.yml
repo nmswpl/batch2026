@@ -711,9 +711,8 @@ jobs:
           
             RAW=$(jq -r '.candidates[0].content.parts[0].text // "{}"' "$f")
             
-            PARSED=$(echo "$RAW" | jq -r '.')
-            STATUS=$(echo "$PARSED" | jq -r '.status')
-            AI_MESSAGE=$(echo "$PARSED" | jq -r '.message // ""')
+            STATUS=$(echo "$RAW" | jq -r '.status')
+            AI_MESSAGE=$(echo "$RAW" | jq -r '.message // ""')
           
             FILE_NAME=$(basename "$f" .json)
             FILE_NAME=${FILE_NAME#ai_}
