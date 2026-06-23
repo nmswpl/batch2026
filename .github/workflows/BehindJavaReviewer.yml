@@ -451,7 +451,11 @@ jobs:
                 
                 const aiFile = normalizedKey ? aiData[normalizedKey] : null;
   
-                if (!aiFile) continue;
+                if (!aiFile) {
+                  console.log("aiData keys:", Object.keys(aiData));
+                  console.log("normalizedKey:", normalizedKey);
+                  continue;
+                }
   
                 // let raw = aiFile.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
                 // remove markdown fences if present
