@@ -277,18 +277,26 @@ jobs:
             )
           
             RESPONSE=""
-            SUCCESS=false
           
             for MODEL in "${MODELS[@]}"; do
+              SUCCESS=false
               echo "Trying model: $MODEL"
           
               for ATTEMPT in 1 2 3; do
                 echo "Attempt $ATTEMPT"
-          
-                RESPONSE=$(curl -s -X POST \
+                        
+                RESPONSE=$(curl -sS --fail --max-time 120 -X POST \
                   "https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${GEMINI_API_KEY}" \
                   -H "Content-Type: application/json" \
-                  -d "$PAYLOAD")
+                  -d "$PAYLOAD") || {
+                      echo "❌ CURL FAILED for model $MODEL"
+                      exit 1
+                  }
+                
+                if echo "$RESPONSE" | jq -e '.error' >/dev/null 2>&1; then
+                  echo "❌ GEMINI ERROR RESPONSE:"
+                  echo "$RESPONSE" | jq .
+                fi
                 
                 if ! echo "$RESPONSE" | jq -e '.candidates[0].content.parts[0].text' >/dev/null 2>&1; then
                   echo "==== GEMINI RAW RESPONSE ===="
