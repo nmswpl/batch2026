@@ -179,91 +179,109 @@ jobs:
           GEMINI_MODEL: "gemini-flash-latest"
         run: |
           set -euo pipefail
+  
           LAST_CALL_TIME=0
+          JOB_ID=$(echo '${{ toJson(matrix.job) }}' | jq -r '.id')
           
-          process_file () {
-            FILE=$1
-            
-            echo "Reviewing $FILE"
+          BATCH_SIZE=5
+          FILES=($ADDED_OR_MODIFIED)
           
-            if [ ! -f "$FILE" ]; then
-              echo "File deleted or missing: $FILE"
-              return
-            fi
+          process_batch() 
+          {
+            local ALL_FILES_CONTENT=""
+          
+            for file in "$@"; do
+              if [ ! -f "$file" ]; then
+                echo "File deleted or missing: $file"
+                continue
+              fi
             
-            JOB_ID=$(echo '${{ toJson(matrix.job) }}' | jq -r '.id')
+              echo "Adding $file to review batch"
             
-            FILE_CONTENT=$(cat "$FILE")
+              ALL_FILES_CONTENT="${ALL_FILES_CONTENT}
+          FILE: ${file}
+          $(cat "$file")
+            
+          ========================================
+          "
+            done
           
             PAYLOAD=$(jq -n \
-              --arg file "$FILE" \
-              --arg content "$FILE_CONTENT" \
-              '{
-                contents: [
-                  {
-                    parts: [
-                      {
-                        text: (
-                          "You are an encouraging but strict Senior Java Developer reviewing a fresher'\''s daily code changes. " +
-                          "Analyze this java code and generate a clean, brief, bulleted report. Follow these rules:\n" +
-                          "1. If the code is well-written and has no notable errors, output a brief, highly appreciative and encouraging message praising their clean work.\n" +
-                          "2. If errors exist, skip the praise and list the critical flaws under these specific headers:\n" +
-                          "[CRITICAL LOGIC BUGS] (resource leaks, broken loops, bad logic)\n" +
-                          "[NAMING & STYLE CONVENTIONS] (violations of camelCase, PascalCase, or bad variable names like x, y, temp)\n" +
-                          "[CLEAN CODE SUGGESTIONS] (redundant code, better ways to write it)\n\n" +
-                          "Return ONLY raw JSON. Do NOT use markdown. Do NOT wrap output in triple backticks. Do NOT add explanations. Output must start with { and end with }. Any extra text makes it invalid.\n\n" +
-                          "JSON FORMAT:\n" +
-                          "{\n" +
-                          "  \"status\": \"PASS|FAIL\",\n" +
-                          "  \"files\": [\n" +
-                          "    {\n" +
-                          "      \"file\": \"FileName.java\",\n" +
-                          "      \"criticalLogicBugs\": [],\n" +
-                          "      \"namingStyleIssues\": [],\n" +
-                          "      \"cleanCodeSuggestions\": []\n" +
-                          "    }\n" +
-                          "  ]\n" +
-                          "}\n\n" +
-                          "- If no issues: status = PASS, files = []\n" +
-                          "- Keep each point under 15 words\n\n" +
-                          "FILE:\n" + $content
-                        )
-                      }
-                    ]
-                  }
-                ]
-              }')
+              --arg content "$ALL_FILES_CONTENT" \
+            '{
+              contents: [
+                {
+                  parts: [
+                    {
+                      text: (
+                              "You are an encouraging but strict Senior Java Developer reviewing a fresher'\''s daily code changes. " +
+                              "Analyze all Java files below and generate a clean, brief, bulleted report.\n\n" +
+              
+                              "Rules:\n" +
+                              "1. If a file is well-written and has no notable issues, mark status PASS and give a brief, highly appreciative and encouraging message praising their clean work.\n" +
+                              "2. If issues exist, mark status FAIL.\n" +
+                              "3. Review each file independently.\n\n" +
+              
+                              "Return ONLY raw JSON. No markdown. No explanations. Output must start with { and end with }.\n\n" +
+              
+                              "JSON FORMAT:\n" +
+                              "{\n" +
+                              "  \"files\": [\n" +
+                              "    {\n" +
+                              "      \"file\": \"FileName.java\",\n" +
+                              "      \"status\": \"PASS|FAIL\",\n" +
+                              "      \"message\": \"Appreciation Message when status is PASS\",\n" +
+                              "      \"criticalLogicBugs\": [],\n" +
+                              "      \"namingStyleIssues\": [],\n" +
+                              "      \"cleanCodeSuggestions\": []\n" +
+                              "    }\n" +
+                              "  ]\n" +
+                              "}\n\n" +
+              
+                              "- One object per file\n" +
+                              "- Keep each point under 20 words in simple english\n" +
+                              "- Use empty arrays when no issues exist\n\n" +
+              
+                              "FILES:\n" + $content
+                            )
+                    }
+                  ]
+                }
+              ]
+            }')
           
             # =========================
             # GEMINI RATE LIMITER
             # =========================
             : "${LAST_CALL_TIME:=0}"
-            
-            MIN_INTERVAL=5   # 6 seconds = ~10 calls/min max (safe for 10–15 RPM limit)
-            
+          
+            MIN_INTERVAL=12
+          
             CURRENT_TIME=$(date +%s)
             DIFF=$((CURRENT_TIME - LAST_CALL_TIME))
-            
+          
             if [ "$DIFF" -lt "$MIN_INTERVAL" ]; then
               sleep $((MIN_INTERVAL - DIFF))
             fi
-            
+          
             LAST_CALL_TIME=$(date +%s)
-            
+          
             MODELS=(
+              "gemini-3.1-flash-lite"
               "gemini-flash-latest"
               "gemini-2.5-flash"
               "gemini-2.5-pro"
             )
-            
+          
             RESPONSE=""
-            
+            SUCCESS=false
+          
             for MODEL in "${MODELS[@]}"; do
               echo "Trying model: $MODEL"
-              SUCCESS=false
-              
+          
               for ATTEMPT in 1 2 3; do
                 echo "Attempt $ATTEMPT"
+          
                 RESPONSE=$(curl -s -X POST \
                   "https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${GEMINI_API_KEY}" \
                   -H "Content-Type: application/json" \
@@ -285,8 +303,8 @@ jobs:
                 echo "Reason : $ERROR_MESSAGE"
                 
                 if [ "$ATTEMPT" -lt 3 ]; then
-                  echo "Retrying in 5 seconds..."
-                  sleep 5
+                  echo "Retrying in 20 seconds..."
+                  sleep 20
                 fi
           
               done
@@ -303,16 +321,43 @@ jobs:
               exit 1
             fi
           
-            FILE_OUT="ai_${JOB_ID}_${FILE//\//_}.json"
-            echo "$RESPONSE" | tee "$FILE_OUT"
+            REVIEW_JSON=$(echo "$RESPONSE" | jq -r '.candidates[0].content.parts[0].text')
           
-            echo "$RESPONSE" | jq -r '.candidates[0].content.parts[0].text' \
-              > "ai_${JOB_ID}_${FILE//\//_}.txt" || true
+            echo "$REVIEW_JSON" > "ai_${JOB_ID}_batch_review.json"
+          
+            jq -c '.files[]' "ai_${JOB_ID}_batch_review.json" | while read -r FILE_JSON; do
+              FILE_NAME=$(echo "$FILE_JSON" | jq -r '.file')
+              FILE_STATUS=$(echo "$FILE_JSON" | jq -r '.status')
+            
+              SAFE_FILE_NAME="${FILE_NAME//\//_}"
+            
+              jq -n \
+                --arg status "$FILE_STATUS" \
+                --argjson fileObj "$FILE_JSON" \
+                '{
+                    status: $status,
+                    files: [
+                      ($fileObj | del(.status))
+                    ]
+                  }' \
+                > "ai_${JOB_ID}_${SAFE_FILE_NAME}.json"
+            
+              jq -n \
+                --arg status "$FILE_STATUS" \
+                --argjson fileObj "$FILE_JSON" \
+                '{
+                    status: $status,
+                    files: [
+                      ($fileObj | del(.status))
+                    ]
+                  }' \
+                > "ai_${JOB_ID}_${SAFE_FILE_NAME}.txt"
+            done
           }
           
-          # Process added/modified files
-          for file in $ADDED_OR_MODIFIED; do
-            process_file "$file"
+          for ((i=0; i<${#FILES[@]}; i+=BATCH_SIZE)); do
+            BATCH=("${FILES[@]:i:BATCH_SIZE}")
+            process_batch "${BATCH[@]}"
           done
 
       - name: Manage GitHub Issues
