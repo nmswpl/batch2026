@@ -10,10 +10,10 @@ public class Day1Practice {
         printInteger();
 
         addInteger();
-        divideTwoNumber();
+        divideTwoNumbers();
         findEvenOrOdd();
         findAscii();
-        multiplyTwoNumber();
+        productOFTwoNumber();
         swapTwoNumber();
 
         checkVowelOrConsonant();
@@ -26,8 +26,8 @@ public class Day1Practice {
 
     public static void printInteger(){
         System.out.println("Enter a number: ");
-        int n = sc.nextInt();
-        System.out.println("You entered: "+n);
+        int number1 = sc.nextInt();
+        System.out.println("You entered: "+number1);
     }
     public static void addInteger(){
         System.out.println("Enter two numbers");
@@ -36,7 +36,7 @@ public class Day1Practice {
         int sum = firstNumber + secondNumber;
         System.out.println("The sum is: "+sum);
     }
-    public static void divideTwoNumber(){
+    public static void divideTwoNumbers(){
         int firstNumber1 = 13;
         int secondNumber1 = 2;
         int quotient = firstNumber1 / secondNumber1;
@@ -46,19 +46,19 @@ public class Day1Practice {
     }
     public static void findEvenOrOdd(){
         System.out.println("Enter a number: ");
-        int n = sc.nextInt();
-        if (n % 2 == 0){
-            System.out.println(n+" is even");
+        int number1 = sc.nextInt();
+        if (number1 % 2 == 0){
+            System.out.println(number1+" is even");
         }
         else{
-            System.out.println(n+" is odd");
+            System.out.println(number1+" is odd");
         }
     }
     public static void findAscii(){
         char ch = 'B';
         System.out.println("ASCII value is : "+(int)ch);
     }
-    public static void multiplyTwoNumber(){
+    public static void productOFTwoNumber(){
         float firstNumber = 3;
         float secondNumber = 1;
         float multiply = firstNumber * secondNumber;
@@ -80,6 +80,7 @@ public class Day1Practice {
     public static void checkVowelOrConsonant(){
         System.out.println("Enter a character: ");
         char ch = sc.next().charAt(0);
+        sc.close();
         ch = Character.toUpperCase(ch);
         if (ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U'){
             System.out.println(ch+" is a vowel.");
@@ -88,4 +89,6 @@ public class Day1Practice {
             System.out.println(ch+" is not a vowel.");
         }
     }
+
+
 }
