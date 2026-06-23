@@ -279,29 +279,26 @@ jobs:
             RESPONSE=""
           
             for MODEL in "${MODELS[@]}"; do
-              SUCCESS=false
               echo "Trying model: $MODEL"
-          
+              SUCCESS=false
+              
               for ATTEMPT in 1 2 3; do
+                
+                echo "================ CURL DEBUG ================"
+                echo "curl -X POST \"https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=\$GEMINI_API_KEY\" \
+                -H \"Content-Type: application/json\" \
+                -d '$PAYLOAD'"
+                echo "============================================"
+                
                 echo "Attempt $ATTEMPT"
-                        
-                RESPONSE=$(curl -sS --fail --max-time 120 -X POST \
+                RESPONSE=$(curl -s -X POST \
                   "https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${GEMINI_API_KEY}" \
                   -H "Content-Type: application/json" \
-                  -d "$PAYLOAD") || {
-                      echo "❌ CURL FAILED for model $MODEL"
-                      exit 1
-                  }
+                  -d "$PAYLOAD")
                 
-                if echo "$RESPONSE" | jq -e '.error' >/dev/null 2>&1; then
-                  echo "❌ GEMINI ERROR RESPONSE:"
-                  echo "$RESPONSE" | jq .
-                fi
-                
-                if ! echo "$RESPONSE" | jq -e '.candidates[0].content.parts[0].text' >/dev/null 2>&1; then
-                  echo "==== GEMINI RAW RESPONSE ===="
-                  echo "$RESPONSE" | jq . || echo "$RESPONSE"
-                fi
+                echo "================ RAW RESPONSE ================"
+                echo "$RESPONSE"
+                echo "============================================"
                 
                 # success if candidate exists
                 if echo "$RESPONSE" | jq -e '.candidates[0].content.parts[0].text' >/dev/null 2>&1; then
