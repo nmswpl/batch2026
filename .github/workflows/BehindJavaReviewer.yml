@@ -86,8 +86,8 @@ jobs:
             // Sort by oldest first
             unclaimed.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
 
-            // Take the top 3
-            const selected = unclaimed.slice(0, 1);
+            // Take the top 5
+            const selected = unclaimed.slice(0, 5);
             core.info(`Selected ${selected.length} oldest comments to process.`);
 
             if (selected.length === 0) {
@@ -223,6 +223,9 @@ jobs:
                               "Rules:\n" +
                               "1. If a file is well-written and has no notable issues, mark status PASS and give a brief, highly appreciative and encouraging message praising their clean work.\n" +
                               "2. If issues exist, mark status FAIL.\n" +
+                                "[CRITICAL LOGIC BUGS] (resource leaks, broken loops, bad logic)\n" +
+                                "[NAMING & STYLE CONVENTIONS] (violations of camelCase, PascalCase, or bad variable names like x, y, temp)\n" +
+                                "[CLEAN CODE SUGGESTIONS] (redundant code, better ways to write it)\n\n" +
                               "3. Review each file independently.\n\n" +
               
                               "Return ONLY raw JSON. No markdown. No explanations. Output must start with { and end with }.\n\n" +
@@ -258,7 +261,7 @@ jobs:
             # =========================
             : "${LAST_CALL_TIME:=0}"
           
-            MIN_INTERVAL=12
+            MIN_INTERVAL=12      # 6 seconds = ~10 calls/min max (safe for 10–15 RPM limit)
           
             CURRENT_TIME=$(date +%s)
             DIFF=$((CURRENT_TIME - LAST_CALL_TIME))
@@ -466,23 +469,6 @@ jobs:
                   continue;
                 }
   
-                // let raw = aiFile.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
-                // remove markdown fences if present
-                // raw = raw
-                //   .replace(/```json/g, "")
-                //   .replace(/```/g, "")
-                //   .trim();
-  
-                // let parsed;
-                // try {
-                //   parsed = JSON.parse(raw);
-                // } catch (e) {
-                //   console.log("JSON parse failed", cleanFile);
-                //   parsed = {
-                //     status: "FAIL",
-                //     files: []
-                //   };
-                // }
                 let parsed = aiFile;
                 console.log("************** aiFile **************");
                 console.log(parsed);
@@ -714,7 +700,7 @@ jobs:
             RAW=$(cat "$f")
             
             STATUS=$(echo "$RAW" | jq -r '.status')
-            AI_MESSAGE=$(echo "$RAW" | jq -r '.message // ""')
+            AI_MESSAGE=$(echo "$RAW" | jq -r '.files[]?.message // empty')
           
             FILE_NAME=$(basename "$f" .json)
             FILE_NAME=${FILE_NAME#ai_}
