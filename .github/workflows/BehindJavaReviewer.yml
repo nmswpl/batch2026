@@ -585,6 +585,26 @@ jobs:
               throw e;
             }
 
+      - name: Delete Processed Queue Items
+        if: ${{ steps.manage_issues.outputs.status == 'SUCCESS' }}
+        uses: actions/github-script@v7
+        env:
+          JOB: ${{ toJson(matrix.job) }}
+        with:
+          script: |
+            const job = JSON.parse(process.env.JOB);
+
+            // extra safety: ensure comment still exists
+            try {
+              await github.rest.issues.deleteComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: job.id
+              });
+            } catch (e) {
+              console.log("Comment already deleted or inaccessible:", job.id);
+            }	
+
       - name: Build Email Body
         run: |
           set -euo pipefail
@@ -640,8 +660,10 @@ jobs:
           FAIL_COUNT=0
           TOTAL_COUNT=0
           
-          shopt -s nullglob
-          files=(ai_${JOB_ID}_*.json)
+          files=()
+          for f in ai_${JOB_ID}_*.json; do
+            [[ "$f" == *".java.json" ]] && files+=("$f")
+          done
           
           if [ -z "${ADDED_OR_MODIFIED:-}" ]; then
             echo "No Java files were modified in this commit." >> AI_REVIEW.txt
