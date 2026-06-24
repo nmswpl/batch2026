@@ -37,6 +37,10 @@ public class PractiseProblems {
 
         obj.factorsOfInteger(60);
 
+        obj.charFrequency("abcdeaabcc", 'c');
+
+        obj.countCharOfDifferentTypes("This website is aw3som3.");
+
         int factorialResult = obj.recursiveFactorial(number);
         System.out.println("\n Recursive Factorial of " + number + "  =  " + factorialResult);
 
@@ -179,7 +183,7 @@ public class PractiseProblems {
         int quotient ;
         int digitCount=0;
 
-        System.out.println("\n Total no of digits in "+number);
+        System.out.print("\n Total no of digits in "+number);
 
         while(number >0){
             quotient = number/10;
@@ -238,4 +242,51 @@ public class PractiseProblems {
             return num*recursiveFactorial(num-1);
         }
     }
+
+    /** Frequency of a character in a String */
+    public void charFrequency(String str,char ch){
+        int count = 0 ;
+        for (int i = 0; i < str.length() ; i++) {
+            if(str.charAt(i) == ch){
+                count++;
+            }
+        }
+
+        System.out.println("\nThe frequency of " + ch + " is : " + count);
+    }
+
+    /** Count the vowels, consonants, digits and spaces in a String */
+    public void countCharOfDifferentTypes(String str){
+        int countVowels = 0 ;
+        int countConsonants = 0;
+        int countDigits = 0 ;
+        int countSpaces = 0 ;
+
+        for (int i = 0; i < str.length() ; i++) {
+            if(str.charAt(i) == 'a' || str.charAt(i) == 'e' ||
+                    str.charAt(i) == 'i' || str.charAt(i) == 'o'  || str.charAt(i) == 'u' ){
+                countVowels++;
+            }
+            else{
+                if(str.charAt(i) == ' '){
+                    countSpaces ++;
+                } else if (str.charAt(i) == '0' || str.charAt(i) == '1' || str.charAt(i) == '2' ||
+                        str.charAt(i) == '3' || str.charAt(i) == '4' || str.charAt(i) == '5' ||
+                        str.charAt(i) == '6' || str.charAt(i) == '7' || str.charAt(i) == '8' || str.charAt(i) == '9' ) {
+                    countDigits ++;
+                }
+                else {
+                    countConsonants ++;
+                }
+            }
+        }
+
+        System.out.println("\nCount of vowels, consonants, digits and spaces :  ");
+        System.out.println("String : " + str);
+        System.out.println("Vowel : " + countVowels);
+        System.out.println("Consonant : " + countConsonants);
+        System.out.println("Digits : " + countDigits);
+        System.out.println("Spaces : " + countSpaces);
+    }
+
 }
