@@ -231,7 +231,7 @@ jobs:
                               "{\n" +
                               "  \"files\": [\n" +
                               "    {\n" +
-                              "      \"file\": \"FileName.java\",\n" +
+                              "      \"file\": \"FULL_FILE_PATH\",\n" +
                               "      \"status\": \"PASS|FAIL\",\n" +
                               "      \"message\": \"Appreciation Message when status is PASS\",\n" +
                               "      \"criticalLogicBugs\": [],\n" +
@@ -447,14 +447,16 @@ jobs:
               }
   
               for (const file of changed) {
-                console.log("CHANGED FILE (raw):", file);
-                const cleanFile = file.trim().split('/').pop();
-                console.log("CHANGED FILE (normalized):", cleanFile);
+  
+                const cleanFile = file.trim();
   
                 const normalizedKey = Object.keys(aiData).find(k => {
                 const base = k.replace(/^ai_\d+_/, '').replace(/\.json$/, '');
                   return base.replace(/_/g, '/') === cleanFile;
                 });
+                
+                console.log("NORMALIZED KEY (normalized):", normalizedKey);
+                console.log("aiFile :", aiData[normalizedKey]);
                 
                 const aiFile = normalizedKey ? aiData[normalizedKey] : null;
   
