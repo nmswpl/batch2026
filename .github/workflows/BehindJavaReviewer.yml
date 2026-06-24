@@ -711,7 +711,7 @@ jobs:
         
             TOTAL_COUNT=$((TOTAL_COUNT + 1))
           
-            RAW=$(jq -r '.candidates[0].content.parts[0].text // "{}"' "$f")
+            RAW=$(cat "$f")
             
             STATUS=$(echo "$RAW" | jq -r '.status')
             AI_MESSAGE=$(echo "$RAW" | jq -r '.message // ""')
