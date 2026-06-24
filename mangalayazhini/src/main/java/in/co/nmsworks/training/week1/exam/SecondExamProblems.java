@@ -65,7 +65,6 @@ public class SecondExamProblems {
 
 }
 
-
 class Book{
     private int id;
     private String title;

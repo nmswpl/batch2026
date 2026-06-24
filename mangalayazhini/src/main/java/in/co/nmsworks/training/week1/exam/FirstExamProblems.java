@@ -2,7 +2,6 @@ package in.co.nmsworks.training.week1.exam;
 
 public class FirstExamProblems {
 
-
     public static void main(String[] args) {
         int[] array1 = {10,20,30,40,50};
         int[] array2 = {100,200,300,400};
