@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>FRUITS</title>
+        <style>
+            body{
+                font-family: Verdana, sans-serif;
+                font-size: larger;
+            }
+            .fruits-container-div{
+                display : flex;
+                flex-direction: column;
+                /*border : 3px solid grey ;*/
+            }
+
+            .orange-div,
+            .apple-div,
+            .gauva-div,
+            .jackfruit-div,
+            .mango-div {
+                /*border : 2px solid blue ;*/
+                padding:25px;
+            }
+
+            .apple-orange-div{
+                display : flex;
+                justify-content: space-between;
+
+            }
+
+
+            .mango-guava-div{
+                display : flex;
+                justify-content: space-between;
+            }
+
+            .jackfruit-div{
+                display : flex;
+                justify-content: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="fruits-container-div">
+            <div class="apple-orange-div">
+                <div class="apple-div">Apple</div>
+                <div class="orange-div">Orange</div>
+            </div>
+
+            <div class="jackfruit-div">JackFruit</div>
+
+            <div class="mango-guava-div">
+                <div class="mango-div">Mango</div>
+                <div class="gauva-div">Guava</div>
+            </div>
+        </div>
+    </body>
+</html>
