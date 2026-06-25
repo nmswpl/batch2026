@@ -13,7 +13,7 @@ public class RunnerEmployee {
 
         System.out.println(emp2.getCOMPANY());
         System.out.println(emp==emp2); //its compare the address
-        System.out.println(emp.equals(emp2));
+        System.out.println(emp2.equals(emp));
 
         String name="NMSWorks";
         String company ="NMSWorks";

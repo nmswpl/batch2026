@@ -20,12 +20,15 @@ public class RunnerObject {
         System.out.println(tr4);
         System.out.println(tr5);
 
+        String[] name={"Arun","Balaji","das","gopi","hari"};
         Training[] trainees=new Training[5];
         for(int i=0;i<trainees.length;i++){
-            trainees[i]=new Training("Name : " + (i+1)) ;
+            trainees[i]=new Training(name[i]) ;
         }
         for(Training tr:trainees){
-            System.out.println(tr);
+            System.out.println(tr.getName());
+            //System.out.println(tr);
         }
+
     }
 }

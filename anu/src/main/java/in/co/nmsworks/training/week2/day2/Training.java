@@ -4,6 +4,7 @@ public class Training {
     private int id;
     static int count=1;
     private String name;
+    private String names;
 
     public Training() {
     }
@@ -11,6 +12,7 @@ public class Training {
     public Training(String name) {
         id=count++;
         this.name = name;
+        this.names=names;
     }
 
     public int getId() {
@@ -36,6 +38,4 @@ public class Training {
                 ", name='" + name + '\'' +
                 '}';
     }
-
-
 }
