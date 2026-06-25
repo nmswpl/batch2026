@@ -7,9 +7,9 @@ public class ObjectPractice {
         Customer c1 = new Customer(1, "Kowshik");
         Customer c2 = new Customer(2, "Senthil");
 
-//        System.out.println("Result : " + op.compareCustomers(c1, c2));
+        System.out.println("Result : " + op.compareCustomers(c1, c2));
 
-//        op.displayFiveTrainees();
+        op.displayFiveTrainees();
 
         Trainee[] trainees = new Trainee[5];
 
@@ -20,6 +20,9 @@ public class ObjectPractice {
         for (Trainee trainee : trainees) {
             System.out.println("Trainee Obj : " + trainee);
         }
+
+        op.createAndDisplayCars();
+
     }
 
     private boolean compareCustomers(Customer c1, Customer c2){
@@ -38,6 +41,20 @@ public class ObjectPractice {
         System.out.println(anas);
         System.out.println(siva);
         System.out.println(sathish);
+    }
+
+    private void createAndDisplayCars(){
+        Car c1 = new Car(1, "i20", "Hyundai");
+        Car c2 = new Car(2, "i10", "Hyundai");
+        Car c3 = new Car(3, "Virtus", "Volkswagen");
+        Car c4 = new Car(4, "Slavia", "Skoda");
+        Car c5 = new Car(5, "Superb", "Skoda");
+
+        Car[] cars = {c1, c2, c3, c4, c5};
+
+        for (Car car : cars) {
+            System.out.println(car);
+        }
     }
 
 
