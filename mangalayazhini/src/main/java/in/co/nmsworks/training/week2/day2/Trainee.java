@@ -15,7 +15,7 @@ public class Trainee {
 
 
 
-    Trainee(String name){
+    public Trainee(String name){
         this.id = ++counter;
         this.name = name;
     }
