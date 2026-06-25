@@ -3,10 +3,10 @@ package in.co.nmsworks.training.week2.day3;
 public class Runner {
     public static void main(String[] args) {
 
-        //trainee();
+        trainee();
         vehicle();
-        //employee();
-        //report();
+        employee();
+        report();
     }
 
     private static void report() {
