@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calender</title>
+    <style>
+        body{
+            padding: 25px;
+            max-width: 100%;
+        }
+
+        .header{
+            padding-top: 200px;
+            background-color: red;
+            border-radius: 15px 15px 0 0;
+            font-size: 75px;
+            padding-left: 20px;
+            color: white;
+            font-weight: bolder;
+        }
+
+        .week-names{
+            display: flex;
+            height: 50px;
+            justify-content: space-between;
+            border: 1px rgb(243 243 243 / 0.49) solid;
+            padding: 10px;
+            font-weight: bolder;
+            font-size: xx-large;
+        }
+        .weekend{
+            color: red;
+        }
+
+        .day-grid{
+            display: flex;
+            flex-wrap: wrap;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            border: 1px black solid;
+            max-width: fit-content;
+        }
+
+        .day-cell{
+            width: 9vw;
+            height: 6vh;
+            border: 1px black solid;
+            font-size: xx-large;
+            font-weight: bolder;
+            padding: 2vh;
+
+        }
+        .day-row{
+            display: flex;
+            max-width: fit-content;
+
+        }
+    </style>
+</head>
+<body>
+<div class="header">Calender</div>
+
+<div class="week-names">
+    <div>Monday</div>
+    <div>Tuesday</div>
+    <div>Wednesday</div>
+    <div>Thursday</div>
+    <div>Friday</div>
+    <div class="weekend">Saturday</div>
+    <div class="weekend">Sunday</div>
+</div>
+
+<div class="day-grid">
+    <div  class="day-row">
+        <div class="day-cell"></div>
+        <div class="day-cell"></div>
+        <div class="day-cell">1</div>
+        <div class="day-cell">2</div>
+        <div class="day-cell">3</div>
+        <div class="day-cell weekend">4</div>
+        <div class="day-cell weekend">5</div>
+    </div>
+    <div class="day-row">
+        <div class="day-cell">6</div>
+        <div class="day-cell">7</div>
+        <div class="day-cell">8</div>
+        <div class="day-cell">9</div>
+        <div class="day-cell">10</div>
+        <div class="day-cell weekend">11</div>
+        <div class="day-cell weekend">12</div>
+    </div>
+    <div class="day-row">
+        <div class="day-cell">13</div>
+        <div class="day-cell">14</div>
+        <div class="day-cell">15</div>
+        <div class="day-cell">16</div>
+        <div class="day-cell">17</div>
+        <div class="day-cell weekend">18</div>
+        <div class="day-cell weekend">19</div>
+    </div>
+    <div class="day-row">
+        <div class="day-cell">20</div>
+        <div class="day-cell">21</div>
+        <div class="day-cell">22</div>
+        <div class="day-cell">23</div>
+        <div class="day-cell">24</div>
+        <div class="day-cell weekend">25</div>
+        <div class="day-cell weekend">26</div>
+    </div>
+    <div class="day-row">
+        <div class="day-cell">27</div>
+        <div class="day-cell">28</div>
+        <div class="day-cell">29</div>
+        <div class="day-cell">30</div>
+        <div class="day-cell">31</div>
+        <div class="day-cell weekend"></div>
+        <div class="day-cell weekend"></div>
+    </div>
+
+</div>
+</body>
+</html>
