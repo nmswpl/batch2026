@@ -1,0 +1,50 @@
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #f4f7f6;
+}
+
+
+.calendar {
+    width: 300px;
+    border-collapse: collapse;
+    text-align: center;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+--
+.header th {
+    background: #4a90e2;
+    color: white;
+    padding: 15px;
+    font-size: 1.2rem;
+}
+
+/* Weekday Row */
+.weekdays th {
+    background: #f4f4f4;
+    color: #666;
+    font-size: 0.85rem;
+    padding: 10px 0;
+}
+
+/* Individual Days */
+.calendar td {
+    padding: 12px 0;
+    color: #333;
+}
+
+/* Highlight Today */
+.calendar .today {
+    background: #4a90e2;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+}
