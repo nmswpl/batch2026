@@ -12,9 +12,9 @@ public class Pattern {
 
 
     public static void  RightAngle(){
-
+        int n=7;
         System.out.println("Right angle Triangle ");
-        for(int i=1;i<=5;i++){
+        for(int i=1;i<=n;i++){
             for(int j=1;j<=i;j++){
                 System.out.print("*");
             }
@@ -26,7 +26,8 @@ public class Pattern {
     public static void InvertedRightAngle(){
 
         System.out.println("INVERTED RIGHT ANGLE TRAINGLE ");
-        for(int i=5;i>=1;i--){
+        int n=7;
+        for(int i=n;i>=1;i--){
             for(int j=1;j<=i;j++){
                 System.out.print("*");
             }
@@ -37,10 +38,10 @@ public class Pattern {
     }
     public static void LeftAngleTriangle(){
         System.out.println("LEFT ANGLE TRIANGLE ");
+        int n=7;
+        for(int i=1;i<=n;i++){
 
-        for(int i=1;i<=5;i++){
-
-            for(int j=1; j<=5-i ;j++){
+            for(int j=1; j<=n-i ;j++){
                 System.out.print(" ");
             }
             for(int k=1;k<=i;k++){
@@ -54,9 +55,9 @@ public class Pattern {
     }
     public static void InvertedLeftAngleTriangle(){
         System.out.println("INVERTED LEFT ANGLE TRIANGLE ");
-
-        for(int i=5;i>=1;i--){
-            for(int j=1;j<=5-i;j++){
+        int n=7;
+        for(int i=n;i>=1;i--){
+            for(int j=1;j<=n-i;j++){
                 System.out.print(" ");
             }
             for(int k=1;k<=i;k++){
@@ -68,9 +69,9 @@ public class Pattern {
     }
     public static void Pyramid(){
         System.out.println("PYRAMID ");
-
-        for(int i=1;i<=5;i++){
-            for(int j=0;j<=5-i;j++){
+        int n=7;
+        for(int i=1;i<=n;i++){
+            for(int j=0;j<=n-i;j++){
                 System.out.print(" ");
             }
             for (int k=0;k<=2*(i-1);k++){
