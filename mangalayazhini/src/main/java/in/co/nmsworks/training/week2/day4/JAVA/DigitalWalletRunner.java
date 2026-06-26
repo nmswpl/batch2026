@@ -1,4 +1,4 @@
-package in.co.nmsworks.training.week2.day4.HTML;
+package in.co.nmsworks.training.week2.day4.JAVA;
 
 public class DigitalWalletRunner {
     public static void main(String[] args) {
