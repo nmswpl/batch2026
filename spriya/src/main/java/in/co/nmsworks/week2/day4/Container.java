@@ -4,6 +4,7 @@ public class Container {
 
     double maxWeight;
 
+
     public void open(){
         System.out.println("\"Opening the container...\"");
     }
