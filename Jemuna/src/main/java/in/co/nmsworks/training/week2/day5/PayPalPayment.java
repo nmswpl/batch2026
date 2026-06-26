@@ -1,0 +1,9 @@
+package in.co.nmsworks.training.week2.day5;
+
+public class PayPalPayment implements PaymentGateway{
+    public void processPayment(double amount){
+        System.out.println("Processing Pay Pal Payment of "+amount);
+
+
+    }
+}
