@@ -8,6 +8,7 @@ public class Car extends Vehicle {
         setCompanyName(companyName);
         setPrice(price);
 
+
         Engine carEngine = new Engine(fuelType,cc);
         setVehicleEngine(carEngine);
     }
