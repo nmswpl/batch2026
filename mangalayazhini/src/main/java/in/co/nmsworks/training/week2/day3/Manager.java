@@ -11,6 +11,7 @@ public class Manager extends Employee{
         this.bonus = bonus;
     }
 
+
     public double annualSalary(){
 
         double totalAnnualSalary = super.annualSalary() + bonus ;

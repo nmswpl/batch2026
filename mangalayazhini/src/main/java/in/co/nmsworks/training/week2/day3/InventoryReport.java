@@ -11,6 +11,7 @@ public class InventoryReport extends Report{
         return "Total Quantity: 500";
     }
 
+
     public String footer(){
         return "Ordered items for next month: 650";
     }

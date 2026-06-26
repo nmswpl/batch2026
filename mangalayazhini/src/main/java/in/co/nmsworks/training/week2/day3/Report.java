@@ -15,6 +15,7 @@ public class Report {
 
     }
 
+
     public void generate(){
         System.out.println(
                 "_____________________________________\n"+

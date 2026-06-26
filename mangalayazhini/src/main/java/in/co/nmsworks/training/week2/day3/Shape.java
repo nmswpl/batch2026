@@ -8,6 +8,7 @@ public class Shape {
         System.out.println("This is a shape");
     }
 
+
     public void printArea(){
         System.out.println("Area of the shape");
     }

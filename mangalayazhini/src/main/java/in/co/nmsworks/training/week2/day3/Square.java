@@ -8,6 +8,7 @@ public class Square extends Shape {
         System.out.println("\nThis is a square");
     }
 
+
     public double getLength() {
         return length;
     }

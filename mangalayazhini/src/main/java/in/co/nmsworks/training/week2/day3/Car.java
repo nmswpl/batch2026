@@ -13,6 +13,7 @@ public class Car extends Vehicle {
         setVehicleEngine(carEngine);
     }
 
+
     public void seatingCapacity(){
         System.out.println("Car has maximum seating capacity of eight");
     }

@@ -23,7 +23,6 @@ public class StringPractise {
 
         obj.removesLeadingZeros("000056780");
 
-
         obj.printSentenceInNewline(paragraph);
 
         obj.removeDuplicateChars("abcaabb");

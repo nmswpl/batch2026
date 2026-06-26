@@ -12,6 +12,7 @@ public class Bike extends Vehicle{
         setVehicleEngine(bikeEngine);
     }
 
+
     public void seatingCapacity(){
         System.out.println("Bike has maximum seating capacity of two");
     }
