@@ -1,4 +1,4 @@
-package in.co.nmsworks.training.week2.day4.JAVA;
+package in.co.nmsworks.training.week2.day4.java;
 
 public class Coin {
     private Integer denomination; // 100

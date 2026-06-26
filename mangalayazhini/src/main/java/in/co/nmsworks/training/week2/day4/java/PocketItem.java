@@ -1,4 +1,4 @@
-package in.co.nmsworks.training.week2.day4.JAVA;
+package in.co.nmsworks.training.week2.day4.java;
 
 public class PocketItem {
 
