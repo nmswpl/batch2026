@@ -1,9 +1,5 @@
 package in.co.nmsworks.training.week2.Day3.Inheritance;
 
-import sun.security.krb5.internal.PAData;
-
-import java.sql.SQLOutput;
-
 public class RunnerInheritance {
     public static void main(String[] args) {
 //        Shape s= new Square(5);
