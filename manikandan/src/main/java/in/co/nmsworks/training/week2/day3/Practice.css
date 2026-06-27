@@ -1,0 +1,58 @@
+/* Center alignment on page */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: sans-serif;
+    background: #f4f7f6;
+}
+
+/* Base Wrapper */
+.calendar {
+    width: 300px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    text-align: center;
+}
+
+/* Month Banner */
+.month {
+    background: #4a90e2;
+    color: white;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Shared Grid Layout */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+/* Weekday Label Row */
+.weekdays {
+    background: #f4f4f4;
+    color: #666;
+    font-size: 0.85rem;
+    font-weight: bold;
+    padding: 10px 0;
+}
+
+/* Individual Day Boxes */
+.days div {
+    padding: 12px 0;
+    color: #333;
+}
+
+/* Active/Today Highlight */
+.days .today {
+    background: #4a90e2;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+}
