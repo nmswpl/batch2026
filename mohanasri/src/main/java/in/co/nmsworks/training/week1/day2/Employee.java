@@ -1,15 +1,33 @@
 package in.co.nmsworks.training.week1.day2;
 
+import java.util.Objects;
+
 public class Employee {
     private int id;
     private String name;
     private String dept;
     private long salary;
-    private boolean isFullTime;
+    private final String companyName = "NMSWorks";
 
     public Employee() {
-        // Default constructor
+
     }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+//
+//    public void setCompanyName(String companyName) {
+//        this.companyName = companyName;
+//    }
+//private boolean isFullTime;
+
+//    public Employee(String companyName) {
+//        this.companyName = companyName;
+//    }
+//    public Employee(String str){
+//        this.name =str;
+//    }
 
     public int getId() {
         return id;
@@ -43,11 +61,50 @@ public class Employee {
         this.salary = newSalary;
     }
 
-    public boolean isFullTime() {
-        return isFullTime;
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", dept='" + dept + '\'' +
+                ", salary=" + salary +
+                ", companyName='" + companyName + '\'' +
+                '}';
     }
+//
+//    @Override
+//    public String toString() {
+//        return "Employee{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", dept='" + dept + '\'' +
+//                ", salary=" + salary +
+//                '}';
+//    }
+//
+//    @Override
+//    public boolean equals(Object o) {
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Employee employee = (Employee) o;
+//        return id == employee.id;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hashCode(id);
+//    }
 
-    public void setIsFullTime(boolean newUpdate) {
-        this.isFullTime = newUpdate;
-    }
+//    @Override
+//    public boolean equals(Object obj) {
+//        return id == ((Employee)obj).getId();
+//    }
+
+
+    //    public boolean isFullTime() {
+//        return isFullTime;
+//    }
+//
+//    public void setIsFullTime(boolean newUpdate) {
+//        this.isFullTime = newUpdate;
+//    }
 }
