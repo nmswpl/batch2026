@@ -10,13 +10,13 @@ public class Runner {
 //        square.printArea();
 //        square.printPerimeter();
 //
-//        Rectangle rectangle = new Rectangle(4,5);
-//        rectangle.printArea();
-//        rectangle.printPerimeter();
-//
-//        Triangle triangle = new Triangle(2,3,10);
-//        triangle.printArea();
-//        triangle.printPerimeter();
+        Rectangle rectangle = new Rectangle(4,5);
+        rectangle.printArea();
+        rectangle.printPerimeter();
+
+        Triangle triangle = new Triangle(2,3,10);
+        triangle.printArea();
+        triangle.printPerimeter();
 
 
         Bike bike1 = new Bike(1,"Activa",new Engine(25,"Petrol"),"pink","Scooty");
