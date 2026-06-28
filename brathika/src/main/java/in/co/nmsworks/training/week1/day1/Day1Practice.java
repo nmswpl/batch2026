@@ -13,7 +13,7 @@ public class Day1Practice {
         divideTwoNumbers();
         findEvenOrOdd();
         findAscii();
-        productOFTwoNumber();
+        productOfTwoNumber();
         swapTwoNumber();
 
         checkVowelOrConsonant();
@@ -58,7 +58,7 @@ public class Day1Practice {
         char ch = 'B';
         System.out.println("ASCII value is : "+(int)ch);
     }
-    public static void productOFTwoNumber(){
+    public static void productOfTwoNumber(){
         float firstNumber = 3;
         float secondNumber = 1;
         float multiply = firstNumber * secondNumber;
@@ -80,15 +80,25 @@ public class Day1Practice {
     public static void checkVowelOrConsonant(){
         System.out.println("Enter a character: ");
         char ch = sc.next().charAt(0);
-        sc.close();
-        ch = Character.toUpperCase(ch);
-        if (ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U'){
-            System.out.println(ch+" is a vowel.");
+        try {
+            ch = Character.toUpperCase(ch);
+            if (ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U'){
+                System.out.println(ch+" is a vowel.");
+            }
+            else{
+                System.out.println(ch+" is not a vowel.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error has occured");
+
+        } finally {
+            sc.close();
         }
-        else{
-            System.out.println(ch+" is not a vowel.");
-        }
+
+
+
     }
+
 
 
 }
