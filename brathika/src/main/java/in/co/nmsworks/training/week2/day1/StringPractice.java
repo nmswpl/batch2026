@@ -5,7 +5,7 @@ import java.text.StringCharacterIterator;
 public class StringPractice {
     public static void main(String[] args) {
         reverseAndPrintTheString();
-        checkForPalindrom();
+        checkForPalindrome();
         printWordsWithEvenLength();
         removeZeroAndPrintTheNumber();
         printEachSentenceInNewLine();
@@ -78,11 +78,12 @@ public class StringPractice {
         String str = "Hello World";
         String value = str.toLowerCase();
         int vowels = 0 , consonants = 0;
-        for (int i = 0; i < str.length() - 1; i++) {
+        for (int i = 0; i < str.length() ; i++) {
             if(str.charAt(i) == 'a' || str.charAt(i) == 'e' || str.charAt(i) == 'i' || str.charAt(i) == 'o' || str.charAt(i) == 'u') {
                 vowels ++;
-            }
-            else {
+            } else if (str.charAt(i) == ' ') {
+                continue;
+            } else {
                 consonants ++;
             }
         }
@@ -118,7 +119,7 @@ public class StringPractice {
         }
     }
 
-    private static void checkForPalindrom() {
+    private static void checkForPalindrome() {
         String str1 = "dad";
         String revere = "";
         for (int i = str1.length() - 1; i >= 0; i--) {
