@@ -16,7 +16,8 @@ public class Test {
         int mean = sum / len;
         System.out.println("The mean is :" + mean);
     }
-    public static void Printgrade(int grade){
+
+    public static void Printgrade(int grade) {
 
         //91-100 = S; 81-90 = A; 71-80 = B; 61-70 = C ; 51-60 = D; Every thing else : F
         if (grade >= 91 && grade <= 100) {
