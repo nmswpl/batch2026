@@ -2,7 +2,7 @@ package in.co.nmsworks.training.week1.exam;
 
 public class ExamSet2 {
     public static void main(String[] args) {
-        findMeadianOfTheArray();
+        findMedianOfTheArray();
         MobilePhone phone1 = new MobilePhone(101,"Sumsang","Galaxy S24",79999.0);
         MobilePhone phone2 = new MobilePhone(102,"Oppo","oppo f21 s pro",30000.0);
         MobilePhone phone3 = new MobilePhone(103,"Iphone","17 pro",130000);
@@ -24,7 +24,7 @@ public class ExamSet2 {
         }
     }
 
-    private static void findMeadianOfTheArray() {
+    private static void findMedianOfTheArray() {
         int[] array = {1, 2, 3, 4, 5, 6};
         int n = array.length;
         float meadian = 0;

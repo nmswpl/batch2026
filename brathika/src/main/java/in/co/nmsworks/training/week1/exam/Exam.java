@@ -3,7 +3,7 @@ package in.co.nmsworks.training.week1.exam;
 import java.util.Scanner;
 
 public class Exam {
-    static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
         findMeanOfTheArray();
         Book book1 = new Book(1, "Java Programing", "James Gosling", 450.0);
@@ -16,7 +16,7 @@ public class Exam {
         book3.printValues();
         book4.printValues();
         book5.printValues();
-        printGrade();
+        printGrade(79);
     }
 
     public static void findMeanOfTheArray(){
@@ -30,20 +30,19 @@ public class Exam {
         System.out.println("Mean of the array is: "+mean);
     }
 
-    public static void printGrade(){
-        System.out.println("Enter you mark");
-        int n = sc.nextInt();
-        if (n > 100) {
+    public static void printGrade(int number1){
+
+        if (number1 > 100) {
             System.out.println("Mark is invald");
-        } else if (n >= 91 ) {
+        } else if (number1 >= 91 ) {
             System.out.println("Your grade is S");
-        } else if (n >= 81 ){
+        } else if (number1 >= 81 ){
             System.out.println("Your grade is A");
-        } else if (n >= 71 ) {
+        } else if (number1 >= 71 ) {
             System.out.println("Your grade is B");
-        } else if (n >= 61 ) {
+        } else if (number1 >= 61 ) {
             System.out.println("Your grade is C");
-        } else if (n >= 51 ) {
+        } else if (number1 >= 51 ) {
             System.out.println("Your grade is D");
         }else {
             System.out.println("Your grade is F");

@@ -22,8 +22,8 @@ public class Book {
         return price;
     }
 
-    public void setBook_id(int book_id) {
-        this.bookId = book_id;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
     public void setTitle(String title) {
@@ -34,7 +34,7 @@ public class Book {
         this.author = author;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -49,7 +49,7 @@ public class Book {
     }
 
     public void printValues(){
-        System.out.println("Book Id"+this.getBookId());
+        System.out.println("Book Id: "+this.getBookId());
         System.out.println("Title: "+this.getTitle());
         System.out.println("Author: "+this.getAuthor());
         System.out.println("Price: "+this.getPrice());
