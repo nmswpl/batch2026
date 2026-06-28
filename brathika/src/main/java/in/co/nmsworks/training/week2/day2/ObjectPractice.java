@@ -9,7 +9,7 @@ public class ObjectPractice {
     }
 
     private void printTraineeDetails() {
-        /*Trainee t1 = new Trainee("Brathika");
+        Trainee t1 = new Trainee("Brathika");
         Trainee t2 = new Trainee("AmruthaVarshini");
         Trainee t3 = new Trainee("Chinthana");
         Trainee t4 = new Trainee("Infant Lidwina");
@@ -18,7 +18,7 @@ public class ObjectPractice {
         System.out.println(t2);
         System.out.println(t3);
         System.out.println(t4);
-        System.out.println(t5);*/
+        System.out.println(t5);
         String[] names = {"Brathika", "Amrutha", "Chintu", "Lid", "Rithika"};
         Trainee[] trainees = new Trainee[5];
         for (int i = 0; i < names.length; i++) {

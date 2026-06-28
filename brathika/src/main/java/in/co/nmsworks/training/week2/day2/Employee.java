@@ -7,7 +7,7 @@ public class Employee {
     private String name;
     private String dept;
     private long salary;
-    private final String COMPANYNAME;
+    private final String companyName;
 
 
     public Employee(int empId, String name, String dept, long salary, String companyName) {
@@ -15,7 +15,7 @@ public class Employee {
         this.name = name;
         this.dept = dept;
         this.salary = salary;
-        this.COMPANYNAME = companyName;
+        this.companyName = companyName;
     }
     public int getEmpId() {
         return empId;
@@ -56,12 +56,12 @@ public class Employee {
                 ", name='" + name + '\'' +
                 ", dept='" + dept + '\'' +
                 ", salary=" + salary +
-                ", companyName='" + COMPANYNAME + '\'' +
+                ", companyName='" + companyName + '\'' +
                 '}';
     }
 
     public String getCompanyName() {
-        return COMPANYNAME;
+        return companyName;
     }
     @Override
     public boolean equals(Object o) {

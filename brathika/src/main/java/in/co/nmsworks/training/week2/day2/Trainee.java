@@ -7,10 +7,14 @@ public class Trainee {
     private static int counter = 1;
     private String name;
 
-
     public Trainee(String name) {
         this.name = name;
         id = counter++;
+    }
+
+    public Trainee(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public String getName() {
@@ -20,6 +24,7 @@ public class Trainee {
     public void setName(String name) {
         this.name = name;
     }
+
 
     @Override
     public String toString() {

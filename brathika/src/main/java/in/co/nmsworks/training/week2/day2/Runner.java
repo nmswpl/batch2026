@@ -5,7 +5,6 @@ public class Runner {
         Employee emp = new Employee(1,"Brathika G S","cse",20000,"NMSWroks");
         System.out.println(emp);
         System.out.println(emp.getEmpId());
-
         String name = "NMSWorks";
         String company = "NMSWorks";
         System.out.println(name == company);
