@@ -2,7 +2,7 @@ package in.co.nmsworks.training.week2.day4.schoolbag;
 
 public class TextBook {
 
-    private  String subject;
+    private String subject;
 
     public TextBook(String subject) {
         this.subject = subject;

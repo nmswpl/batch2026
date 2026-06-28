@@ -71,10 +71,16 @@ public class PracticeProblems {
     }
 
     private static void primeOrNot() {
-        int number = 37;
+        int number = 3;
+        if (number <= 1){
+            System.out.println("Not a Prime Number");
+        }
+        if (number == 2 || number == 3){
+            System.out.println("Prime Number");
+        }
         for (int i = 2; i <= Math.sqrt(number) ; i++) {
             if ( number % i == 0){
-                System.out.println("Not a Prime");
+                System.out.println("Not a Prime Number");
                 break;
             }
             else{
@@ -182,7 +188,7 @@ public class PracticeProblems {
     private static void largestNumber() {
         int fNum = 34;
         int sNum = 59;
-        int tNum = 20;
+        int tNum = 200;
         if (fNum > sNum){
             if(fNum > tNum){
                 System.out.println("First number is larger");
@@ -191,8 +197,12 @@ public class PracticeProblems {
                 System.out.println("Third number is larger");
         }
         else{
-            System.out.println("Second number is largest");
-
+            if (sNum > tNum) {
+                System.out.println("Second number is largest");
+            }
+            else {
+                System.out.println("Third number is larger");
+            }
         }
     }
 

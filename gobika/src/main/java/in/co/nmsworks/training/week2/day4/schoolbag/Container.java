@@ -17,7 +17,7 @@ public class Container {
     }
 
 
-    public  void  open(){
+    public void open(){
         System.out.println("Opening the Container");
     }
 

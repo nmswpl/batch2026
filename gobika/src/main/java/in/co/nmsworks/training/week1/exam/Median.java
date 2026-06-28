@@ -1,5 +1,6 @@
 package in.co.nmsworks.training.week1.exam;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Median {
@@ -14,7 +15,7 @@ public class Median {
         for (int i = 0; i < n; i++) {
             arr[i] = sc.nextInt();
         }
-
+        Arrays.sort(arr);
         float median= 0;
         if ( n%2 == 0){
             float sum= arr[n/2] + arr [(n/2)-1];
@@ -25,6 +26,6 @@ public class Median {
             median = arr[(n-1)/2];
             System.out.println(" Median : "+ median);
         }
-
+        sc.close();
     }
 }

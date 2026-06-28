@@ -1,12 +1,8 @@
 package in.co.nmsworks.training.week2.day1;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes;
-
-import static java.lang.Character.toTitleCase;
-
 public class StringManipulation {
     public static void main(String[] args) {
-        reverseSring();
+        reverseString();
         checkPalindrome();
         printEvenLength();
         leadingZero();
@@ -15,7 +11,7 @@ public class StringManipulation {
         removeDuplicates();
         toTitleCase();
         longestWord();
-        reverseSringWithOutBuildIn();
+        reverseStringWithOutBuildIn();
         removeSpaces();
     }
 
@@ -30,7 +26,7 @@ public class StringManipulation {
         System.out.println("String without Spaces : " + strWithoutSpace);
     }
 
-    private static void reverseSringWithOutBuildIn() {
+    private static void reverseStringWithOutBuildIn() {
         String s = "This is java language";
         String rev = "";
         for (int i = s.length()-1; i >= 0 ; i--) {
@@ -163,7 +159,7 @@ public class StringManipulation {
         }
     }
 
-    private static void reverseSring() {
+    private static void reverseString() {
         String str = "India is my Country";
         String reverse = "";
         String[] myStrArray = str.split(" ");

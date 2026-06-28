@@ -3,17 +3,17 @@ package in.co.nmsworks.training.week2.day2;
 public class StringPractice {
     public static void main(String[] args) {
         StringPractice sp = new StringPractice();
-        sp.usreNameCheck("Gobika");
+        sp.userNameCheck("Gobika");
         sp.checkEmailId("gobikas@nmsworks.co.in");
         sp.containsWord("product description");
         sp.extraSpace("  SAVE10 ");
-//        sp.extraSpace(null);
+        sp.extraSpace(null);
         sp.displayInitial("University College of Engineering");
         sp.encryptNumber("1234567890");
     }
 
     private void encryptNumber(String s) {
-        System.out.println("");
+        System.out.println();
         String newNum = "";
         for (int i = 0; i < s.length(); i++) {
             if (i < 2) {
@@ -31,19 +31,23 @@ public class StringPractice {
 
     private void displayInitial(String s) {
         String[] strArr = s.split(" ");
-        for (int i = 0; i < strArr.length; i++) {
-            System.out.print(strArr[i].charAt(0));
+        for (String string : strArr) {
+            System.out.print(string.charAt(0));
         }
 
     }
 
     private void extraSpace(String s) {
-
-        if ("SAVE10".equals(s.trim())){
-            System.out.println("Contain code");
+        if (s == null){
+            System.out.println("Invalid input");
         }
         else {
-            System.out.println("Code is not placed");
+            if ("SAVE10".equals(s.trim())){
+                System.out.println("Contain code");
+            }
+            else {
+                System.out.println("Code is not placed");
+            }
         }
     }
 
@@ -69,7 +73,7 @@ public class StringPractice {
         if (splitMail.length != 2){
             System.out.println("Invalid Email");
         }
-        if ( splitMail[0].length() > 0 && splitMail[1] .equals("nmsworks.co.in")){
+        if (!splitMail[0].isEmpty() && splitMail[1] .equals("nmsworks.co.in")){
             System.out.println("Valid Email");
         }
         else {
@@ -77,7 +81,7 @@ public class StringPractice {
         }
     }
 
-    private void usreNameCheck(String name ){
+    private void userNameCheck(String name ){
 
         if (name.length() >= 5 && name.length() <= 15){
             System.out.println("Valid Username");

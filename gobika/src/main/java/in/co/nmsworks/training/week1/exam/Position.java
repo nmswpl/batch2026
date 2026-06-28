@@ -4,7 +4,7 @@ public class Position {
     public static void main(String[] args) {
         int num = 673;
 
-        if (num < 99 && num >= 1000){
+        if (num < 99 || num >= 1000){
             System.out.println("Invalid inputs..");
         }
         else{
