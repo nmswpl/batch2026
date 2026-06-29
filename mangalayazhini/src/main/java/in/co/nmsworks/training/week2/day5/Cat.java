@@ -2,6 +2,7 @@ package in.co.nmsworks.training.week2.day5;
 
 public class Cat implements Animal, LandBased{
 
+
     @Override
     public void eat() {
         System.out.println("Cat eats");
