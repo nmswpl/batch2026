@@ -15,7 +15,7 @@ public class LibraryBook {
 
     public void checkOut(){
         if(this.noOfCopy > 0 ){
-                this.noOfCopy--;
+            this.noOfCopy--;
             System.out.println(this.title + " " + " available");
         }
         else{

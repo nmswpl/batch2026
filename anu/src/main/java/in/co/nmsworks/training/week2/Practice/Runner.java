@@ -221,13 +221,11 @@ public class Runner {
         Computable multiple = new Multiplier();
         Computable divide = new Divider();
 
-        adder.compute(2,3);
-        multiple.compute(2,3);
-        divide.compute(10,5);
+        Calculator.performCalculation(2,3,adder);
+        Calculator.performCalculation(2,3,multiple);
+        Calculator.performCalculation(10,5,divide);
     }
-    private static void performCalculation ( int a, int b, Computable operation){
-        operation.compute(a,b);
-    }
+
 
     private static void LibrarySystem(){
         LibraryBook oops = new LibraryBook("Object Orientation programming","Anushri",2005,1);
