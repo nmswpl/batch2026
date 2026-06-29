@@ -2,9 +2,9 @@ package in.co.nmsworks.training.week2.day2;
 
 public class ObjectPractice {
     public static void main(String[] args) {
-        ObjectPractice ob = new ObjectPractice();
-        ob.checkEquals();
-        ob.printTrainee();
+        ObjectPractice practice = new ObjectPractice();
+        practice.checkEquals();
+        practice.printTrainee();
             Trainee[] trainees = new Trainee[5];
             for (int i = 0; i < trainees.length; i++) {
                 trainees[i] = new Trainee("Name" + (i+1));

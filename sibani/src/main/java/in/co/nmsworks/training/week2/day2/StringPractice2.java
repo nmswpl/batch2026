@@ -3,12 +3,12 @@ package in.co.nmsworks.training.week2.day2;
 public class StringPractice2 {
     public static void main(String[] args) {
         StringPractice2 sp = new StringPractice2();
-        String usrName= "sibani";
-        sp.checkUsernameValid(usrName);
+        String username= "sibani";
+        sp.checkUsernameValid(username);
         String email = "@nmsworks.co.insanjeev";
         sp.checkValidEmail(email);
-        String prodDesc = "wirelessProduct";
-        System.out.println("Contains Wireless : " + sp.checkContainsWireless(prodDesc));
+        String description = "wirelessProduct";
+        System.out.println("Contains Wireless : " + sp.checkContainsWireless(description));
         String coupon = "SAVE10";
         System.out.println("Valid Coupon : " + sp.checkValidCode(coupon));
         //sp.checkValidCode(null);
@@ -17,7 +17,6 @@ public class StringPractice2 {
         System.out.println();
         String number = "9876543210";
         sp.hideNumber(number);
-
     }
 
     private void hideNumber(String number) {
@@ -49,9 +48,9 @@ public class StringPractice2 {
 
     }
 
-    private boolean checkContainsWireless(String prodDesc) {
+    private boolean checkContainsWireless(String description) {
 
-        if (prodDesc.contains("wireless")){
+        if (description.contains("wireless")){
             return true;
         }
         else {
@@ -79,8 +78,8 @@ public class StringPractice2 {
         }
     }
 
-    private void checkUsernameValid(String usrName) {
-        if(usrName.length()>=5 && usrName.length()<=15){
+    private void checkUsernameValid(String username) {
+        if(username.length()>=5 && username.length()<=15){
             System.out.println("Valid User name");
         }
         else {

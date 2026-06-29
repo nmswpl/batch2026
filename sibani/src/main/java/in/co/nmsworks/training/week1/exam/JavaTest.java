@@ -9,7 +9,8 @@ public class JavaTest {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the mark :");
         int mark = sc.nextInt();
-        System.out.println("The Grade is : " +findGrade(mark));
+        findGrade(mark);
+        sc.close();
 
         Book bk1 = new Book(205,"Java Programming","James Gosling",250.0F);
         Book bk2 = new Book(206,"Python Programming","James",350.0F);
@@ -24,31 +25,34 @@ public class JavaTest {
     }
     public static float meanOfArray(){
         int[] arr = {1, 2, 3, 4, 5};
-        int sum=0;
+        float sum=0;
         for (int i=0; i<arr.length;i++){
             sum += arr[i];
         }
         float mean = sum / arr.length;
         return mean;
     }
-    public static char findGrade(int mark){
-        if (91< mark && mark <100) {
-            return 'S';
+    public static void findGrade(int mark){
+        if (mark > 100 || mark < 0) {
+            System.out.println("Invalid Mark");
         }
-        else if (81<mark && mark<90) {
-            return 'A';
+        if (mark > 90){
+            System.out.println("Grade is : S" );
         }
-        else if (71<mark && mark<80) {
-            return 'B';
+        else if (mark > 80){
+            System.out.println("Grade is : A" );
         }
-        else if (61<mark && mark<70) {
-            return 'C';
+        else if (mark > 70){
+            System.out.println("Grade is : B" );
         }
-        else if (51<mark && mark<60) {
-            return 'D';
+        else if (mark > 60){
+            System.out.println("Grade is : C" );
+        }
+        else if (mark > 50){
+            System.out.println("Grade is : D" );
         }
         else {
-            return 'F';
+            System.out.println("Grade is : F" );
         }
     }
 }

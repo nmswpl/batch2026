@@ -20,7 +20,7 @@ public class SetBTest {
 
     private static void printHundredthPosition() {
         int num = 567;
-        if (num <99 && num >1000){
+        if (num <99  || num >1000){
             System.out.println("Invalid Output");
         }
         else {
@@ -35,7 +35,7 @@ public class SetBTest {
 
         float median = 0, sum =0;
         int n = arr.length;
-        for (int i = 0; i < n; i++) {
+
             if(n % 2 == 0) {
                 sum = arr[n/2]+ arr[n/2 -1];
                 median = sum / 2;
@@ -43,7 +43,6 @@ public class SetBTest {
             else {
                 median = arr[n/2];
             }
-        }
         System.out.println("Median : " + median);
     }
 

@@ -15,7 +15,7 @@ public class StringPractice
         String str1 = "My name is Sibani";
         System.out.println("Output : " + reverseString(str1));
         convertFirstLetterToCaps("the quick brown fox jumps over the lazy dog");
-        leedingZero("0005640");
+        removeleedingZero("0005640");
         removeDuplicates();
         vowelCountAndConsonantCount();
 
@@ -55,7 +55,7 @@ public class StringPractice
         System.out.println("Vowels: " + vowels + ", Consonants: " + consonants);
     }
 
-    private static void leedingZero(String str) {
+    private static void removeleedingZero(String str) {
         int i =0;
         while (i < str.length() && str.charAt(i) == '0'){
             i++;

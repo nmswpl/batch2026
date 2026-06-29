@@ -16,6 +16,7 @@ public class JavaTask {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter a number:");
         int num = sc.nextInt();
+        sc.close();
         System.out.println("You entered :" + num);
     }
     public static void addNum(){
@@ -23,6 +24,7 @@ public class JavaTask {
         System.out.println("Enter two numbers:");
         int num1 = sc.nextInt();
         int num2 = sc.nextInt();
+        sc.close();
         int c = num1 + num2;
         System.out.println("The sum is :" + c);
     }
@@ -53,6 +55,7 @@ public class JavaTask {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter a number :");
         int num = sc.nextInt();
+        sc.close();
         if (num % 2 == 0){
             System.out.println(num + " is even");
         }
