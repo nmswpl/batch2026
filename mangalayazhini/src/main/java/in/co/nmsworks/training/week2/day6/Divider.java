@@ -12,6 +12,5 @@ public class Divider implements Computable {
             System.out.println(a + " / " + b + " = " + quotient);
             return quotient;
         }
-
     }
 }

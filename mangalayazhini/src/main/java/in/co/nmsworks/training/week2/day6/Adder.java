@@ -7,6 +7,5 @@ public class Adder implements Computable{
         int sum = a+b;
         System.out.println(a + " + " + b + " = " + sum);
         return sum;
-
     }
 }
