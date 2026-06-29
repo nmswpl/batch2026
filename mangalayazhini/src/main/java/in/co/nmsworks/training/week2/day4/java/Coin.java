@@ -13,8 +13,8 @@ public class Coin {
 
     public void spent(Integer amt){
 
-        if(denomination > amt){
-            Integer previousDenomination = denomination;
+        if(denomination >= amt){
+            // Integer previousDenomination = denomination;
             denomination = denomination - amt ;
             System.out.println("The amount spent = "+amt);
             System.out.println("Remaining Balance in Digital Wallet : " + denomination);

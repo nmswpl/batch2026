@@ -6,6 +6,7 @@ public class DigitalWallet extends PocketItem{
     // price
 
     private Coin myCoins ;
+    private String color;
 
     public Coin getMyCoins() {
         System.out.println("The Digital wallet has Rs. "+myCoins.getDenomination());
@@ -15,6 +16,7 @@ public class DigitalWallet extends PocketItem{
     public void setMyCoins(Coin myCoins) {
         this.myCoins = myCoins;
     }
+
 
     public void makePayment(Integer amount){
         myCoins.spent(amount);
@@ -26,3 +28,4 @@ public class DigitalWallet extends PocketItem{
 
 
 }
+

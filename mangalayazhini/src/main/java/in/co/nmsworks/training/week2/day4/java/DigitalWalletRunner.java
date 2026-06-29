@@ -10,7 +10,7 @@ public class DigitalWalletRunner {
         myWallet.setMyCoins(myEarnings);
 
         myWallet.getMyCoins();
-        myWallet.carry();
+        myWallet.carry();package in.co.nmsworks.training.week2.day4.java;
 
 public class DigitalWalletRunner {
     public static void main(String[] args) {
@@ -34,7 +34,9 @@ public class DigitalWalletRunner {
 }
 
 
-     
+        myWallet.makePayment(450);
+        myWallet.makePayment(200);
+        myWallet.makePayment(300);
         myWallet.makePayment(75);
 
         myWallet.getMyCoins();
