@@ -46,12 +46,22 @@ public class Book {
         this.price = price;
     }
 
-    public void display() {
-        System.out.println("ID = "+this.id);
-        System.out.println("Title = "+this.title);
-        System.out.println("Author = "+this.author);
-        System.out.println("Price = "+this.price);
-        System.out.println();
+//    public void display() {
+//        System.out.println("ID = "+this.id);
+//        System.out.println("Title = "+this.title);
+//        System.out.println("Author = "+this.author);
+//        System.out.println("Price = "+this.price);
+//        System.out.println();
+//    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", price=" + price +
+                '}';
     }
 
     public static void main(String[] args) {
@@ -61,11 +71,11 @@ public class Book {
         Book b4 = new Book(4,"AOT","Eren Yeager", 2550);
         Book b5 = new Book(5,"Java Programming","James Goshling", 450);
 
-        b1.display();
-        b2.display();
-        b3.display();
-        b4.display();
-        b5.display();
+//        b1.display();
+//        b2.display();
+//        b3.display();
+//        b4.display();
+//        b5.display();
 
     }
 
