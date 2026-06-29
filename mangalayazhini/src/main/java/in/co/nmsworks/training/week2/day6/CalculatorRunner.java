@@ -10,5 +10,6 @@ public class CalculatorRunner {
         calculator.performCalculation(5,10,add);
         calculator.performCalculation(50,10,divide);
         calculator.performCalculation(5,10,multiply);
+
     }
 }

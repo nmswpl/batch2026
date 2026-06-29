@@ -7,5 +7,6 @@ public class Multiplier implements Computable{
         int multipliedValue = a*b;
         System.out.println(a + " x " + b + " = " + multipliedValue);
         return multipliedValue;
+
     }
 }
