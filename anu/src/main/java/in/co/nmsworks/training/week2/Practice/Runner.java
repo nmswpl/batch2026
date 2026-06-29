@@ -1,5 +1,7 @@
 package in.co.nmsworks.training.week2.Practice;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Runner {
@@ -7,7 +9,122 @@ public class Runner {
         computableCalculation();
         LibrarySystem();
         trainingProblem();
+        patternProgram();
+        stringPractice();
 
+    }
+
+    private static void stringPractice() {
+        String name="NMSWorks";
+        int index=5;
+        char value=name.charAt(index);
+        System.out.println("index value of an program : " + value);
+
+        System.out.println();
+        String character="OpenAI";
+        System.out.println("length of an string : " + character.length());
+
+        System.out.println();
+        String javaString="Java Programming";
+        String nameValue=javaString.substring(5);
+        System.out.println("Substring of---------- " + nameValue);
+
+        System.out.println();
+        String javaProgram="Welcome to Java";
+        String stringValue=javaProgram.substring(11,15);
+        System.out.println("Substring of---------- " + stringValue);
+
+        System.out.println();
+        System.out.print("check the string contains :  ");
+        if(javaString.contains("Prog")) {
+            System.out.println("found");
+        }
+        else{
+            System.out.println("not found");
+        }
+
+        System.out.println();
+        List<String> fruits = Arrays.asList("apple", "banana", "cherry");
+        String result = String.join(", ", fruits);
+        System.out.println(result);
+
+        System.out.println();
+        String str1 = "hello";
+        String str2 = "Hello";
+        if (str1.equals(str2)) {
+            System.out.println("Equal");
+        } else {
+            System.out.println("Not Equal");
+        }
+
+        System.out.println();
+        String str = " ";
+        if (str.isEmpty()) {
+            System.out.println("Empty");
+        } else {
+            System.out.println("Not Empty");
+        }
+
+        System.out.println();
+        String namev = "Hello";
+        String namel = " World";
+        System.out.println(namev.concat(namel));
+
+        System.out.println();
+        String stringReplace = "banana";
+        System.out.println(str.replace('a', 'o'));
+
+        System.out.println();
+        String valueOfOne = "hello";
+        String valueOfTwo = "HELLO";
+        if (valueOfOne.equalsIgnoreCase(valueOfTwo)) {
+            System.out.println("Equal");
+        } else {
+            System.out.println("Not Equal");
+        }
+
+        System.out.println();
+        String stringOfSplit = "one,two,three";
+        String[] parts = stringOfSplit.split(",");
+        System.out.print("split of string : ");
+        for (String s : parts) {
+            System.out.println(s);
+        }
+
+        System.out.println();
+        String stringOfLimit = "apple;banana;cherry;date";
+        String[] limits = stringOfLimit.split(";", 3);
+        for (String s : limits) {
+            System.out.println(s);
+        }
+
+        System.out.println();
+        System.out.println(javaString.indexOf('g'));
+
+        System.out.println();
+        String stringWorld = "welcome to the world";
+        System.out.println("indexof an string : " + stringWorld.indexOf("the", 10));
+
+        System.out.println();
+        System.out.println("java string for lowercase : " + javaString.toLowerCase());
+
+        System.out.println();
+        System.out.println("java string for uppercase : " + str.toUpperCase());
+
+        System.out.println();
+        int valueNumber= 1234;
+        String stringNumberValue = String.valueOf(valueNumber);
+        System.out.println(stringNumberValue);
+    }
+
+    private static void patternProgram() {
+        PatternProgram.numbericPatternOne();
+        System.out.println();
+        PatternProgram.numbericPatternTwo();
+        System.out.println();
+        PatternProgram.starPatternOne();
+        System.out.println();
+        PatternProgram.alphabetPattern();
     }
 
     private static void trainingProblem() {
