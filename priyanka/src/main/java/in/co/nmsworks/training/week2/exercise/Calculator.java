@@ -3,17 +3,17 @@ package in.co.nmsworks.training.week2.exercise;
 public class Calculator {
     public static void main(String[] args) {
         Adder add = new Adder();
-        calciMethod(add);
+        performCalculation(10,20,add);
 
         Multiplier multiply = new Multiplier();
-        calciMethod(multiply);
+        performCalculation(10,20,multiply);
 
         Divider divide = new Divider();
-        calciMethod(divide);
+        performCalculation(10,5,divide);
     }
 
-    public static void calciMethod(Computable compute){
-        compute.compute(20,20);
+    public static void performCalculation(int a, int b, Computable compute){
+        compute.compute(a,b);
     }
 
 }
