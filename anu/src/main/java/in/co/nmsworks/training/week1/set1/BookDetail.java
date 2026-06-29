@@ -1,5 +1,7 @@
 package in.co.nmsworks.training.week1.set1;
 
+import java.util.Objects;
+
 public class BookDetail {
     private int Id;
     private String title;
@@ -46,6 +48,28 @@ public class BookDetail {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "BookDetail{" +
+                "Id=" + Id +
+                ", title='" + title +
+                ", Author='" + Author +
+                ", price=" + price +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        BookDetail that = (BookDetail) o;
+        return Id == that.Id && Double.compare(price, that.price) == 0 && Objects.equals(title, that.title) && Objects.equals(Author, that.Author);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Id, title, Author, price);
     }
 }
 
