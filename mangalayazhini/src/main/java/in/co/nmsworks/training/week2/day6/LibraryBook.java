@@ -2,10 +2,22 @@ package in.co.nmsworks.training.week2.day6;
 
 public class LibraryBook {
 
+    private int id;
+
+
+
     private String title;
     private String author;
     private int publicationYear;
     private int numberOfCopies;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -40,7 +52,8 @@ public class LibraryBook {
     }
 
 
-    public LibraryBook(String title, String author, int publicationYear, int numberOfCopies) {
+    public LibraryBook(int id, String title, String author, int publicationYear, int numberOfCopies) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
@@ -57,6 +70,18 @@ public class LibraryBook {
     }
 
     public void displayBook() {
-        System.out.println("Title : " + title + " Author : " + author + " Publication Year : " + publicationYear + " No of copies : "+ numberOfCopies);
+        System.out.println("ID : "+id+"Title : " + title + " Author : " + author + " Publication Year : " + publicationYear + " No of copies : "+ numberOfCopies);
+
+    }
+
+    @Override
+    public String toString() {
+        return "LibraryBook{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", publicationYear=" + publicationYear +
+                ", numberOfCopies=" + numberOfCopies +
+                '}';
     }
 }
