@@ -4,7 +4,7 @@ import in.co.nmsworks.training.week2.day2.Trainee;
 
 public class Runner {
     public static void main(String[] args) {
-        /*Square s = new Square();
+        Square s = new Square();
         s.printArea();
         s.printPerimeter();
         Rectangle r = new Rectangle();
@@ -51,12 +51,20 @@ public class Runner {
         bag.setMaxWeight(20.00);
         bag.open();
         bag.study();
-        System.out.println(bag); */
+        System.out.println(bag);
 
         DigitalWallet wallet = new DigitalWallet(new Coin(500));
         wallet.setColor("Brown");
         wallet.carry();
         wallet.makePayment();
 
+        SmartRemote smartRemote = new SmartRemote();
+        int chnumber = 22;
+        if (chnumber < 0 || chnumber < 999) {
+            System.err.println("Invalid Channel");
+        }
+        else {
+            smartRemote.setChannelNumber(chnumber);
+        }
     }
 }
