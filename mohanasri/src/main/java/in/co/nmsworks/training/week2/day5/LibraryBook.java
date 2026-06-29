@@ -31,4 +31,14 @@ public class LibraryBook {
     public void setNoOfCopies(int noOfCopies) {
         this.noOfCopies = noOfCopies;
     }
+
+    @Override
+    public String toString() {
+        return "LibraryBook{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", publicationYear=" + publicationYear +
+                ", noOfCopies=" + noOfCopies +
+                '}';
+    }
 }
