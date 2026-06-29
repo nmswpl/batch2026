@@ -11,6 +11,8 @@ public class DigitalWalletRunner {
 
         myWallet.getMyCoins();
         myWallet.carry();
+
+
         myWallet.makePayment(450);
         myWallet.makePayment(200);
         myWallet.makePayment(300);
@@ -19,4 +21,3 @@ public class DigitalWalletRunner {
         myWallet.getMyCoins();
     }
 }
-
