@@ -5,9 +5,72 @@ import java.util.*;
 public class Runner {
     public static void main(String[] args) {
         bookList();
+        bookMap();
+        bookSet();
+        bookLinkedHashMap();
     }
 
+    private static void bookLinkedHashMap() {
+
+        LinkedHashMap<Integer, Double> mapLinkedBook = new LinkedHashMap<>();
+        mapLinkedBook.put(1,25000.0);
+        mapLinkedBook.put(3,45000.0);
+        mapLinkedBook.put(2,34000.0);
+        mapLinkedBook.put(4,56770.0);
+        mapLinkedBook.put(5,80000.0);
+        System.out.println("Mapping using LinkedHashMap of list of books");
+        for(Map.Entry<Integer, Double>entry : mapLinkedBook.entrySet()){
+            System.out.println("BookId : "+entry.getKey()+" Book Price : "+entry.getValue());
+        }
+    }
+
+
+    private static void bookSet() {
+        BookList python = new BookList(1,"AI","Jemuna", 25000.0);
+        BookList java = new BookList(2,"Java Programming","Reema Thareja",4500.0);
+        BookList javaAdvanced = new BookList(3,"Java Advanced Programming","Reema Thareja",4500.0);
+        BookList c = new BookList(4,"C programming","Anu",100000.0);
+        BookList dbms = new BookList(5,"DataBase","Yaazhini",40000.0);
+
+        Set<BookList> setItem = new HashSet<>();
+        setItem.add(python);
+        setItem.add(java);
+        setItem.add(javaAdvanced);
+        setItem.add(c);
+        setItem.add(c);
+        setItem.add(dbms);
+
+        System.out.println("List of Books : ");
+        System.out.println("Size of the BookList : "+ setItem.size());
+        for (BookList bookList :  setItem) {
+            System.out.println(bookList);
+        }
+
+        System.out.println("Is Empty : "+ setItem.isEmpty());
+        System.out.println("Size : "+ setItem.size());
+        System.out.println("Remove Object : "+ setItem.remove(c));
+        System.out.println("BookList Contains javaAdvanced book or not  : "+ setItem.contains(javaAdvanced));
+        System.out.println("dbms Equals of python : "+dbms.equals(python));
+
+    }
+
+    private static void bookMap() {
+
+        Map<Integer, Double> mapBook = new HashMap<>();
+        mapBook.put(1,25000.0);
+        mapBook.put(3,45000.0);
+        mapBook.put(4,56770.0);
+        mapBook.put(2,34000.0);
+        mapBook.put(5,80000.0);
+        System.out.println("Mapping using HashMap of list of books");
+        for(Map.Entry<Integer, Double>entry : mapBook.entrySet()){
+            System.out.println("BookId : "+entry.getKey()+" Book Price : "+entry.getValue());
+        }
+    }
+
+
     private static void bookList() {
+
         BookList python = new BookList(1,"AI","Jemuna", 25000.0);
         BookList java = new BookList(2,"Java Programming","Reema Thareja",4500.0);
         BookList javaAdvanced = new BookList(3,"Java Advanced Programming","Reema Thareja",4500.0);
@@ -38,40 +101,6 @@ public class Runner {
         System.out.println("dbms Equals of python : "+dbms.equals(python));
 
 
-        //Set
-
-        Set<BookList> setItem = new HashSet<>();
-        Set<BookList> setItem2 = new HashSet<>();
-
-        setItem.add(python);
-        setItem.add(java);
-        setItem.add(javaAdvanced);
-        setItem.add(c);
-        setItem.add(c);
-        setItem.add(dbms);
-
-        System.out.println(" ");
-        System.out.println("Hash Set of Books : ");
-        System.out.println("Size of the Hash Set Books : "+setItem.size());
-        for (BookList bookHashList : setItem) {
-            System.out.println(bookHashList);
-
-        }
-        System.out.println("Is Empty : "+setItem.isEmpty());
-        System.out.println("Size : "+setItem.size());
-        System.out.println("Remove Object : "+setItem.remove(c));
-        System.out.println("BookList Contains javaAdvanced book or not  : "+setItem.contains(javaAdvanced));
-        System.out.println("dbms Equals of python : "+dbms.equals(python));
-
-        //Set 2
-        setItem2.addAll(setItem);
-        System.out.println("Set 2 of Book set");
-        for (BookList book2List : setItem2) {
-            System.out.println(book2List);
-
-        }
-        System.out.println("Remove all from Set 2: "+setItem.removeAll(setItem2));
-
 
         //Linked Hash Set
         Set<BookList> linkedHashSetItem = new LinkedHashSet<>();
@@ -94,6 +123,7 @@ public class Runner {
         System.out.println("Remove Object : "+linkedHashSetItem.remove(c));
         System.out.println("BookList Contains javaAdvanced book or not  : "+linkedHashSetItem.contains(javaAdvanced));
         System.out.println("dbms Equals of python : "+dbms.equals(python));
+
 
 
 
