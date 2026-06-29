@@ -32,9 +32,6 @@ public class TrainingExercises {
         palindromeOrNot("abc");
         primeNumber(7);
         primeNumber(10);
-
-
-
     }
 
     private static int factorial(int number) {
