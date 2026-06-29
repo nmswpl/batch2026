@@ -8,8 +8,8 @@ public class PatternPrinting {
         leftAlignTriangle();
         invertedLeftAlignedTriangle();
         fullpyramid();
-        numbericPatternOne();
-        numbericPatternTwo();
+        numericPatternOne();
+        numericPatternTwo();
         alphabetPatternThree();
 
     }
@@ -26,7 +26,7 @@ public class PatternPrinting {
         }
     }
 
-    private static void numbericPatternTwo() {
+    private static void numericPatternTwo() {
         System.out.println("Numeric Pattern Printing 2");
         int n = 7;
         for (int i = 1; i <=n ; i++) {
@@ -37,7 +37,7 @@ public class PatternPrinting {
         }
     }
 
-    private static void numbericPatternOne() {
+    private static void numericPatternOne() {
         System.out.println("Numeric Pattern Printing 2");
         int n = 7;
         for (int i = 1; i <= n ; i++) {
