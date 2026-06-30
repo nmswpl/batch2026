@@ -18,13 +18,9 @@ public class DigitalWallet extends PocketItem{
     }
 
 
-    public void makePayment(Integer amount){
-        if (myCoins.spent(amount)){
-            System.out.println("Your payment is successfully completed"); 
-        }
-        else{
-            System.out.println("You payment failed"); 
-        }
+    public boolean makePayment(Integer amount){
+        return myCoins.spent(amount); 
+    
     }
 
     public void carry(){
