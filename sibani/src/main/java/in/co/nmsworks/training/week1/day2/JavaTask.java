@@ -18,7 +18,7 @@ public class JavaTask {
         fibonacciSeries(10);
         countInteger();
         findPower();
-        findPowerUsingPow();
+        findPowerUsingPow(2,3);
         System.out.println("Enter a natural number :");
         int number = sc.nextInt();
         System.out.println( number +  " is prime :" + isPrime(number));
@@ -26,8 +26,9 @@ public class JavaTask {
         int num1 = sc.nextInt();
         findFactors(num1);
         System.out.println("Enter a number :");
-        int n1 = sc.nextInt();
-        System.out.println("Factorial using recursion is : " + fact(n1));
+
+        System.out.println("Factorial using recursion is : " + fact(6));
+        sc.close();
     }
     public static void checkGreater(int a, int b, int c) {
         if (a > b && a > c) {
@@ -48,6 +49,7 @@ public class JavaTask {
         else {
             System.out.println( num + " is negative");
         }
+        sc.close();
     }
     public static void isAlphabet(char ch){
         if (!Character.isAlphabetic(ch)){
@@ -73,6 +75,7 @@ public class JavaTask {
             fact *= i;
         }
         System.out.println("Factorial of " + num + " is : " + fact);
+        sc.close();
     }
     public static void findFactorialUsingWhile() {
         Scanner sc = new Scanner(System.in);
@@ -84,6 +87,7 @@ public class JavaTask {
             i++;
         }
         System.out.println("Factorial of " + num + " using while loop is : " + fact);
+        sc.close();
     }
     public static void multiplicationTable(int num){
         System.out.println("Multiplication Table of " + num);
@@ -120,6 +124,7 @@ public class JavaTask {
             }
         }
         System.out.println("No of digits is :"  + count);
+        sc.close();
     }
     public static void findPower() {
         Scanner sc = new Scanner(System.in);
@@ -132,21 +137,19 @@ public class JavaTask {
              ans *= base;
         }
         System.out.println("Answer :" + ans);
+        sc.close();
     }
-    public static void findPowerUsingPow() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter Base number :");
-        int base = sc.nextInt();
-        System.out.println("Enter power :");
-        int power = sc.nextInt();
-        System.out.println("Answer :" + pow(2,3));
+    public static void findPowerUsingPow(int base, int power) {
+
+        System.out.println("Answer :" + pow(base,power));
+
     }
     public static boolean isPrime(int num) {
         if (num <= 1){
            return false;
         }
-        for (int i = 2; i < sqrt(num) ; i++) {
-            if (num % 2 == 0) {
+        for (int i = 2; i <= Math.sqrt(num) ; i++) {
+            if (num % i == 0) {
                 return false;
             }
         }
@@ -154,7 +157,7 @@ public class JavaTask {
     }
     public static void findFactors(int num1){
         System.out.println("Factors of " + num1 + " are :");
-        for (int i = 1; i < num1; i++) {
+        for (int i = 1; i <= num1; i++) {
             if (num1 % i == 0) {
                 System.out.print(i + " ");
             }
