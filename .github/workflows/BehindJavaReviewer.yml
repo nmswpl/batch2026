@@ -186,7 +186,7 @@ jobs:
           LAST_CALL_TIME=0
           JOB_ID=$(echo '${{ toJson(matrix.job) }}' | jq -r '.id')
           
-          BATCH_SIZE=5
+          BATCH_SIZE=10
           FILES=($ADDED_OR_MODIFIED)
           
           process_batch() 
@@ -261,7 +261,7 @@ jobs:
             # =========================
             : "${LAST_CALL_TIME:=0}"
           
-            MIN_INTERVAL=12      # 6 seconds = ~10 calls/min max (safe for 10–15 RPM limit)
+            MIN_INTERVAL=20      # 6 seconds = ~10 calls/min max (safe for 10–15 RPM limit)
           
             CURRENT_TIME=$(date +%s)
             DIFF=$((CURRENT_TIME - LAST_CALL_TIME))
