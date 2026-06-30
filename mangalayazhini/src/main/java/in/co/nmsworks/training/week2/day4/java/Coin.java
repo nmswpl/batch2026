@@ -11,18 +11,20 @@ public class Coin {
         this.denomination = denomination;
     }
 
-    public void spent(Integer amt){
+    public boolean spent(Integer amt){
 
         if(denomination >= amt){
             // Integer previousDenomination = denomination;
             denomination = denomination - amt ;
             System.out.println("The amount spent = "+amt);
             System.out.println("Remaining Balance in Digital Wallet : " + denomination);
+            return true;
         }
         else{
             System.out.println("Insufficient Balance !");
             System.out.println("Current Balance : " + denomination);
             System.out.println("Amount required by you : "+amt);
+            return false; 
         }
 
     }
