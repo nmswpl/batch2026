@@ -4,8 +4,8 @@ import java.util.*;
 
 public class RunnerCollection {
     public static void main(String[] args) {
-//        listMethod();
-//        setMethod();
+        listMethod();
+        setMethod();
         mapMethod();
     }
 

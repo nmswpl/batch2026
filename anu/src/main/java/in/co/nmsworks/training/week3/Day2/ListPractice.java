@@ -7,6 +7,7 @@ public class ListPractice {
         this.colors = colors;
     }
 
+
     public String getColors() {
         return colors;
     }
