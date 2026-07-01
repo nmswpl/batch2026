@@ -16,6 +16,17 @@ public class Movies {
         Map<Integer,List<String>> yearWiseMovies = getYearWiseMovies(movieList);
         System.out.println(yearWiseMovies);
 
+        Map<Integer,Integer> yearWiseMoviesCount = getYearWiseMoviesCount(yearWiseMovies);
+        System.out.println(yearWiseMoviesCount);
+
+    }
+
+    private static Map<Integer, Integer> getYearWiseMoviesCount(Map<Integer, List<String>> yearWiseMovies) {
+        Map<Integer, Integer> yearToMoviesCount = new HashMap<>();
+        for (Map.Entry<Integer, List<String>> movieEntry : yearWiseMovies.entrySet()){
+            yearToMoviesCount.put(movieEntry.getKey(),movieEntry.getValue().size());
+        }
+        return  yearToMoviesCount;
     }
 
     private static Map<Integer, List<String>> getYearWiseMovies(List<String> movieList) {
