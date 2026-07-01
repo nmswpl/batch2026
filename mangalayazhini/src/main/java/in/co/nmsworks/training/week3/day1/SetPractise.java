@@ -1,4 +1,4 @@
-package in.co.nmsworks.training.week3;
+package in.co.nmsworks.training.week3.day1;
 
 import java.util.Set;
 import java.util.HashSet;
