@@ -16,6 +16,13 @@ public class MoviesByYear {
         Map<Integer, List<String>> yearToMovies = moviesByYear.listToMap(movies);
         System.out.println(yearToMovies);
         moviesByYear.noOfMovies(yearToMovies);
+        moviesByYear.yearWiseMovies(yearToMovies);
+    }
+
+    private void yearWiseMovies(Map<Integer, List<String>> yearToMovies) {
+        for (Map.Entry<Integer, List<String>> entry : yearToMovies.entrySet()) {
+            System.out.println(entry.getKey()+" "+entry.getValue());
+        }
     }
 
     private void noOfMovies(Map<Integer, List<String>> yearToMovies) {
