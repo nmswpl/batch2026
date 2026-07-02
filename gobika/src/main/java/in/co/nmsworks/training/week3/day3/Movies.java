@@ -39,7 +39,7 @@ public class Movies {
                 movieNameList = new ArrayList<>();
                 yearToMovies.put(year,movieNameList);
             }
-            movieNameList.add(movie[0]);
+            movieNameList.add(movie[0].replace('"',' ').trim());
         }
         return yearToMovies;
     }

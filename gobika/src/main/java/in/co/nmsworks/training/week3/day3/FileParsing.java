@@ -5,11 +5,30 @@ import java.io.*;
 public class FileParsing {
     public static void main(String[] args) {
         FileParsing fileParsing = new FileParsing();
-        fileParsing.writeToFile();
-        fileParsing.readFromFile();
-        String txt = fileParsing.readFromSampleTxt();
-        fileParsing.writeToSampleFile(txt);
-        fileParsing.readAndWriteBuffer();
+//        fileParsing.writeToFile();
+//        fileParsing.readFromFile();
+//        String txt = fileParsing.readFromSampleTxt();
+//        fileParsing.writeToSampleFile(txt);
+//        fileParsing.readAndWriteBuffer();
+        fileParsing.tryWithResource();
+    }
+
+    private void tryWithResource() {
+        try (FileReader fr = new FileReader("/home/nms-training/Downloads/SampleText.txt" );
+             FileWriter fw = new FileWriter("/home/nms-training/Downloads/SampleFile.txt" )){
+            int ch;
+            while ((ch = fr.read()) != -1){
+                fw.write(ch);
+                System.out.print((char) ch);
+            }
+            fw.flush();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void readAndWriteBuffer() {
