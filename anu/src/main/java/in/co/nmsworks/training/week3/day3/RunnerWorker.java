@@ -8,46 +8,57 @@ import java.util.Set;
 
 public class RunnerWorker {
     public static void main(String[] args) {
-        RunnerWorker runnerWorker =new RunnerWorker();
-        runnerWorker.printDetails();
-
+        RunnerWorker rw = new RunnerWorker();
+        rw.printDetails();
     }
 
     private void printDetails() {
-        Set<String> setWork = new HashSet<>();
-        Map<Integer,Worker> mapWork = new HashMap<>();
-
-        BufferedReader br= null;
-        BufferedWriter bw=null;
-
-        try{
-            br = new BufferedReader(new FileReader("/home/nms-training/Downloads/WorkerDetails-Collection.txt"));
-            String line =" ";
+        Map<String, Worker> workerMap = new HashMap<>();
+        try (BufferedReader br = new BufferedReader(new FileReader("/home/nms-training/Downloads/WorkerDetails-Collection.txt"));
+             BufferedWriter bw = new BufferedWriter (new FileWriter("/home/nms-training/Downloads/attendance-report.txt"))
+        )
+        {
             br.readLine();
-            while((line = br.readLine()) !=  null){
-                String data = line.replace("|",",");
-                String[] separate=data.split(",");
-                Worker works = new Worker();
-                works.setWorkerId(separate[0]);
-                works.setWorkerName(separate[1]);
-                works.setDepartment(separate[2]);
+            String line = " ";
+            while ((line = br.readLine()) != null) {
+                String separate = line.replace("|",",");
+                String[] data=separate.split(",");
 
+                String workerId = data[0];
+                String workerName = data[1];
+                String department = data[2];
+                String month = data[3];
+                int daysWorked = Integer.parseInt(data[4]);
 
-                System.out.println(works);
+                Worker worker = workerMap.get(workerId);
+                if (worker == null) {
+                    worker = new Worker();
+                    worker.setWorkerId(workerId);
+                    worker.setWorkerName(workerName);
+                    worker.setDepartment(department);
 
+                    workerMap.put(workerId, worker);
+                }
+                worker.getAttendance().put(month, daysWorked);
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Set<Worker> workerSet = new HashSet<>(workerMap.values());
+
+            for (Worker worker : workerSet) {
+                int total = 0;
+                for (Integer days : worker.getAttendance().values()) {
+                    total += days;
+                }
+                bw.write("\n");
+                bw.write("Worker Id : " + worker.getWorkerId() + "\n");
+                bw.write("Worker Name : " + worker.getWorkerName() + "\n");
+                bw.write("Department : " + worker.getDepartment() + "\n");
+                bw.write("Attendance : " + worker.getAttendance() + " \n");
+                bw.write("Total Days Worked : " + total +"\n");
+                bw.write("-----------------");
+            }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
-            try {
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
