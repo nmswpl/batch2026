@@ -1,0 +1,74 @@
+package in.co.nmsworks.training.week3.day4;
+
+public class CarInfo {
+    private Integer id;
+    private String name;
+    private String Manufacturer;
+    private Integer yearOfProduction;
+    private Status status;
+    public enum Status{
+        Active, Discontinued
+    }
+
+    public CarInfo() {
+    }
+
+    public CarInfo(Integer id, String name, String manufacturer, Integer yearOfProduction, Status status) {
+        this.id = id;
+        this.name = name;
+        Manufacturer = manufacturer;
+        this.yearOfProduction = yearOfProduction;
+        this.status = status;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getManufacturer() {
+        return Manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        Manufacturer = manufacturer;
+    }
+
+    public Integer getYearOfProduction() {
+        return yearOfProduction;
+    }
+
+    public void setYearOfProduction(Integer yearOfProduction) {
+        this.yearOfProduction = yearOfProduction;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "CarInfo{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", Manufacturer='" + Manufacturer + '\'' +
+                ", yearOfProduction=" + yearOfProduction +
+                ", status=" + status +
+                '}';
+    }
+}
