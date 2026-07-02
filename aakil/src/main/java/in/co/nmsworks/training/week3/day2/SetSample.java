@@ -5,13 +5,7 @@ import java.util.Set;
 
 public class SetSample {
     public static void main(String[] args) {
-        fruitSet();
-
-        Set<String> fruits = new HashSet<>();
-        Set<String> food = new HashSet<>();
-
-        food.add("dosa");
-
+        Set<String> fruits = fruitSet();
         fruits.add("apple");
         fruits.add("banana");
         fruits.add("orange");
@@ -19,16 +13,16 @@ public class SetSample {
         fruits.add("apple");
         fruits.add("orange");
 
-        String element1 = "Lemon";
-        String element2 = "Tomato";
 
-
+        Set<String> food = new HashSet<>();
+        food.add("dosa");
+        String fruitToFind = "orange";
 
         iterateSet(fruits);
-        searchElement(fruits, element1);
+        searchElement(fruits, fruitToFind);
         copyInto(fruits, food);
         compareSets(fruits, food);
-        removeElement(fruits, element1);
+        removeElement(fruits, fruitToFind);
 
     }
 
@@ -42,7 +36,6 @@ public class SetSample {
             System.out.println("NOT EQUAL");
             return;
         }
-
         System.out.println((setOne.containsAll(setTwo)) ? "EQUAL" : "NOT EQUAL");
     }
 
@@ -62,9 +55,8 @@ public class SetSample {
         set.forEach(System.out::println);
     }
 
-    private static void fruitSet() {
+    private static Set<String> fruitSet() {
         Set<String> fruits = new HashSet<>();
-
         fruits.add("apple");
         fruits.add("banana");
         fruits.add("orange");
@@ -72,7 +64,6 @@ public class SetSample {
         fruits.add("apple");
         fruits.add("orange");
 
-        System.out.println("FRUITS SET :: " + fruits);
-
+        return fruits;
     }
 }
