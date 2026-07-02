@@ -15,6 +15,7 @@ public class StudentRunner {
         subject.add("Maths");
         subject.add("Science");
         subject.add("Social");
+
         StudentRunner sr = new StudentRunner();
         Student s1 = new Student(1,"Priyanka","IT",subject);
         System.out.println(s1);
@@ -24,6 +25,7 @@ public class StudentRunner {
         System.out.println(s3);
         Student s4= new Student(4,"Sunitha","CSE",subject);
         System.out.println(s4);
+
         List<Student> students = new ArrayList<>();
         students.add(s1);
         students.add(s2);
