@@ -14,6 +14,21 @@ public class FileParsing {
         fileParsing.writeToFileFromSampleText(sampleTextDoc);
 
         fileParsing.readFileUsingBufferedReader();
+
+        fileParsing.readFromSampleText();
+    }
+
+    private void readFromSampleText() {
+        try (FileReader fileReader = new FileReader("/home/nms-training/Desktop/SampleText.txt");
+        BufferedReader bufferedReader = new BufferedReader(fileReader);)
+        {
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void readFileUsingBufferedReader() {
