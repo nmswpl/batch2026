@@ -10,7 +10,22 @@ public class FileParsing {
 //        fileParsing.readFromFile();
 //        String text = fileParsing.readFromSampleText();
 //        fileParsing.writeToSampleText(text);
-        fileParsing.bufferedReadFromSampleText();
+       //fileParsing.bufferedReadFromSampleText();
+        fileParsing.bufferedReadFromSampleTextTry();
+    }
+
+    private void bufferedReadFromSampleTextTry() {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("/home/nms-training/Desktop/SampleText.txt"));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("/home/nms-training/Desktop/SampleText1.txt"))) {
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null) {
+                bufferedWriter.write(line + "\n");
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String bufferedReadFromSampleText() {
