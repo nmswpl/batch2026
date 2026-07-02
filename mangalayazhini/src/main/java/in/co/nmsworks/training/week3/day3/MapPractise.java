@@ -65,6 +65,7 @@ public class MapPractise {
         return score;
     }
 
+
     private Map<String, Integer> createGameMap() {
 
         Map<String, Integer> gameMap = new HashMap<>();
