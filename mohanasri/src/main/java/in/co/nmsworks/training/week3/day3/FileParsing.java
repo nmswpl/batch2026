@@ -7,7 +7,9 @@ public class FileParsing {
         FileParsing fileParsing = new FileParsing();
         //fileParsing.writeToFile();
         //fileParsing.readFromFile();
-        fileParsing.readFromAnotherFile();
+        //fileParsing.readFromAnotherFile();
+        fileParsing.readFromAnotherFile1();
+
         try {
             fileParsing.bufferREaderAndWriter();
         } catch (IOException e) {
@@ -17,7 +19,25 @@ public class FileParsing {
 
     }
 
-    private void bufferREaderAndWriter() throws IOException {
+    private void readFromAnotherFile1() {
+
+        try (FileReader fr = new FileReader("/home/nms-training/Downloads/SampleText.txt"); FileWriter fw = new FileWriter("/home/nms-training/Downloads/SampleTextOutput.txt")) {
+
+            int line;
+            while ((line = fr.read()) != -1) {
+                System.out.print((char)line);
+                fw.write(line);
+
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+           e.printStackTrace();
+        }
+    }
+
+        private void bufferREaderAndWriter() throws IOException {
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader("/home/nms-training/Downloads/SampleText.txt"));
