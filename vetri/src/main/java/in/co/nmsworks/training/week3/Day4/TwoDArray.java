@@ -18,7 +18,7 @@ public class TwoDArray {
         int[][] array = {
                 {1, 2, 3, 4},
                 {5, 6, 7, 8},
-                {9,10, 11, 12},
+                {9, 10, 11, 12},
                 {13, 14, 15, 16}
         };
         int rowLength = array.length;
@@ -28,16 +28,16 @@ public class TwoDArray {
             System.out.print(array[0][col] + " ");
         }
 
-        for (int row = 1; row <rowLength; row++) {
-            System.out.print(array[row][colLength-1]+" ");
+        for (int row = 1; row < rowLength; row++) {
+            System.out.print(array[row][colLength - 1] + " ");
         }
 
-        for (int col= rowLength-2; col >=0; col--) {
-            System.out.print(array[colLength-1][col]+" ");
+        for (int col = rowLength - 2; col >= 0; col--) {
+            System.out.print(array[colLength - 1][col] + " ");
         }
 
-        for (int row = colLength-2; row >=0 ; row--) {
-            System.out.print(array[row][0]+" ");
+        for (int row = colLength - 2; row >= 0; row--) {
+            System.out.print(array[row][0] + " ");
         }
 
     }
