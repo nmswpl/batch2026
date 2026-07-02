@@ -1,6 +1,7 @@
 package in.co.nmsworks.training.week2.weekend;
 
 public class LibraryBook {
+    private int id;
     private String title;
     private String author;
     private String publicationYear;
@@ -9,11 +10,20 @@ public class LibraryBook {
     public LibraryBook() {
     }
 
-    public LibraryBook(String title, String author, String publicationYear, Integer availableCount) {
+    public LibraryBook(int id, String title, String author, String publicationYear, Integer availableCount) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
         this.availableCount = availableCount;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -61,7 +71,8 @@ public class LibraryBook {
     @Override
     public String toString() {
         return "LibraryBook{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", publicationYear='" + publicationYear + '\'' +
                 ", availableCount=" + availableCount +

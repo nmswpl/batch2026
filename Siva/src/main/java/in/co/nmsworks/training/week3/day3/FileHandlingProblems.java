@@ -1,15 +1,34 @@
 package in.co.nmsworks.training.week3.day3;
 
 import java.io.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class FileHandlingProblems {
     public static void main(String[] args) {
         FileHandlingProblems fp = new FileHandlingProblems();
-        fp.readFromFileAndChangeParticularValue(fp);
-        fp.countNumberOfWordsAndSentence(fp);
-        fp.countNumberOfWordsLongerThanX(fp);
+//        fp.readFromFileAndChangeParticularValue(fp);
+//        fp.countNumberOfWordsAndSentence(fp);
+//        fp.countNumberOfWordsLongerThanX(fp);
+        fp.manageMovieList(fp);
+    }
+
+    private void manageMovieList(FileHandlingProblems fp) {
+        String content = fp.readFile("/home/nms-training/Downloads/MovieNameAndYear.txt");
+        String[] eachMovie = content.split(",");
+        Map<Integer, Set<String>> yearToMovies = new HashMap<>();
+        for (String movie : eachMovie) {
+            movie = movie.substring(1,movie.length()-1);
+            int index = movie.indexOf('-');
+            Integer year = Integer.parseInt(movie.substring(index+1));
+            String movieName = movie.substring(0,index);
+            Set<String> currentMovies = yearToMovies.get(year);
+            if (currentMovies == null) {
+                currentMovies = new HashSet<>();
+                yearToMovies.put(year, currentMovies);
+            }
+            currentMovies.add(movieName);
+        }
+        System.out.println(yearToMovies);
     }
 
     private void countNumberOfWordsLongerThanX(FileHandlingProblems fp) {
@@ -65,7 +84,7 @@ public class FileHandlingProblems {
         }
     }
 
-    private String readFile(String filePath) {
+    public String readFile(String filePath) {
         BufferedReader reader = null;
         String resultContent = "";
         try {

@@ -9,7 +9,8 @@ public class FileParsing {
 //        fileParsing.readFromFile();
 //        fileParsing.readAndWrite();
 //        fileParsing.readFromFile("/home/nms-training/Desktop/Output.txt");
-        fileParsing.buffered("/home/nms-training/Downloads/SampleText.txt","/home/nms-training/Desktop/Output.txt");
+//        fileParsing.buffered("/home/nms-training/Downloads/SampleText.txt","/home/nms-training/Desktop/Output.txt");
+        fileParsing.readAndWriteSample();
     }
 
     private void buffered(String readFilePath, String writeFilePath) {
@@ -101,5 +102,16 @@ public class FileParsing {
         finally {
         }
 
+    }
+    private void readAndWriteSample() {
+        try ( FileReader reader = new FileReader("/home/nms-training/Downloads/SampleText.txt"); FileWriter writer = new FileWriter("/home/nms-training/Downloads/Output.txt")){
+            int i;
+            while ((i = reader.read()) != -1) {
+                writer.write((char)i);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+//
     }
 }
