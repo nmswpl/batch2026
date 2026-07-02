@@ -51,4 +51,14 @@ public class Book {
         System.out.println("Author: " + this.author);
         System.out.println("Price: " + this.price);
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }
