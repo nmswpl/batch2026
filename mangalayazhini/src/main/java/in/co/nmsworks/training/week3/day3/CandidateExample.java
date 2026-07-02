@@ -12,9 +12,6 @@ public class CandidateExample {
     public static void main(String[] args) {
         CandidateExample candidateExample = new CandidateExample();
         List<Candidate> candidateObjList = candidateExample.readFromFile("/home/nms-training/Downloads/StudentDetails.txt");
-//        for (Candidate candidate : candidateObjList) {
-//            System.out.println(candidate.getName() + ", "+ candidate.getId() +" , "+ candidate.getDept() + " , "+candidate.getCollege());
-//        }
 
         candidateExample.writeCandidateIntoDB(candidateObjList);
     }
