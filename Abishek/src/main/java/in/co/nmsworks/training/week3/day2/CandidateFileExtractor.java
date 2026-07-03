@@ -9,7 +9,7 @@ public class CandidateFileExtractor {
         getValueFromFile();
     }
 
-    private static void getValueFromFile() {
+    public static void getValueFromFile() {
 
         List<Candidate> ls = new ArrayList<>();
         try {
