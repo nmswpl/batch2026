@@ -16,13 +16,22 @@ public class CarInfoRunner {
     public static void main(String[] args) {
         CarInfoRunner carInfoRunner = new CarInfoRunner();
         List<CarInfo> carInfoList = carInfoRunner.carDbToList();
-        System.out.println(carInfoList);
+//        System.out.println(carInfoList);
 
         Map<String, List<String>> manufacturerToCars = carInfoRunner.getManufacturerToCars(carInfoList);
-        System.out.println(manufacturerToCars);
+//        System.out.println(manufacturerToCars);
 
-        carInfoRunner.writeManufacturersToFile(manufacturerToCars);
-    }
+//        carInfoRunner.writeManufacturersToFile(manufacturerToCars);
+
+
+        ActiveCars activeCars = new ActiveCars();
+        activeCars.write(carInfoList);
+
+        DiscontinuedCars discontinuedCars = new DiscontinuedCars();
+        discontinuedCars.write(carInfoList);
+
+        }
+
 
     private void writeManufacturersToFile(Map<String, List<String>> manufacturerToCars) {
         BufferedWriter bufferedWriter = null;
