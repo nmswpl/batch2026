@@ -10,7 +10,8 @@ import java.util.List;
 public class CarProcessor {
     public static void main(String[] args) {
         CarProcessor carProcessor = new CarProcessor();
-        List<CarInfo> carDetails = carProcessor.readFromDB();
+        CarInfoRunner carInfoRunner = new CarInfoRunner();
+        List<CarInfo> carDetails = carInfoRunner.readFromDB();
         carProcessor.write(carDetails);
     }
 
@@ -20,7 +21,7 @@ public class CarProcessor {
 
         for (CarInfo carDetail : carDetails) {
             CarInfo.Status status = carDetail.getStatus();
-            if (status.equals(CarInfo.Status.Active)) {
+            if (CarInfo.Status.Active.equals(status) ){
                 activeCars.add(carDetail);
             }
             else  {
@@ -50,20 +51,5 @@ public class CarProcessor {
         } catch (IOException e) {
             e.printStackTrace();;
         }
-    }
-
-    private List<CarInfo> readFromDB() {
-        List<CarInfo> carDetails = new ArrayList<>();
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/training", "nms-training", "");
-             PreparedStatement ps = con.prepareStatement("select * from CarInfo")) {
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                CarInfo carInfo = new CarInfo(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getInt(4),CarInfo.Status.valueOf(rs.getString(5)));
-                carDetails.add(carInfo);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return carDetails;
     }
 }
