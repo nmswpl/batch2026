@@ -1,6 +1,8 @@
 package in.co.nmsworks.training.week3.day4;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.sql.*;
 import java.util.*;
@@ -65,7 +67,7 @@ public class CarInfo {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "CarInfo{" + "id=" + id + ", name='" + name + '\'' + ", manufacturer='" + manufacturer + '\'' + ", year=" + year + ", status='" + status + '\'' + '}';
     }
 
     @Override
@@ -80,7 +82,6 @@ public class CarInfo {
         return Objects.hash(id, name, manufacturer, year, status);
     }
 
-
     //*************************************************************************************************************************************************************//
 
     public static void main(String[] args) {
@@ -90,42 +91,53 @@ public class CarInfo {
         car.ReadfromFile();
     }
 
-    private void ReadfromFile() {
+    // Reads and processes the text file written by writeToFile()
+    public void ReadfromFile() {
+        String path = "/home/nms-training/Desktop/CarAndManufacturer.txt";
+        System.out.println("--- Reading from File ---");
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            String currentManufacturer = null;
+            while ((line = br.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty()) continue;
 
-
+                if (line.contains(" manufacture:")) {
+                    currentManufacturer = line.replace(" manufacture:", "").trim();
+                } else if (currentManufacturer != null) {
+                    System.out.println("Manufacturer: " + currentManufacturer + " -> Cars: " + line);
+                    currentManufacturer = null; // reset for next entry
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private void writeToFile(Map<String, List<String>> mappedObj) {
-
-
+    public void writeToFile(Map<String, List<String>> mappedObj) {
         String path = "/home/nms-training/Desktop/CarAndManufacturer.txt";
         try (BufferedWriter wr = new BufferedWriter(new FileWriter(path))){
-
-
-            for(Map.Entry<String,List<String>>entry: mappedObj.entrySet()){
+            for(Map.Entry<String,List<String>> entry: mappedObj.entrySet()){
                 String manufacturer = entry.getKey();
                 List<String> cars = entry.getValue();
 
                 String line = manufacturer + " manufacture: " +"\n"+ String.join(", ", cars)+"\n";
-                wr.write(line+"\n");
+                wr.write(line);
                 wr.newLine();
             }
-
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
-    private Map<String, List<String>> readFromDb() {
+    public Map<String, List<String>> readFromDb() {
         String url = "jdbc:mysql://localhost:3306/training";
         String user = "nms-training";
         String pwd ="";
         String query ="SELECT Id,Name,Manufacturer,YearOfProduction,Status from CarInfo";
         Map<String, List<String>> groupedMap = new HashMap<>();
         try(Connection con = DriverManager.getConnection(url,user,pwd);
-            PreparedStatement smt = con.prepareCall(query);
+            PreparedStatement smt = con.prepareStatement(query); // Fixed: changed prepareCall to prepareStatement
             ResultSet rs = smt.executeQuery()) {
             while (rs.next()) {
                 String name = rs.getString("Name");
