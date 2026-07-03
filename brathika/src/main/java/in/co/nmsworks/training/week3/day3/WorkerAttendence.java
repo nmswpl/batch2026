@@ -13,6 +13,23 @@ public class WorkerAttendence {
 //        workerList.addAll(workerSet2);
 //        System.out.println(workerList);
         workerAttendence.countNoOfDaysPresent(workerSet2);
+        workerAttendence.generateReport(workerSet2);
+    }
+
+    private void generateReport(Set<Worker> workerSet2) {
+        for (Worker worker : workerSet2) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("/home/nms-training/Desktop/"+worker.getWorkerId()));){
+
+                writer.write("Worker: "+worker.getWorkerId()+"\n");
+                writer.write("Name: "+worker.getWorkerName());
+                writer.write("Department: "+worker.getWorkerDepartment());
+                for (Map.Entry<String, Integer> entry : worker.getAttendence().entrySet()) {
+                    writer.write(entry.getKey()+" "+entry.getValue()+"\n");
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private void countNoOfDaysPresent(Set<Worker> workerSet2) {
@@ -36,7 +53,6 @@ public class WorkerAttendence {
         Set<Worker> workerSet1 = new HashSet<>();
         try {
             Map<String, Map<String, Integer >> attendenceMaptoId = new HashMap<>();
-            BufferedWriter writer = new BufferedWriter(new FileWriter("/home/nms-training/Desktop/Attendence.txt"));
             for (String s : workerSet) {
 
 
@@ -56,7 +72,7 @@ public class WorkerAttendence {
              //   System.out.println(worker);
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return workerSet1;
