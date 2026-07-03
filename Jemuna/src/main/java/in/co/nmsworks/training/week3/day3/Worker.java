@@ -1,22 +1,23 @@
 package in.co.nmsworks.training.week3.day3;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class Worker {
+
     private Integer workerID;
     private String workerName;
     private String department;
-    private Map<String,Integer> attendance;
+    private Map<String, Integer> attendance;
+
+    public Worker() {
+    }
 
     public Worker(Integer workerID, String workerName, String department, Map<String, Integer> attendance) {
         this.workerID = workerID;
         this.workerName = workerName;
         this.department = department;
         this.attendance = attendance;
-    }
-
-    public Worker(){
-
     }
 
     public Integer getWorkerID() {
@@ -51,6 +52,17 @@ public class Worker {
         this.attendance = attendance;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Worker worker = (Worker) o;
+        return Objects.equals(workerID, worker.workerID) && Objects.equals(workerName, worker.workerName) && Objects.equals(department, worker.department) && Objects.equals(attendance, worker.attendance);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(workerID, workerName, department, attendance);
+    }
 
     @Override
     public String toString() {
