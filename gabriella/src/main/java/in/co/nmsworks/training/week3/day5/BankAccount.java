@@ -24,8 +24,16 @@ public class BankAccount {
     }
 
     public void withdraw(Integer amount){
-        balance -= amount;
-        statements.add(amount + " debited");
+        if (balance >= amount) {
+            balance -= amount;
+            statements.add(amount + " debited");
+        } else if (balance > 0){
+            System.out.println("Amount greater than balance. Cannot withdraw amount.");
+        }
+        else {
+            System.out.println("0 balance. Cannot withdraw amount");
+            balance = 0;
+        }
     }
 
     public Integer checkBalance(){
@@ -37,5 +45,6 @@ public class BankAccount {
         for (String statement : statements) {
             System.out.println(statement);
         }
+        System.out.println("Balance: " + checkBalance());
     }
 }
