@@ -12,6 +12,7 @@ public class Account {
 
     public Account(Double amount) {
         this.amount = amount;
+        statement.add("Cr - "+amount+" Account Balance - "+amount);
     }
 
     public void deposit(Double creaditAmount) {
