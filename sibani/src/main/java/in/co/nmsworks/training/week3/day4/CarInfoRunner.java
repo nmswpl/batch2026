@@ -45,7 +45,7 @@ public class CarInfoRunner {
         return manufacturerWiseCar;
     }
 
-    private List<CarInfo> readFromDB() {
+    protected List<CarInfo> readFromDB() {
         List<CarInfo> carDetails = new ArrayList<>();
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/training", "nms-training", "");
              PreparedStatement ps = con.prepareStatement("select * from CarInfo")) {
