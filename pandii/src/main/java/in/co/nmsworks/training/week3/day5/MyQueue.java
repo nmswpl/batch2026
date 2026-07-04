@@ -10,7 +10,7 @@ public class MyQueue  {
         list.add(num);
     }
     public void deQueue() {
-        if(list.size()>0)
+        if(!list.isEmpty())
         {
             list.remove(0);
         }
@@ -20,12 +20,12 @@ public class MyQueue  {
 
     }
     public void front() {
-        if (list.isEmpty())
+        if (!list.isEmpty())
         {
-            System.out.println("List is empty");
+            System.out.println("Top element is "+list.get(0));
         }
         else {
-            System.out.println("Top element is "+list.get(0));
+            System.out.println("List is empty");
         }
     }
     public void size()

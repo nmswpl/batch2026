@@ -10,7 +10,7 @@ public class MyStack  {
         list.add(num);
     }
     public void pop() {
-        if(list.size()>0)
+        if(!list.isEmpty())
         {
             list.remove((list.size())-1);
         }
