@@ -19,8 +19,8 @@ public class WordFrequencyCount {
     }
 
     private void removeWords() {
-        Set<String> removableWords = new HashSet<>(Arrays.asList("a", "an", "the", "and", "but", "or", "of", "to", "in", "for", "on", "by", "with", "at", "from", "as", "is", "am", "are", "was", "were", "be", "been", "has", "have", "had", "this", "that", "it", "they", "we", "he", "she", "you", "i", "not", "will", "would"));
-        freqMap.remove(removableWords);
+        Set<String> words = new HashSet<>(Arrays.asList("a", "an", "the", "and", "but", "or", "of", "to", "in", "for", "on", "by", "with", "at", "from", "as", "is", "am", "are", "was", "were", "be", "been", "has", "have", "had", "this", "that", "it", "they", "we", "he", "she", "you", "i", "not", "will", "would"));
+        freqMap.keySet().removeAll(words);
         System.out.println("Removing the unwanted words from the List");
         for (Map.Entry<String, Integer> entry : freqMap.entrySet()) {
             System.out.println(entry.getKey());
