@@ -15,8 +15,7 @@ public class FileParsing {
     }
 
     private void tryWithResource() {
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("/home/nms-training/Downloads/SampleText.txt"));
-           BufferedWriter bufferedWriter = new BufferedWriter(new BufferedWriter(new FileWriter("/home/nms-training/Downloads/TrySampleText.txt")))){
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("/home/nms-training/Downloads/SampleText.txt"))){
             String line;
             while((line = bufferedReader.readLine())!=null){
                 System.out.println(line);
@@ -43,8 +42,7 @@ public class FileParsing {
 
     private String bufferReader() {
         String outputText = "";
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("/home/nms-training/Downloads/SampleText.txt"));
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("/home/nms-training/Downloads/SampleText.txt"))){
             String sentences;
             while((sentences = bufferedReader.readLine())!=null){
                 outputText+=sentences;
@@ -59,8 +57,7 @@ public class FileParsing {
 
     private String sampleReadToFile() {
         String sampleText="";
-        try {
-            FileReader sampleReader = new FileReader("/home/nms-training/Downloads/SampleText.txt");
+        try (FileReader sampleReader = new FileReader("/home/nms-training/Downloads/SampleText.txt")){
             int ch;
             while((ch = sampleReader.read()) !=-1){
                 sampleText+=(char) ch;
@@ -72,8 +69,7 @@ public class FileParsing {
     }
 
     private void sampleWriteToFile() {
-        try {
-            FileWriter sampleWriter = new FileWriter("/home/nms-training/Desktop/SampleOutput.txt");
+        try (FileWriter sampleWriter = new FileWriter("/home/nms-training/Desktop/SampleOutput.txt")){
             String sampleText = sampleReadToFile();
             String[] newSampleText = sampleText.split("\\.");
             for (String s : newSampleText) {
@@ -89,8 +85,7 @@ public class FileParsing {
     }
 
     private void readFromFile() {
-        try {
-            FileReader reader = new FileReader("/home/nms-training/Desktop/Output.txt");
+        try (FileReader reader = new FileReader("/home/nms-training/Desktop/Output.txt")){
             int ch;
             while ((ch = reader.read()) !=-1){
                 System.out.print((char) ch);
@@ -104,8 +99,7 @@ public class FileParsing {
 
     private void writeToFile() {
         String text = "My name is Jemuna. I am coming from Pudukkottai. ";
-        try {
-            FileWriter writer = new FileWriter("/home/nms-training/Desktop/Output.txt",true);
+        try (FileWriter writer = new FileWriter("/home/nms-training/Desktop/Output.txt",true)){
             writer.write(text);
             writer.flush();
         } catch (IOException e) {
