@@ -52,7 +52,6 @@ public class MapTask {
         studentOne.get("Alice").add(75);
         for (Map.Entry<String, List<Integer>> stringListEntry : studentOne.entrySet()) {
             System.out.println("Name of the Student : "+stringListEntry.getKey()+"List of scores : "+stringListEntry.getValue());
-
         }
     }
 

@@ -26,6 +26,7 @@ public class SetPractice {
         fruits1.add("Pomegranate");
         fruits1.add("Pine apple");
         System.out.println("Comparing two sets : "+ fruits.containsAll(fruits1));
+
     }
 
     private static void copySet() {

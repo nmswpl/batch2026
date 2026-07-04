@@ -12,7 +12,7 @@ public class Runner {
 
     private static void bookLinkedHashMap() {
 
-        LinkedHashMap<Integer, Double> mapLinkedBook = new LinkedHashMap<>();
+        Map<Integer, Double> mapLinkedBook = new LinkedHashMap<>();
         mapLinkedBook.put(1,25000.0);
         mapLinkedBook.put(3,45000.0);
         mapLinkedBook.put(2,34000.0);
@@ -22,6 +22,24 @@ public class Runner {
         for(Map.Entry<Integer, Double>entry : mapLinkedBook.entrySet()){
             System.out.println("BookId : "+entry.getKey()+" Book Price : "+entry.getValue());
         }
+
+        Map<Integer, String> idToName = new HashMap<>();
+        idToName.put(5,"Anusri");
+        idToName.put(6,"Jemuna");
+        idToName.put(7,"Mangala Yaazhini");
+        idToName.put(0,"Sanjeev");
+        System.out.println("get method for retrieving not stored value : "+idToName.get(25));
+        idToName.put(25,null);
+        System.out.println("Getting key 25 :"+idToName.get(25));
+        System.out.println("Adding new key value pair : "+idToName.put(1,"Mona"));
+        System.out.println("Altering Sanjeev into Google : "+ idToName.put(0,"Google"));
+        System.out.println("Printing ID to name: ");
+        for(Integer i : idToName.keySet()){
+            System.out.println("Id : "+i+" "+"Name : "+ idToName.get(i));
+
+        }
+
+
     }
 
 

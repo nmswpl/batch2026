@@ -9,8 +9,22 @@ public class FileParsing {
         //fileParsing.readFromFile();
         //fileParsing.sampleWriteToFile();
         //fileParsing.sampleReadToFile();
-        fileParsing.bufferReader();
-        fileParsing.bufferWriter();
+        //fileParsing.bufferReader();
+        //fileParsing.bufferWriter();
+        fileParsing.tryWithResource();
+    }
+
+    private void tryWithResource() {
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("/home/nms-training/Downloads/SampleText.txt"));
+           BufferedWriter bufferedWriter = new BufferedWriter(new BufferedWriter(new FileWriter("/home/nms-training/Downloads/TrySampleText.txt")))){
+            String line;
+            while((line = bufferedReader.readLine())!=null){
+                System.out.println(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void bufferWriter() {
