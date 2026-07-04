@@ -1,4 +1,4 @@
-package in.co.nmsworks.training.week3;
+package in.co.nmsworks.training.week3.day1;
 
 import in.co.nmsworks.training.week1.exam.Book;
 
@@ -24,16 +24,20 @@ public class Runner {
         listImplementation(bookList, book5, book4, book1);
 
         setImplementation(book1, book2, book3, book4, book5);
+//
+//        linkedHashSetImplementation(book1, book2, book3, book4, book5);
+//
+//        hashMapImplementation(bookList);
+//
+//        linkedHashMapImplementation(bookList);
 
-        linkedHashSetImplementation(book1, book2, book3, book4, book5);
 
-        hashMapImplementation(bookList);
-
-        linkedHashMapImplementation(bookList);
 
 
 
     }
+
+
 
     private static void listImplementation(List<Book> bookList, Book book5, Book book4, Book book1) {
         System.out.println("BookList");
@@ -71,21 +75,22 @@ public class Runner {
             System.out.println(book);
         }
 
+
+
         System.out.println(bookSet.size());
 //
 //
-//        System.out.println(bookSet.contains(book5));
-//        System.out.println(bookSet.containsAll(bookList));
-//        System.out.println(bookSet.isEmpty());
-//        System.out.println(bookSet.getClass());
-//        System.out.println(bookSet.remove(book1));
-//        System.out.println(bookSet);
-//        System.out.println(bookSet.toArray());
-//        bookList.clear();
-//        System.out.println(bookSet.isEmpty());
-//        System.out.println(bookSet.removeAll(bookSet));
-//        System.out.println(bookSet.isEmpty());
-//
+        System.out.println(bookSet.contains(book5));
+
+        System.out.println(bookSet.isEmpty());
+        System.out.println(bookSet.getClass());
+        System.out.println(bookSet.remove(book1));
+        System.out.println(bookSet);
+        System.out.println(bookSet.toArray());
+        System.out.println(bookSet.isEmpty());
+        System.out.println(bookSet.removeAll(bookSet));
+        System.out.println(bookSet.isEmpty());
+
     }
 
     private static void linkedHashSetImplementation(Book book1, Book book2, Book book3, Book book4, Book book5) {
@@ -111,10 +116,6 @@ public class Runner {
             map.put(book.getId(),book.getPrice());
         }
 
-//        for (Book book : bookList) {
-//            System.out.println(map.get(book.getId()));
-//        }                                                             //Accessing using List
-
         for (Integer i : map.keySet()) {
             System.out.println("Key : "+i+", Value (Price) : "+map.get(i));
 
@@ -136,6 +137,7 @@ public class Runner {
         for (Integer i : linkMap.keySet()) {
             System.out.println("Key : "+i+" - Title : "+linkMap.get(i).getTitle());
         }
+
     }
 
 
