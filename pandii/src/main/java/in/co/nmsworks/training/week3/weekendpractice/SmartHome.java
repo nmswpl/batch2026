@@ -10,13 +10,13 @@ public class SmartHome {
     }
 
     private void runner() {
-        Device device=new Device("Air Conditioner",1500,2);
-        Device device1=new Device("Electronic Light",20,2);
-        Device device2=new Device("Television",150,3);
+        Device airConditioner=new Device("Air Conditioner",1500,2);
+        Device electronicLight=new Device("Electronic Light",20,2);
+        Device television=new Device("Television",150,3);
         List<Device> deviceList=new ArrayList<>();
-        deviceList.add(device);
-        deviceList.add(device1);
-        deviceList.add(device2);
+        deviceList.add(airConditioner);
+        deviceList.add(electronicLight);
+        deviceList.add(television);
         int totalConsumption=calculateConsumption(deviceList);
         calculateAmt(totalConsumption);
     }
@@ -37,14 +37,18 @@ public class SmartHome {
             }
             totalConsumption+=device.getWatts()*device.getCycles();
         }
+        return displayConsumption(deviceList, totalConsumption);
+    }
+
+    private static int displayConsumption(List<Device> deviceList, int totalConsumption) {
         System.out.println("------------------------------------------");
-        System.out.println("Device  Watts  Cycle PowerUsed");
+        System.out.println("Device  Watts  Cycle  PowerUsed");
         System.out.println("------------------------------------------");
         for (Device device : deviceList) {
             System.out.println(device.getDeviceName()+" "+device.getWatts()+" "+device.getCycles()+" "+(device.getWatts()*device.getCycles()));
         }
         System.out.println("==========================================");
-        System.out.println("Total power Consumed : "+totalConsumption);
+        System.out.println("Total power Consumed : "+ totalConsumption);
         return totalConsumption;
     }
 }
