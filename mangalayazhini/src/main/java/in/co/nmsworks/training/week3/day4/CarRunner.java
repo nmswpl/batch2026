@@ -2,75 +2,57 @@ package in.co.nmsworks.training.week3.day4;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.*;
+import java.util.*;
 
 public class CarRunner {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         CarRunner carRunner = new CarRunner();
         List<Car> carObjectList = carRunner.readFromDB("jdbc:mysql://localhost:3306/training","nms-training","");
+        Map<String,List<Car>> manufacturerCarMap = carRunner.writeManufactureWiseCars(carObjectList);
+        carRunner.writeToFile(manufacturerCarMap, "/home/nms-training/Downloads/car_manufactures.txt");
 
-        Map<String, List<String>> manufacturerWiseCar = carRunner.convertToMap(carObjectList);
-
-        for(String manufacturer : manufacturerWiseCar.keySet()){
-            System.out.println(manufacturer + " : " + manufacturerWiseCar.get(manufacturer) );
-        }
-
-        carRunner.writeToFile(manufacturerWiseCar);
-//        carRunner.writeToFile();
-//        System.out.println("type of list : " + (carObjectList instanceof List));
-//        System.out.println("type of object in list : " + (carObjectList.get(0) instanceof Car));
     }
 
-    private void writeToFile(Map<String, List<String>> manufacturerWiseCar) {
+    private void writeToFile(Map<String, List<Car>> manufacturerCarMap, String path) {
+        try(BufferedWriter writerObj = new BufferedWriter(new FileWriter(path))){
+            for (String manufacturer : manufacturerCarMap.keySet()) {
 
-        try(BufferedWriter writerObj = new BufferedWriter(new FileWriter("/home/nms-training/Downloads/car.txt"))){
-            for(String manufacturer : manufacturerWiseCar.keySet()){
-                writerObj.write(manufacturer + " : ");
-                writerObj.write(manufacturerWiseCar.get(manufacturer).toString());
-                writerObj.write("\n");
+                List<Car> carsList = manufacturerCarMap.get(manufacturer);
+                writerObj.write("\n\n"+manufacturer + " : ");
+                for (Car car : carsList) {
+                    writerObj.write(car.getName());
+                }
             }
-        }
-        catch (Exception e){
-            e.printStackTrace();
+
+        }catch(Exception e){
+
         }
     }
 
-    private Map<String, List<String>> convertToMap(List<Car> carObjectList) {
-        Map<String, List<String>> manufacturerWiseCar = new HashMap<>();
+
+    private Map<String,List<Car>> writeManufactureWiseCars(List<Car> carObjectList){
+        Map<String,List<Car>> manufacturerCarMap = new HashMap<>();
+
 
         for (Car car : carObjectList) {
-            String carManufacturer = car.getManufacturer();
-            List<String> carNamesList = manufacturerWiseCar.get(carManufacturer);
-            if(carNamesList == null){
-                carNamesList = new ArrayList<>();
-                manufacturerWiseCar.put(carManufacturer,carNamesList);
+            String manufacturer = car.getManufacturer();
+            List<Car> cars = manufacturerCarMap.get(manufacturer);
+            if(cars == null){
+                cars = new ArrayList<>();
+                manufacturerCarMap.put(manufacturer,cars);
             }
-            carNamesList.add(car.getName());
+            cars.add(car);
         }
-        return manufacturerWiseCar;
+
+
+        for (String carManufacturer : manufacturerCarMap.keySet()) {
+            System.out.println("\n"+carManufacturer + " : ");
+            List<Car> carsList = manufacturerCarMap.get(carManufacturer);
+            System.out.println(carsList);
+        }
+        return manufacturerCarMap;
     }
-
-    private void writeToFile(List<Car> carObjectList, String path) {
-        try(BufferedWriter writerObj = new BufferedWriter(new FileWriter(path,true)); ){
-            for (Car car : carObjectList) {
-                writerObj.write(car.getManufacturer() + car.getName());
-            }
-
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-
-    }
-
-
 
     private List<Car> readFromDB(String path,String username, String password) {
         List<Car> carObjectList = new ArrayList<>();

@@ -54,4 +54,15 @@ public class Car {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", yearOfProduction=" + yearOfProduction +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }
