@@ -3,7 +3,7 @@ package in.co.nmsworks.training.week1.exam;
 public class Test {
     public static void main(String[] args) {
         printMean();
-//        printGrade(87);
+        printGrade(87);
 
     }
 
