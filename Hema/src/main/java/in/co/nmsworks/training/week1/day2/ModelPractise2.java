@@ -8,20 +8,20 @@ public class ModelPractise2 {
 
     public static void main(String[] args) {
 
-//        largestThreeNumbers(1,2,3);
-//        positiveOrNegative(-2);
-//        isAlphabet('a');
-//        sumOfNumbers();
-//        findFactorialUsingForLoop(10);
-//        findFactorialUsingWhileLoop(5);
-//        mulitplicationTable(5);
-//        fibonnacci(3);
-//        lowerCaseAlphabet();
-//        countNoOfDigits();
-//        power();
-//        built_in_Power();
-//        checkPrime();
-//        findFactors(60);
+        largestThreeNumbers(1,2,3);
+        positiveOrNegative(-2);
+        isAlphabet('a');
+        sumOfNumbers();
+        findFactorialUsingForLoop(10);
+        findFactorialUsingWhileLoop(5);
+        multiplicationTable(5);
+        fibonacci(3);
+        lowerCaseAlphabet();
+        countNoOfDigits();
+        power();
+        built_in_Power();
+        checkPrime();
+        findFactors(60);
         int fact = factorialUsingRecursion(5);
         System.out.println(fact);
 
@@ -43,7 +43,7 @@ public class ModelPractise2 {
             System.out.print("Factors of "+ num +" are: 1, ");
             for (int i = 2; i <= num/2; i++)
             {
-                if(num%i == 0)
+                if(num % i == 0)
                     System.out.print(i+ ", ");
             }
             System.out.print(num);
@@ -53,8 +53,7 @@ public class ModelPractise2 {
     public static void checkPrime() {
         sc = new Scanner((System.in));
         System.out.println("Enter a Number:");
-        int n =sc.nextInt();
-        int temp = n;
+        int n = sc.nextInt();
         int factor = 0;
         for (int i = 2; i <= n/2; i++) {
             if(( n % i ) == 0 )
@@ -120,8 +119,8 @@ public class ModelPractise2 {
         }
     }
 
-    public static void fibonnacci(int n) {
-        System.out.println("Fionnacci Series till "+n+" terms:");
+    public static void fibonacci(int n) {
+        System.out.println("Fibonacci Series till "+n+" terms: \n");
 
         if( n == 1)
         {
@@ -135,12 +134,12 @@ public class ModelPractise2 {
         {
             int a = 0;
             int b = 1;
-            System.out.print("0, 1, ");
+            System.out.print("0, 1");
 
             for(int j = 2; j < n; j++)
             {
                 int c = a + b;
-                System.out.print(c+", ");
+                System.out.print(", "+c);
                 a = b;
                 b = c;
             }
@@ -148,7 +147,7 @@ public class ModelPractise2 {
 
     }
 
-    public static void mulitplicationTable(int a) {
+    public static void multiplicationTable(int a) {
         for (int i = 1; i <= 10 ; i++) {
             System.out.println(a+" * "+i+" = "+(a*i));
         }
@@ -158,7 +157,7 @@ public class ModelPractise2 {
     public static void findFactorialUsingWhileLoop(int num) {
         int factorial = 1;
         int temp = num;
-        while(temp!=1)
+        while(temp != 1)
         {
             factorial = factorial * temp;
             temp--;
@@ -197,6 +196,8 @@ public class ModelPractise2 {
         else
             System.out.println(ch+ " is not an alphabet");
 
+
+        System.out.println("\"IS ALPHABETIC => \"+ "+  Character.isAlphabetic('.'));   // checked built in method
     }
 
 
@@ -216,11 +217,11 @@ public class ModelPractise2 {
             if(a > c)
                 System.out.println(a+" is greatest");
             else
-                System.out.println(b+" is greatest");
+                System.out.println(c+" is greatest");
         }
         else
         {
-            System.out.println(c+" is greatest");
+            System.out.println(b+" is greatest");
         }
     }
 

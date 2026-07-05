@@ -5,13 +5,13 @@ import java.util.*;
 
 public class ModelClass {
     public static void main(String[] args) {
-//        addInteger();
-//        checkOddEven();
-//        checkVowelConsonant();
-//        computeQuotientRemainder();
-//        findAscii();
-//        multipyNumbers();
-//        printInteger();
+        addInteger();
+        checkOddEven();
+        checkVowelConsonant();
+        computeQuotientRemainder();
+        findAscii();
+        multipyNumbers();
+        printInteger();
         swapNumbers();
 
     }
