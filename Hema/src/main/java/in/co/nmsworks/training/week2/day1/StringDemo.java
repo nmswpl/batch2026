@@ -15,8 +15,6 @@ public class StringDemo {
         longestWord();
 
         toTitleCase();
-
-
     }
 
     private static void toTitleCase() {
@@ -29,6 +27,8 @@ public class StringDemo {
             res = res + s.substring(1);
             res = res + " ";
         }
+
+
 
         System.out.println(res.trim());
     }
@@ -71,8 +71,8 @@ public class StringDemo {
 
         String[] temp = s.split("");
 
-        for (int i = temp.length-1; i >= 0 ; i--) {
-            result = result+temp[i];
+        for (int i = temp.length - 1; i >= 0 ; i--) {
+            result = result + temp[i];
         }
 
         System.out.println(result);
@@ -91,7 +91,6 @@ public class StringDemo {
             else if("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ".contains(string))
                 consonant++;
 
-
         }
 
         System.out.println("Vowels : "+vowel);
@@ -103,8 +102,6 @@ public class StringDemo {
         String[] result = input.split("\\.");
         for (String s : result) {
             System.out.println(s);
-//            System.out.println("Hi");
-
         }
     }
 
@@ -126,6 +123,7 @@ public class StringDemo {
     public static void wordsWithEvenLength() {
         String str = "Hello This is java language";
         String[] res = str.split(" ");
+
         for (String string : res) {
             if( string.length() % 2 == 0 )
                 System.out.println(string);
@@ -161,7 +159,14 @@ public class StringDemo {
             }
         }
         result = result + str.substring(i+1,j+1);
-        System.out.println(result);
+        System.out.println("Method 1 : "+result);
+
+        String[] strArray = str.split(" ");
+
+        System.out.print("Method 2 : "+strArray[strArray.length-1]);
+        for (int i1 = strArray.length - 2; i1 > 0; i1--) {
+            System.out.print(" "+strArray[i1]);
+        }
 
     }
 }
