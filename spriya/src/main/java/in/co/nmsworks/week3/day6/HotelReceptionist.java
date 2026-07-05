@@ -99,6 +99,7 @@ public class HotelReceptionist {
 
                         break;
 
+
                     case 7:
 
                         System.out.println("Thank You!");

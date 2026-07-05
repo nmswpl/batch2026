@@ -6,6 +6,7 @@ public class Hindi implements CheckInOrOut {
         System.out.println("नमस्ते");
     }
 
+
     @Override
     public void checkOut() {
         System.out.println("धन्यवाद, फिर से आइए");

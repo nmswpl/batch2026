@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class GuestDetails {
 
+
     private String name;
     private int guestId;
     private String language;
