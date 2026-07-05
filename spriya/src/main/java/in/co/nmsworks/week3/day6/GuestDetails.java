@@ -3,6 +3,7 @@ package in.co.nmsworks.week3.day6;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class GuestDetails {
 
     private String name;

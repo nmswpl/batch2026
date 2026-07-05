@@ -89,6 +89,7 @@ public class HotelReceptionist {
 
                         break;
 
+
                     case 6:
 
                         System.out.print("Enter your Name : ");
