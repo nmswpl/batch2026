@@ -28,12 +28,13 @@ public class CricketEvaluation {
                 if("Team Alpha".equals(player.getTeamName()))
                 {
                     Integer totalRuns = 0;
+                    Integer totalBalls = player.getRuns().size();
                     for (Integer run : player.getRuns()) {
                         totalRuns += run;
                     }
 
                     teamAlphaRun += totalRuns;
-                    String data = player.getName() + "\t" + totalRuns +"\n";
+                    String data = player.getName() + "\t" + totalRuns + "\t" + totalBalls +"\n";
                     bufferedWriter.write(data);
                 }
             }
@@ -49,12 +50,13 @@ public class CricketEvaluation {
                 if("Team Omega".equals(player.getTeamName()))
                 {
                     Integer totalRuns = 0;
+                    Integer totalBalls = player.getRuns().size();
                     for (Integer run : player.getRuns()) {
                         totalRuns += run;
                     }
 
                     teamOmegaRun += totalRuns;
-                    String data = player.getName() + "\t" + totalRuns +"\n";
+                    String data = player.getName() + "\t" + totalRuns + "\t" + totalBalls +"\n";
                     bufferedWriter.write(data);
                 }
             }
