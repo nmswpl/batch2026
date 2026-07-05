@@ -45,13 +45,13 @@ public class MobilePhone {
         this.price = price;
     }
 
-    public void display()
-    {
-        System.out.println("ID = "+this.id);
-        System.out.println("Brand = "+this.brand);
-        System.out.println("Model = "+this.model);
-        System.out.println("Price = "+this.price);
-        System.out.println();
+    @Override
+    public String toString() {
+        return "MobilePhone{" +
+                "id=" + id +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", price=" + price +
+                '}';
     }
-
 }

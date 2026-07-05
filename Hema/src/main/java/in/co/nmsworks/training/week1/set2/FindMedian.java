@@ -2,7 +2,7 @@ package in.co.nmsworks.training.week1.set2;
 
 public class FindMedian {
     public static void main(String[] args) {
-//        findMedian();
+        findMedian();
     }
 
     private static void findMedian() {
@@ -11,12 +11,12 @@ public class FindMedian {
 
         if (length % 2 == 0)
         {
-            float median = (float)( array[length/2] + array[( length/2 ) - 1] )/2 ;
-            System.out.println("Median = "+ median);
+            float median = (float) (array[length/2] + array[(length/2) - 1]) / 2 ;
+            System.out.println("Median = " + median);
         }
         else
         {
-            System.out.println("Median = "+array[length/2]);
+            System.out.println("Median = " + array[length/2]);
         }
     }
 

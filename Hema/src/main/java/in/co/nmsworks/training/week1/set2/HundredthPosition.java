@@ -30,7 +30,7 @@ public class HundredthPosition {
             case 9: return "Nine";
 
         }
-        return "";
+        return null;
     }
 
 }

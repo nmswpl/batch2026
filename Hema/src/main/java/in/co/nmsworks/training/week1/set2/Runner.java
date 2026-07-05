@@ -8,12 +8,11 @@ public class Runner {
         MobilePhone mp4 = new MobilePhone(204, "Iphone", "M3", 90000 );
         MobilePhone mp5 = new MobilePhone(205, "Poco", "M4", 70000 );
 
-        mp1.display();
-        mp2.display();
-        mp3.display();
-        mp4.display();
-        mp5.display();
-
+        System.out.println(mp1);
+        System.out.println(mp2);
+        System.out.println(mp3);
+        System.out.println(mp4);
+        System.out.println(mp5);
 
     }
 }
