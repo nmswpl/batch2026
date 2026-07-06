@@ -21,6 +21,7 @@ public class PractiseProblems {
         System.out.println("Enter one number: ");
         int number = scan.nextInt();
         System.out.println("You entered :  " + number);
+        scan.close();
 
     }
 
@@ -37,6 +38,7 @@ public class PractiseProblems {
 
         int sum =  number1 + number2;
         System.out.println("The sum is  " + sum);
+        scan.close();
 
     }
 
@@ -47,9 +49,9 @@ public class PractiseProblems {
     }
 
 
-    public static void calculateQuotientAndRemainder(float dividend, float divisor){
-        float quotient = dividend / divisor;
-        float remainder = dividend % divisor;
+    public static void calculateQuotientAndRemainder(int dividend, int divisor){
+        int quotient = dividend / divisor;
+        int remainder = dividend % divisor;
         System.out.println("\nDivision of two numbers: ");
         System.out.println("Quotient : " + quotient);
         System.out.println("Remainder : " + remainder);
@@ -57,13 +59,13 @@ public class PractiseProblems {
 
 
     public static void swapTwoNumbers(double num1, double num2){
-        double temp;
+        double tempVariable;
         System.out.println("\nSwapping of two numbers: ");
         System.out.println("Before Swap");
         System.out.println("First Number : " + num1);
         System.out.println("Second Number : " + num2);
 
-        temp = num1;
+        tempVariable = num1;
         num1 = num2;
         num2 = temp;
 
@@ -84,6 +86,7 @@ public class PractiseProblems {
         else{
             System.out.println(number + " is odd");
         }
+        scan.close();
     }
 
 
