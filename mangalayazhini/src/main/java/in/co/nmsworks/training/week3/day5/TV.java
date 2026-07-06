@@ -5,3 +5,4 @@ public class TV extends Appliance{
         super(name,powerRatings);
     }
 }
+

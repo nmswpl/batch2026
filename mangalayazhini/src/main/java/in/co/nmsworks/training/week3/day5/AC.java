@@ -6,4 +6,5 @@ public class AC extends Appliance {
         super(name,powerRatings);
     }
 
+
 }

@@ -5,3 +5,4 @@ public class SmartLight extends Appliance{
         super(name,powerRatings);
     }
 }
+

@@ -1,6 +1,6 @@
 package in.co.nmsworks.training.week3.day5;
 
-public class Appliance {
+public abstract class Appliance {
     private String name;
     private Integer powerRatings;
     private Boolean isOn = false;

@@ -8,6 +8,7 @@ public class HomeRunner {
 
         Home myHome = new Home();
 
+
         myHome.myAppliances.add(voltasAC);
         myHome.myAppliances.add(sonyTV);
         myHome.myAppliances.add(phlipsSmartLight);

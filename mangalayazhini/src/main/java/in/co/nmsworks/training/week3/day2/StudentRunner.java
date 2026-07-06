@@ -1,9 +1,6 @@
 package in.co.nmsworks.training.week3.day2;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class StudentRunner {
     public static void main(String[] args) {
@@ -37,6 +34,8 @@ public class StudentRunner {
 
         System.out.println(std1);
         List<Student> studentsList = new ArrayList<>();
+
+
 
         studentsList.add(std1);
         studentsList.add(std2);
