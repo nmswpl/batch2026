@@ -1,12 +1,12 @@
 package in.co.nmsworks.week4.day1;
 
-public class SavingsAccount implements Account {
+public class Wallet implements Account {
 
     private int limit;
     private int balance;
 
 
-    public SavingsAccount(int limit, int balance) {
+    public Wallet(int limit, int balance) {
         this.limit = limit;
         this.balance = balance;
     }
@@ -25,7 +25,6 @@ public class SavingsAccount implements Account {
         }
         if (newAmount > limit()) {
             System.out.println("Amount exceeds Limit");
-
             return limit();
         }
 
@@ -36,13 +35,12 @@ public class SavingsAccount implements Account {
     @Override
     public int deposit(int amount) {
 
-
         if (amount > limit()) {
             System.out.println("Amount exceeds Limit");
             return limit();
         }
 
-        balance +=amount;
+        balance += amount;
         return balance;
     }
 }

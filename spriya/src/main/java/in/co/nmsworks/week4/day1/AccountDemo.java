@@ -2,6 +2,7 @@ package in.co.nmsworks.week4.day1;
 
 public class AccountDemo {
 
+
     public void transaction(Account account, int[] transactions) {
         for (int i = 0; i < transactions.length; i++) {
             if (transactions[i] > 0) {

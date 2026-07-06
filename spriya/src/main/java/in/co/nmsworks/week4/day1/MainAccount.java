@@ -5,6 +5,7 @@ public class MainAccount {
         Wallet wallet = new Wallet(5000, 10000);
         SavingsAccount savingsAccount = new SavingsAccount(2000, 15000);
 
+
         int[] transaction = {3000, -4000, 1000, -2000};
         AccountDemo accountDemo = new AccountDemo();
 

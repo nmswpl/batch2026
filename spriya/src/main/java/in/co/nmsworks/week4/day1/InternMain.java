@@ -8,6 +8,7 @@ public class InternMain {
         Intern intern1 = new Intern(5000, "Priya");
         Intern intern2 = new Intern(6000, "Kavya");
 
+
         Intern[] arr = new Intern[]{intern1, intern2};
 
         double sum = 0;
