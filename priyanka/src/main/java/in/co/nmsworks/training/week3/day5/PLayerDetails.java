@@ -4,42 +4,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PLayerDetails {
+
     private String name;
     private String teamName;
     private List<Integer> runsList = new ArrayList<>();
-    private Integer totalRuns = 0;
+
+    public PLayerDetails(String name, String teamName, List<Integer> runsList) {
+        this.name = name;
+        this.teamName = teamName;
+        this.runsList = runsList;
+    }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getTeamName() {
         return teamName;
     }
 
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
-
     public List<Integer> getRunsList() {
         return runsList;
     }
 
-    public void setRunsList(List<Integer> runsList) {
-        this.runsList = runsList;
-    }
+    public int getTotalRuns() {
+        int total = 0;
 
-    public Integer getTotalRuns() {
-        return totalRuns;
-    }
-
-    public void setTotalRuns(List<Integer> runsList) {
-        for (Integer i : runsList) {
-            totalRuns += i;
+        for (Integer run : runsList) {
+            total += run;
         }
+
+        return total;
+    }
+
+    public int getBallsFaced() {
+        return runsList.size();
     }
 }
