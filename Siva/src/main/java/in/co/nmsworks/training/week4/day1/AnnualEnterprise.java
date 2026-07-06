@@ -27,10 +27,10 @@ public class AnnualEnterprise {
                 String[] splitContent = content.split(",");
                 if ("COUNT".equals(splitContent[6].substring(1,splitContent[6].length()-1))){
                     ps1.setInt(1,Integer.parseInt(splitContent[0]));
-                    ps1.setString(2,splitContent[1]);
-                    ps1.setString(3,splitContent[2]);
-                    ps1.setString(4,splitContent[3]);
-                    ps1.setString(5,splitContent[4]);
+                    ps1.setString(2,splitContent[1].substring(1,splitContent[1].length()-1));
+                    ps1.setString(3,splitContent[2].substring(1,splitContent[2].length()-1));
+                    ps1.setString(4,splitContent[3].substring(1,splitContent[3].length()-1));
+                    ps1.setString(5,splitContent[4].substring(1,splitContent[4].length()-1));
                     ps1.setString(6,splitContent[5]);
                     ps1.executeUpdate();
                 }
