@@ -21,7 +21,6 @@ public class TelephoneRunner {
             if(telephoneBook.getName().equalsIgnoreCase(name)){
                 System.out.println(telephoneBook);
             }
-
         }
     }
 }

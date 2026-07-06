@@ -1,6 +1,6 @@
 package in.co.nmsworks.training.week3.day6;
 
-public class PlayersList {
+public class Player {
 
     private String name;
     private String teamName;
@@ -8,10 +8,10 @@ public class PlayersList {
     private int noOfRuns;
 
 
-    public PlayersList() {
+    public Player() {
     }
 
-    public PlayersList(String name, String teamName, int noOfBalls, int noOfRuns) {
+    public Player(String name, String teamName, int noOfBalls, int noOfRuns) {
         this.name = name;
         this.teamName = teamName;
         this.noOfBalls = noOfBalls;

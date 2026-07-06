@@ -10,32 +10,32 @@ import java.util.List;
 public class PlayersScoresCard {
 
     public static void main(String[] args) {
-        List<PlayersList> playersLists = new ArrayList<>();
-        readPlayersFile(playersLists);
-        printDetails(playersLists);
+        List<Player> players = new ArrayList<>();
+        readPlayersFile(players);
+        printDetails(players);
     }
 
-    private static void printDetails(List<PlayersList> playersLists ) {
+    private static void printDetails(List<Player> players) {
         System.out.println("Team : Team Alpha");
         int totalBallA = 0;
         int totalrunsA = 0;
         int totalBallB = 0;
         int totalrunsB = 0;
-        for (PlayersList playersList : playersLists) {
-            if(playersList.getTeamName().equals("Team Alpha")){
-                totalBallA+= playersList.getNoOfBalls();
-                totalrunsA+= playersList.getNoOfRuns();
-                System.out.println(playersList.getName()+ "  "+ playersList.getNoOfBalls()+"  "+playersList.getNoOfRuns());
+        for (Player player : players) {
+            if(player.getTeamName().equals("Team Alpha")){
+                totalBallA+= player.getNoOfBalls();
+                totalrunsA+= player.getNoOfRuns();
+                System.out.println(player.getName()+ "  "+ player.getNoOfBalls()+"  "+ player.getNoOfRuns());
             }
         }
         System.out.println("Total          "+totalBallA+"  "+totalrunsA);
         System.out.println("Team : Team Omega");
-        for (PlayersList playersList : playersLists) {
+        for (Player player : players) {
 
-            if(playersList.getTeamName().equals("Team Omega")){
-                totalBallB+= playersList.getNoOfBalls();
-                totalrunsB+= playersList.getNoOfRuns();
-                System.out.println(playersList.getName()+ "  "+ playersList.getNoOfBalls()+"  "+playersList.getNoOfRuns());
+            if(player.getTeamName().equals("Team Omega")){
+                totalBallB+= player.getNoOfBalls();
+                totalrunsB+= player.getNoOfRuns();
+                System.out.println(player.getName()+ "  "+ player.getNoOfBalls()+"  "+ player.getNoOfRuns());
             }
         }
         System.out.println("Total          "+totalBallB+"  "+totalrunsB);
@@ -50,7 +50,7 @@ public class PlayersScoresCard {
         }
     }
 
-    public static void readPlayersFile(List<PlayersList> playersLists ) {
+    public static void readPlayersFile(List<Player> playersLists ) {
         try(BufferedReader reader =  new BufferedReader(new FileReader("/home/nms-training/Downloads/cricket_match_data.txt"))){
             String line ;
             while((line = reader.readLine())!=null){
@@ -62,7 +62,7 @@ public class PlayersScoresCard {
                 for (int i = 2; i <playerDetails.length; i++) {
                     runs += Integer.parseInt(playerDetails[i]);
                 }
-                PlayersList players = new PlayersList(name, teamName, noOfBalls, runs);
+                Player players = new Player(name, teamName, noOfBalls, runs);
                 playersLists.add(players);
             }
 
