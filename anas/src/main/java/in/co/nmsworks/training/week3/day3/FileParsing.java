@@ -11,6 +11,21 @@ public class FileParsing {
 //        fileParsing.readFromSampleText();
        // fileParsing.writeToSampleText();
         fileParsing.bufferedReaderWriter();
+        fileParsing.tryResourse();
+    }
+
+    private void tryResourse() {
+        try(FileReader fr = new FileReader("/home/nms-training/Downloads/SampleText.txt"); FileWriter fw = new FileWriter("/home/nms-training/Downloads/SampleText.txt")){
+            BufferedReader br = new BufferedReader(fr);
+            String line = "";
+            while((line = br.readLine()) != null){
+                System.out.println(line);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void bufferedReaderWriter() {
