@@ -22,7 +22,7 @@ public class WordFrequencyCounter {
         wf.printWordsInDescendingOrderOfFrequency(wordsBasedOnCount);
     }
 
-    private static void removeExcludeWords(String[] excludeWords, Map<String, Integer> wordToCount, List<List<String>> wordsBasedOnCount) {
+    public static void removeExcludeWords(String[] excludeWords, Map<String, Integer> wordToCount, List<List<String>> wordsBasedOnCount) {
         for (String excludeWord : excludeWords) {
             Integer index = wordToCount.get(excludeWord);
             if (index != null)
@@ -30,7 +30,7 @@ public class WordFrequencyCounter {
         }
     }
 
-    private void printWordsInDescendingOrderOfFrequency(List<List<String>> wordsBasedOnCount) {
+    public void printWordsInDescendingOrderOfFrequency(List<List<String>> wordsBasedOnCount) {
         Collections.reverse(wordsBasedOnCount);
         for (List<String> wordsList : wordsBasedOnCount) {
             if (wordsList.size() != 0)
@@ -39,7 +39,7 @@ public class WordFrequencyCounter {
         Collections.reverse(wordsBasedOnCount);
     }
 
-    private List<List<String>> getCountToWords(Map<String, Integer> wordToCount) {
+    public List<List<String>> getCountToWords(Map<String, Integer> wordToCount) {
         Integer maxFrequency = Collections.max(wordToCount.values());
         List<List<String>> wordsBasedOnCount = new ArrayList<>();
         for (int i = 0; i <= maxFrequency; i++) {
@@ -55,7 +55,7 @@ public class WordFrequencyCounter {
         return wordsBasedOnCount;
     }
 
-    private Map<String, Integer> getWordToCount(String[] allWords) {
+    public Map<String, Integer> getWordToCount(String[] allWords) {
         Map<String, Integer> wordToCount = new HashMap<>();
         for (String word : allWords) {
             wordToCount.put(word, wordToCount.getOrDefault(word, 0) + 1);
@@ -63,7 +63,7 @@ public class WordFrequencyCounter {
         return wordToCount;
     }
 
-    private String[] splitWords(String fileContent) {
+    public String[] splitWords(String fileContent) {
         fileContent = cleanContent(fileContent);
         String[] allWords = fileContent.split(" ");
         return allWords;
@@ -76,7 +76,7 @@ public class WordFrequencyCounter {
     }
 
 
-    private String readFile(String filePath) {
+    public String readFile(String filePath) {
         String fileContent = "";
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))){
             String eachline = "";
@@ -88,5 +88,18 @@ public class WordFrequencyCounter {
             e.printStackTrace();
         }
         return fileContent;
+    }
+    public Integer getNumberOfStatement(String filePath) {
+        Integer noOfStatement = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))){
+            String eachline = "";
+            while ((eachline = reader.readLine()) != null) {
+                noOfStatement += 1;
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return noOfStatement;
     }
 }
