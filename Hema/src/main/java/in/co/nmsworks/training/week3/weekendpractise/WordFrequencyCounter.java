@@ -13,15 +13,40 @@ public class WordFrequencyCounter {
         WordFrequencyCounter wordFrequencyCounter = new WordFrequencyCounter();
 
         String content = wordFrequencyCounter.readFile();
+
+        int[] result = wordFrequencyCounter.processParagraph(content);
+
+        System.out.println("No.of sentences = "+result[0]);
+        System.out.println("No of words = "+result[1]);
+        System.out.println("No of letters = "+result[2]);
+
         String cleanedContent = wordFrequencyCounter.cleanContent(content);
 
-        Map<String,Integer> countMap = EachWordOccurenceCount(cleanedContent);
-        dislpayDescendingFrequency(countMap);
+        Map<String,Integer> countMap = EachWordOccurrenceCount(cleanedContent);
+        displayDescendingFrequency(countMap);
         List<String> wordList = new ArrayList<>(Arrays.asList( "a", "an", "the", "and", "but", "or", "of", "to", "in", "for", "on", "by", "with",
                 "at", "from", "as", "is", "am", "are", "was", "were", "be", "been", "has", "have", "had", "this", "that", "it", "they", "we", "he",
                 "she", "you", "i", "not", "will", "would"));
 
         excludeWords(cleanedContent, wordList);
+    }
+
+    private int[] processParagraph(String content) {
+
+        int[] result = new int[3];
+
+        String[] statements = content.split("\\.");
+        result[0] = statements.length;
+
+        String[] words = content.split(" ");
+        result[1] = words.length;
+
+//        String[] letters = content.split(""); // Method 1
+        char[] letters = content.toCharArray();
+//        result[2] = content.length();         // Method 2
+        result[2] = letters.length;             // Method 3
+
+        return result;
     }
 
     private static void excludeWords(String content, List<String> wordList) {
@@ -33,7 +58,7 @@ public class WordFrequencyCounter {
         System.out.println(content);
     }
 
-    private static void dislpayDescendingFrequency(Map<String, Integer> map) {
+    private static void displayDescendingFrequency(Map<String, Integer> map) {
 
         Map<String,Integer> sortedMap = map.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue, LinkedHashMap::new ));
 
@@ -43,7 +68,7 @@ public class WordFrequencyCounter {
         }
     }
 
-    private static Map<String,Integer> EachWordOccurenceCount(String cleanedContent) {
+    private static Map<String,Integer> EachWordOccurrenceCount(String cleanedContent) {
         Map<String,Integer> wordCountMap = new HashMap<>();
 
         for (String word : cleanedContent.split(" ")) {
