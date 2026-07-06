@@ -70,11 +70,12 @@ public class PractiseProblems {
         System.out.println("Number : " + number);
         if(number > 0){
             System.out.println("The number "+ number +"is Positive");
-
+        }
+        else if (number < 0 ){
+            System.out.println("The number"+ number +" is Negative");
         }
         else{
-            System.out.println("The number"+ number +" is Negative");
-
+            System.out.println("The number"+ number +" is zero");
         }
     }
 
@@ -213,20 +214,34 @@ public class PractiseProblems {
 
     /** Check if number is prime or composite no*/
     public void isPrimeNo(int number){
-        for (int i = 2; i < number; i++) {
-            if(number %i == 0 ){
-                System.out.println(number +" is composite number");
-                break;
-            }
+        int isComposite=0; 
+        if(number == 0 || number == 1 ) {
+            System.out.println("The no is neither prime or composite no");
         }
-        System.out.println(number + " is prime no");
+        if(number < 0 ){
+            
+        }
+        else {
+            for (int i = 2; i < number; i++) {
+                if(number %i == 0 ){
+                    isComposite=1; 
+                    System.out.println(number +" is composite number");
+                    break;
+                }
+            }
+            if(isComposite == 0){
+                System.out.println(number + " is prime no");
+            }
+            
+        }
+        
     }
 
     /** Factors of a number*/
     public void factorsOfInteger(int number){
 
         System.out.println("Factors : ");
-        for (int i = 1; i < number; i++) {
+        for (int i = 1; i <= number; i++) {
             if(number %i == 0 ){
                 System.out.print(" " + i);
             }
@@ -235,8 +250,11 @@ public class PractiseProblems {
 
     /** Factorial using recursive method*/
     public int recursiveFactorial(int num){
-        if(num == 1){
+        if(num == 1 || num == 0){
             return 1;
+        }
+        else if(num < 0 ){
+            return -1*(-num*recursiveFactorial((-num)-1));
         }
         else{
             return num*recursiveFactorial(num-1);
