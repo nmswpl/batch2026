@@ -66,9 +66,10 @@ public class DefaultAccount implements Account {
 
     @Override
     public String toString() {
-        return "Wallet{" +
+        return "DefaultAccount{" +
                 "initialBalance=" + initialBalance +
                 ", transactionLimit=" + transactionLimit +
+                ", balance=" + balance +
                 '}';
     }
 }

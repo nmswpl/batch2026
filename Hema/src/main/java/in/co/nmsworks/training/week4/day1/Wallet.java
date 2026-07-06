@@ -8,5 +8,4 @@ public class Wallet extends DefaultAccount {
         setBalance(initialBalance);
     }
 
-
 }
