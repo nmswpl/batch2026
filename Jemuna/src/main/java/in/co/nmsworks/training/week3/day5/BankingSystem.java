@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BankingSystem {
-    private int depositAmount=0;
     private int availableBalance=0;
     private List<String> statements = new ArrayList<>();
 
@@ -38,7 +37,7 @@ public class BankingSystem {
                         break;
 
                     case 2:
-                        system.withdrawl(scanner);
+                        system.withdrawal(scanner);
                         break;
 
                     case 3:
@@ -63,7 +62,7 @@ public class BankingSystem {
 
     }
 
-    private void withdrawl(Scanner scanner) {
+    private void withdrawal(Scanner scanner) {
         System.out.println("Enter the amount to Deposit");
         int amount = scanner.nextInt();
         System.out.println("You are withdrawing "+amount+" from your account");
@@ -80,6 +79,7 @@ public class BankingSystem {
     }
 
     private void balanceCheck() {
+
         System.out.println("Available Balance : "+ availableBalance);
     }
 
