@@ -12,19 +12,9 @@
             border-radius: 5px;
 
         }
-        .row1{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: black;
-            font-size: 20px;
-            border: 1px red solid;
-            border-radius: 5px;
-
-        }
         .cell{
             align-content: center;
-            margin-left: 20px;
+            margin-left: 60px;
             font-size: 40px;
             font-weight: bold;
             height: 10vh;
@@ -32,10 +22,19 @@
             border-right: 1px solid red;
 
         }
-
-        .weekend{
+        .days{
             align-content: center;
             margin-left: 10px;
+            font-size: 37px;
+            font-weight: bold;
+            height: 10vh;
+            width: 20vw;
+            border-right: 1px solid red;
+            color: red;
+        }
+        .weekend{
+            align-content: center;
+            margin-left: 60px;
             font-size: 40px;
             font-weight: bold;
             height: 10vh;
@@ -46,18 +45,18 @@
     </style>
 </head>
 <body>
-<div style="height: 80vh;width: 70vw;border-radius: 20%;margin-left: 20vw">
+<div style="height: 80vh;width: 60vw;border-radius: 20%;margin-left: 20vw">
     <div style="background-color: red; height: 10vh;font-weight: bold;font-size: 50px; border-radius: 10px; color: white;align-items: center;border: red solid 1px" >
         Calender
     </div>
-    <div class="row1">
-        <div class="weekend">Sunday</div>
-        <div class="cell">Monday</div>
-        <div class="cell">Tuesday</div>
-        <div class="cell">Wednesday</div>
-        <div class="cell">Thursday</div>
-        <div class="cell">Friday</div>
-        <div class="weekend">Saturday</div>
+    <div class="row">
+        <div class="days">Sunday</div>
+        <div class="days">Monday</div>
+        <div class="days">Tuesday</div>
+        <div class="days">Wednesday</div>
+        <div class="days">Thursday</div>
+        <div class="days">Friday</div>
+        <div class="days">Saturday</div>
     </div>
     <div class="row">
         <div class="weekend"></div>

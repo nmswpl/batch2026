@@ -6,8 +6,8 @@ public class EmployeeRunner {
         Employee emp2 = new Employee(1,"Gobika", "Developer",30000, "Amazon");
 
 
-        System.out.println(emp.getCOMPANY());
-        System.out.println(emp2.getCOMPANY());
+        System.out.println(emp.getCOMPANYNAME());
+        System.out.println(emp2.getCOMPANYNAME());
 
         System.out.println(emp);
 //        System.out.println(emp.getName());

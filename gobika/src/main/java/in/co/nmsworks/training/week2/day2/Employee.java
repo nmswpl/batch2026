@@ -9,7 +9,7 @@ public class Employee {
     private  long salary;
     private final String COMPANYNAME;
 
-    public String getCOMPANY() {
+    public String getCOMPANYNAME() {
         return COMPANYNAME;
     }
 

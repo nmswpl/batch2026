@@ -2,7 +2,6 @@ package in.co.nmsworks.training.week1.exam;
 
 public class Book {
 
-
     private int id;
     private String title;
     private String author;
@@ -53,5 +52,15 @@ public class Book {
         System.out.println("Author :" + this.author);
         System.out.println("Price :" + this.price);
     }
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
 
 }

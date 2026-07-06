@@ -1,8 +1,5 @@
 package in.co.nmsworks.training.week3.weekend;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 
