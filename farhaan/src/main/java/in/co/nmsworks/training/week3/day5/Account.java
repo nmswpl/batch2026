@@ -30,8 +30,8 @@ public class Account {
 
     public void deposit(int amount) {
             balance += amount;
-            System.out.println(" The amount " + amount + " has been deposited");
-            statement.add(" The amount " + amount + " has been deposited");
+            System.out.println("The amount " + amount + " has been deposited");
+            statement.add("The amount " + amount + " has been deposited");
         System.out.println("________________________________________________________________________");
     }
      public void withdrawal(int amount) {

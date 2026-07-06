@@ -4,20 +4,20 @@ import java.util.Scanner;
 
 public class PracticeQuestions {
     public static void main(String[] args) {
-//        largestAmongThree(45,30,48);
-//        checkPostiveOrNegative(54);
-//        checkAlphabetOrNot('8');
-//        sumOfNaturalNumbers();
-//        findFactorialUsingForLoop(5);
-//        findFactorialUsingWhileLoop(6);
-//        printMultiplicationTable(7);
-//        printFibonacciSeries(10);
-//        printLowercaseAlphabet();
-//        countingDigitsOfInteger();
-//        calculatingPower();
-//        powerUsingFunction();
-//        checkPrimeNumber();
-//        findFactors();
+        largestAmongThree(45,30,48);
+        checkPostiveOrNegative(54);
+        checkAlphabetOrNot('8');
+        sumOfNaturalNumbers();
+        findFactorialUsingForLoop(5);
+        findFactorialUsingWhileLoop(6);
+        printMultiplicationTable(7);
+        printFibonacciSeries(10);
+        printLowercaseAlphabet();
+        countingDigitsOfInteger();
+        calculatingPower();
+        powerUsingFunction();
+        checkPrimeNumber();
+        findFactors();
         long result = findFactorialUsingRecursion(6);
         System.out.println("The factorial is : " + result);
 
@@ -115,16 +115,17 @@ public class PracticeQuestions {
     }
 
     public static void calculatingPower() {
-        long baseNumber, power;
+        long baseNumber,power;
+        long  result = 1;
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the Base Number :");
         baseNumber = sc.nextLong();
         System.out.println("Enter the Power : ");
         power = sc.nextLong();
-        for (int i = 1; i < power; i++) {
-            baseNumber *= baseNumber;
+        for (int i = 0; i < power; i++) {
+            result *= baseNumber;
         }
-        System.out.println("Answer = " + baseNumber);
+        System.out.println("Answer = " + result);
     }
 
     public static void powerUsingFunction() {
@@ -151,7 +152,7 @@ public class PracticeQuestions {
         if (isPrime) {
             System.out.println(number + " is a prime number");
         } else {
-            System.out.println(number + " is a prime number");
+            System.out.println(number + " is not a prime number");
         }
     }
 

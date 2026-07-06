@@ -10,6 +10,7 @@ public class BankingRunner {
         account.checkBalance();
         account.withdrawal(3000);
         account.checkBalance();
+        account.withdrawal(3000);
         account.withdrawal(200);
         account.checkBalance();
         account.deposit(500);
