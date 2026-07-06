@@ -7,7 +7,7 @@ public class AccountProcessor {
     }
 
     private void accountOperations() {
-        Account acc = new Account(1001);
+        AccountPojo acc = new AccountPojo(1001);
         acc.chechBalance();
         acc.deposit(1000);
         acc.chechBalance();

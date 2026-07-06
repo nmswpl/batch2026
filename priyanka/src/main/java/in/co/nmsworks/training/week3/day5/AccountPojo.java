@@ -4,13 +4,13 @@ package in.co.nmsworks.training.week3.day5;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Account {
+public class AccountPojo {
     int accNumber;
     int balance=0;
 
     List<String> statements = new ArrayList<>();
 
-    public Account(int accNumber) {
+    public AccountPojo(int accNumber) {
         this.accNumber = accNumber;
 //        this.balance = balance;
 
