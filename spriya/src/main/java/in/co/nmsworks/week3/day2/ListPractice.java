@@ -8,10 +8,10 @@ public class ListPractice {
         list.add("Red");
         list.add("Blue");
         list.add("Green");
-        for (String s : list) {
-            System.out.println(s);
-
-        }
+//        for (String s : list) {
+//            System.out.println(s);
+//
+//        }
     }
 
     public void iterate() {
