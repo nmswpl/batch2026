@@ -17,6 +17,7 @@ public class Intern {
         this.name = name;
     }
 
+
     public Integer getSalary() {
         return salary;
     }

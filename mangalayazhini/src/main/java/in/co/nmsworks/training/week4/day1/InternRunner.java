@@ -15,3 +15,4 @@ public class InternRunner {
         company1.calculateAvgInternSalary(company1.getInternList());
     }
 }
+
