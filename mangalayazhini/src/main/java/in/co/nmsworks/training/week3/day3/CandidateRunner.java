@@ -5,6 +5,7 @@ import java.util.List;
 public class CandidateRunner {
     public static void main(String[] args) {
 
+
         CandidateDetailsParser candidateParser = new CandidateDetailsParser();
         List<String> candidateList = candidateParser.collectDetails("/home/nms-training/Downloads/StudentDetails.txt");
         System.out.println("List of Candidates : ");

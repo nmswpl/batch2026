@@ -1,12 +1,12 @@
 package in.co.nmsworks.training.week3.day3;
 
-public class Candiate {
+public class Candidate {
     private String name;
     private Integer id ;
     private String college;
     private String dept;
 
-    public Candiate(String name, Integer id, String college, String dept) {
+    public Candidate(String name, Integer id, String college, String dept) {
         this.name = name;
         this.id = id;
         this.college = college;
