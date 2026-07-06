@@ -7,5 +7,6 @@ public class FrequencyCounterRunner {
         FrequencyCounter counterObj = new FrequencyCounter();
         Map<String,Integer> countMap = counterObj.countWordsFrequency("/home/nms-training/Downloads/Word_Frequency.txt");
 
+
     }
 }

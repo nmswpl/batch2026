@@ -3,12 +3,12 @@ package in.co.nmsworks.training.week3.day5;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class FrequencyCounter {
     public Map<String,Integer> countWordsFrequency(String path){
         Map<String, Integer> wordsCountMap = new HashMap<>();
+        Map<Integer, List<String>> descCountwordsMap = new HashMap<>();
         try(BufferedReader readerObj = new BufferedReader(new FileReader(path))){
             String sentence ;
             String[] words ; 
@@ -43,9 +43,33 @@ public class FrequencyCounter {
 
             }
 
+//            for (String s : wordsCountMap.keySet()) {
+//                System.out.println(s + " : " + wordsCountMap.get(s) );
+//            }
+
+
             for (String s : wordsCountMap.keySet()) {
-                System.out.println(s + " : " + wordsCountMap.get(s) );
+                List<String> strList = descCountwordsMap.get(wordsCountMap.get(s));
+                if(strList == null){
+                    strList = new ArrayList<>();
+                    descCountwordsMap.put(wordsCountMap.get(s),strList);
+                }
+                strList.add(s);
             }
+
+            List<Integer> descList = new ArrayList<>();
+            descList.addAll(descCountwordsMap.keySet());
+//            for (Integer i : descCountwordsMap.keySet()) {
+//                System.out.println(i + " "+descCountwordsMap.get(i) );
+//            }
+
+            System.out.println("Words Frequency :");
+            Collections.sort(descList);
+            for (int i = descList.size()-1; i >=0 ; i--) {
+                System.out.println(descList.get(i) + " : " + descCountwordsMap.get(descList.get(i)));
+            }
+
+
         }catch(Exception e){
             e.printStackTrace();
         }
