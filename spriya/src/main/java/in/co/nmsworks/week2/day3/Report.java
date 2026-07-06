@@ -16,6 +16,7 @@ public class Report {
         System.out.println("General Report Body");
     }
 
+
     public void footer() {
         System.out.println("Footer");
     }

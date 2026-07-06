@@ -6,6 +6,7 @@ public class MainReport {
 
         Report report = new Report();
         SalesReport sr = new SalesReport();
+        InventoryReport ir=new InventoryReport();
 
         System.out.println("Report");
         report.generte();
@@ -14,5 +15,8 @@ public class MainReport {
 
         System.out.println("Sales Report");
         sr.generte();
+
+        System.out.println("Inventory Report");
+        ir.generte();
     }
 }
