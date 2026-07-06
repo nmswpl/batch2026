@@ -99,7 +99,7 @@ public class WordFrequencyCounter {
         list.add("i");
         list.add("not");
         list.add("will");
-        list.add("would");
+        list.add("would");//must  be set
 
     }
 }
