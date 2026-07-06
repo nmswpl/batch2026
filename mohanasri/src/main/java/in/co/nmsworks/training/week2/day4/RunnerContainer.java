@@ -9,6 +9,8 @@ public class RunnerContainer {
         sb.study();
         sb.setBrandName("STAR");
         System.out.println(sb);
+        Textbook tb = new Textbook("Java");
+        tb.read();
 
     }
 }

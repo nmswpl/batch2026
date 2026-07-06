@@ -24,6 +24,8 @@ public class MapExamples {
             entry.getKey();
             entry.getValue();
         }
+
+
 //        for (Integer map : map.keySet()){
 //            System.out.println(map + " : " + map.get(map));
 //        }

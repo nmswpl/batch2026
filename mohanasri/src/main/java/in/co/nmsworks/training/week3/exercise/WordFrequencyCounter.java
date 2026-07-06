@@ -20,24 +20,19 @@ public class WordFrequencyCounter {
         try (BufferedReader br = new BufferedReader(new FileReader("/home/nms-training/Downloads/Word_Frequency.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] words = line.toLowerCase().split("\\W+");
+                String[] words = line.toLowerCase().replace(",", " ").replace("."," ").split("  ");
 
                 for (String word : words) {
-                    if (word.isEmpty()) {
-                        continue;
-                    }
-
                     if (excludedWords.contains(word)) {
                         continue;
                     }
-
                     if (wordCounts.containsKey(word)) {
                         int currentCount = wordCounts.get(word);
                         wordCounts.put(word, currentCount + 1);
                     } else {
                         wordCounts.put(word, 1);
                     }
-                }
+                }System.out.println("\n--- Printing Map ---");
             }
         } catch (IOException e) {
             e.printStackTrace();

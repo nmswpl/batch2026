@@ -5,7 +5,7 @@ import com.sun.crypto.provider.DESParameters;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BankAccount {
+public class   BankAccount {
     int balance;
     List<String> statement = new ArrayList<>();
 

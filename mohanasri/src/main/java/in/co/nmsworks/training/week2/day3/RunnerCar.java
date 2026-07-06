@@ -5,6 +5,7 @@ public class RunnerCar {
 
         Car[] cars = new Car[5];
 
+
         for (int i = 0; i < cars.length; i++) {
             cars[i] = new Car(i, " ");
         }

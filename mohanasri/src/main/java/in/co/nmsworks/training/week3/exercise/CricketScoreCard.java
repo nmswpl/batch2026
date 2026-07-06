@@ -35,19 +35,19 @@ public class CricketScoreCard {
                     continue;
                 }
 
-                String[] tokens = line.split(",");
-                if (tokens.length < 3) {
+                String[] scores = line.split(",");
+                if (scores.length < 3) {
                     continue;
                 }
 
-                String playerName = tokens[0].trim();
-                String teamName = tokens[1].trim();
+                String playerName = scores[0].trim();
+                String teamName = scores[1].trim();
 
                 int playerRuns = 0;
                 int ballsFaced = 0;
 
-                for (int i = 2; i < tokens.length; i++) {
-                    String runValue = tokens[i].trim();
+                for (int i = 2; i < scores.length; i++) {
+                    String runValue = scores[i].trim();
 
                     if (runValue.isEmpty()) {
                         continue;
