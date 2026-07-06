@@ -1,15 +1,15 @@
 package in.co.nmsworks.training.week3.day6;
 
-public class HomeAppliance {
+public class Device {
 
     private String name;
     private int watts;
     private int cycles;
 
-    public HomeAppliance() {
+    public Device() {
     }
 
-    public HomeAppliance(String name, int watts, int cycles) {
+    public Device(String name, int watts, int cycles) {
         this.name = name;
         this.watts = watts;
         this.cycles = cycles;
