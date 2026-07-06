@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeSimulation {
-    List<ElectonicDevice> devices = new ArrayList<>();
+    List<ElectronicDevice> devices = new ArrayList<>();
 
     public static void main(String[] args) {
 
         HomeSimulation homeSimulation = new HomeSimulation();
-        ElectonicDevice ac = new ElectonicDevice("AC","OFF",1500);
-        ElectonicDevice smartLight = new ElectonicDevice("Smart Light","OFF",20);
-        ElectonicDevice television = new ElectonicDevice("Television","OFF",150);
+        ElectronicDevice ac = new ElectronicDevice("AC","OFF",1500);
+        ElectronicDevice smartLight = new ElectronicDevice("Smart Light","OFF",20);
+        ElectronicDevice television = new ElectronicDevice("Television","OFF",150);
 
         ac.setState("ON");
         ac.setState("OFF");
@@ -34,12 +34,12 @@ public class HomeSimulation {
 
     }
 
-    private void displayDetails(List<ElectonicDevice> devices) {
+    private void displayDetails(List<ElectronicDevice> devices) {
 
         System.out.println("\n********************************************************************************************\n");
         System.out.println("DEVICE\t\tWATTS\t\tCYCLES\t\tPOWER USED");
         System.out.println("\n********************************************************************************************\n");
-        for (ElectonicDevice device : devices) {
+        for (ElectronicDevice device : devices) {
             System.out.println(device.getDeviceName()+"\t\t\t"+device.getPowerRating()+"\t\t\t"+device.getCycle()+"\t\t\t"+(device.getPowerRating() * device.getCycle()));
         }
         System.out.println("\n********************************************************************************************\\n");
@@ -47,10 +47,10 @@ public class HomeSimulation {
         System.out.println("ELECTRICITY BILL : "+(float)((calculateTotalEnergyConsumed(devices)/10))+"\n");
     }
 
-    private Integer calculateTotalEnergyConsumed(List<ElectonicDevice> devices) {
+    private Integer calculateTotalEnergyConsumed(List<ElectronicDevice> devices) {
 
         Integer totalPoweredConsumed = 0;
-        for (ElectonicDevice device : devices) {
+        for (ElectronicDevice device : devices) {
             totalPoweredConsumed += (device.getPowerRating()*device.getCycle());
         }
 

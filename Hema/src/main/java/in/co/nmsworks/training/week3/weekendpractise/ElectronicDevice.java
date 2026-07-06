@@ -1,12 +1,12 @@
 package in.co.nmsworks.training.week3.weekendpractise;
 
-public class ElectonicDevice {
+public class ElectronicDevice {
     private String deviceName;
     private String state;
     private Integer powerRating;
     private Integer cycle = 0;
 
-    public ElectonicDevice(String deviceName, String state, Integer powerRating) {
+    public ElectronicDevice(String deviceName, String state, Integer powerRating) {
         this.deviceName = deviceName;
         this.state = state;
         this.powerRating = powerRating;
@@ -29,11 +29,11 @@ public class ElectonicDevice {
         {
             this.setCycle(this.getCycle()+1);
             this.state = newState;
-            System.out.println(this.getDeviceName()+" is ON");
+            System.out.println(getDeviceName()+" is ON");
         }
         else {
             this.state = newState;
-            System.out.println(this.getDeviceName()+" is OFF");
+            System.out.println(getDeviceName()+" is OFF");
         }
 
     }
