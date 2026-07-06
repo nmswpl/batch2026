@@ -1,10 +1,11 @@
 package in.co.nmsworks.week3.day2;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SetPractice {
 
-    public void addFruits(Set fruit) {
+    public void addFruits(Set<String> fruit) {
 
 
         System.out.println("Fruits name");
@@ -17,7 +18,7 @@ public class SetPractice {
 
     }
 
-    public void iterate(Set fruit) {
+    public void iterate(Set<String> fruit) {
         for (Object o : fruit) {
             System.out.println(o);
         }
@@ -42,11 +43,9 @@ public class SetPractice {
         }
     }
 
-    public void copyMethod(Set fruit) {
+    public void copyMethod(Set<String> fruit) {
 
-        Set<String> fruit1 = new HashSet<>();
-
-        fruit1.addAll(fruit);
+        Set<String> fruit1 = new HashSet<>(fruit);
 
         for (String s : fruit1) {
             System.out.println(s);
@@ -75,7 +74,7 @@ public class SetPractice {
         System.out.println();
     }
 
-    public void removeElement(Set fruit) {
+    public void removeElement(Set<String> fruit) {
         System.out.println("Remove Specified eleemnt from set");
         System.out.println(fruit.remove("Apple"));
     }
