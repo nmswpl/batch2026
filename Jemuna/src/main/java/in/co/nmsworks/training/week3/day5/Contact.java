@@ -2,13 +2,13 @@ package in.co.nmsworks.training.week3.day5;
 
 import java.util.Objects;
 
-public class TelephoneBook {
+public class Contact {
 
     private String name;
     private String mobile;
     private String email;
 
-    public TelephoneBook(String name, String mobile, String email) {
+    public Contact(String name, String mobile, String email) {
         this.name = name;
         this.mobile = mobile;
         this.email = email;
@@ -41,7 +41,7 @@ public class TelephoneBook {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        TelephoneBook that = (TelephoneBook) o;
+        Contact that = (Contact) o;
         return Objects.equals(name, that.name) && Objects.equals(mobile, that.mobile) && Objects.equals(email, that.email);
     }
 
