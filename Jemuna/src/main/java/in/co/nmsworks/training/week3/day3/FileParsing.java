@@ -5,12 +5,12 @@ import java.io.*;
 public class FileParsing {
     public static void main(String[] args) {
         FileParsing fileParsing = new FileParsing();
-        //fileParsing.writeToFile();
-        //fileParsing.readFromFile();
-        //fileParsing.sampleWriteToFile();
-        //fileParsing.sampleReadToFile();
-        //fileParsing.bufferReader();
-        //fileParsing.bufferWriter();
+        fileParsing.writeToFile();
+        fileParsing.readFromFile();
+        fileParsing.sampleWriteToFile();
+        fileParsing.sampleReadToFile();
+        fileParsing.bufferReader();
+        fileParsing.bufferWriter();
         fileParsing.tryWithResource();
     }
 
