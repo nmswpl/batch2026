@@ -3,7 +3,7 @@ package in.co.nmsworks.training.week3.day6;
 public class Guests {
     private  Integer id ;
     private String name;
-    private String preferedLanguage;
+    private String preferedLang;
 
     public Guests() {
     }
@@ -11,7 +11,7 @@ public class Guests {
     public Guests(Integer id, String name, String language) {
         this.id = id;
         this.name = name;
-        this.preferedLanguage = language;
+        this.preferedLang = language;
     }
 
     public Integer getId() {
@@ -30,12 +30,12 @@ public class Guests {
         this.name = name;
     }
 
-    public String getPreferedLanguage() {
-        return preferedLanguage;
+    public String getPreferedLang() {
+        return preferedLang;
     }
 
-    public void setPreferedLanguage(String preferedLanguage) {
-        this.preferedLanguage = preferedLanguage;
+    public void setPreferedLang(String preferedLang) {
+        this.preferedLang = preferedLang;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Guests {
         return "Guest{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", language='" + preferedLanguage + '\'' +
+                ", language='" + preferedLang + '\'' +
                 '}';
     }
 }

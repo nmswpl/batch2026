@@ -35,9 +35,9 @@ public class HotelReceptionist {
                     int visit = scanner.nextInt();
                     scanner.nextLine();
                     if (visit == 1) {
-                        receptionist.login(guestId);
+                        receptionist.checkIn(guestId);
                     } else if (visit == 2) {
-                        receptionist.logOut(guestId);
+                        receptionist.checkOut(guestId);
                     } else {
                         System.out.println("Invalid Visit Type");
                     }
@@ -53,9 +53,9 @@ public class HotelReceptionist {
                     int existingVisit = scanner.nextInt();
                     scanner.nextLine();
                     if (existingVisit == 1) {
-                        receptionist.login(existingId);
+                        receptionist.checkIn(existingId);
                     } else if (existingVisit == 2) {
-                        receptionist.logOut(existingId);
+                        receptionist.checkOut(existingId);
                     } else {
                         System.out.println("Invalid Visit Type");
                     }
@@ -98,12 +98,12 @@ public class HotelReceptionist {
         return id++;
     }
 
-    public void login(int id) {
+    public void checkIn(int id) {
 
         Guests guest = guestsMap.get(id);
         if (guest != null) {
             Language language;
-            switch (guest.getPreferedLanguage()) {
+            switch (guest.getPreferedLang()) {
 
                 case "tamil":
                     language = new Tamil();
@@ -116,14 +116,14 @@ public class HotelReceptionist {
                 default:
                     language = new English();
             }
-            language.checkIn(guest.getName());
+            language.checkInMessage(guest.getName());
 
         } else {
             System.out.println("Guest ID not found");
         }
     }
 
-    public void logOut(int id) {
+    public void checkOut(int id) {
 
         Guests guest = guestsMap.get(id);
 
@@ -131,7 +131,7 @@ public class HotelReceptionist {
 
             Language language;
 
-            switch (guest.getPreferedLanguage()) {
+            switch (guest.getPreferedLang()) {
 
                 case "tamil":
                     language = new Tamil();
@@ -144,7 +144,7 @@ public class HotelReceptionist {
                 default:
                     language = new English();
             }
-            language.checkOut(guest.getName());
+            language.checkOutMessage(guest.getName());
 
         } else {
             System.out.println("Guest ID not found");

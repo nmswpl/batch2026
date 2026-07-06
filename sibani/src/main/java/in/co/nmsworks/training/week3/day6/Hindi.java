@@ -2,12 +2,12 @@ package in.co.nmsworks.training.week3.day6;
 
 public class Hindi implements Language {
     @Override
-    public void checkIn(String name) {
+    public void checkInMessage(String name) {
         System.out.println("Namasteyy "+name+ "hamare hotel mein aapka swagat hai...");
     }
 
     @Override
-    public void checkOut(String name) {
+    public void checkOutMessage(String name) {
         System.out.println("Dhanyvad "+name+" ,phir iyega...");
     }
 }
