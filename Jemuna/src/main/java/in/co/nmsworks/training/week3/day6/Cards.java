@@ -19,18 +19,23 @@ public class Cards {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the no of Players : ");
         int noOfPlayers = scanner.nextInt();
-        for (int i = 0; i < deck.size(); i++) {
+        if(noOfPlayers>0){
+            for (int i = 0; i < deck.size(); i++) {
                 int playerIndex = i % noOfPlayers;
                 String cards= deck.get(i);
                 String players = "Player "+playerIndex;
                 playersMap.putIfAbsent(players,new ArrayList<>());
                 playersMap.get(players).add(cards);
-        }
-        for (Map.Entry<String, List<String>> cardsPerPlayer : playersMap.entrySet()) {
-            System.out.println(cardsPerPlayer.getKey()+" : "+cardsPerPlayer.getValue());
+            }
+            for (Map.Entry<String, List<String>> cardsPerPlayer : playersMap.entrySet()) {
+                System.out.println(cardsPerPlayer.getKey()+" : "+cardsPerPlayer.getValue());
 
+            }
+            scanner.close();
         }
-        scanner.close();
+        else{
+            System.out.println("Enter a valid number of players...");
+        }
 
         }
     }
