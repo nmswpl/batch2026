@@ -1,6 +1,6 @@
 package in.co.nmsworks.training.week4.day1;
 
-public interface Account {
+interface Account {
 
     int limit();
     int withdraw(int amount);

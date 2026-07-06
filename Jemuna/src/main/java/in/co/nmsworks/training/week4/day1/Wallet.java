@@ -1,33 +1,49 @@
 package in.co.nmsworks.training.week4.day1;
 
-import java.util.Map;
-import java.util.Scanner;
-
 public class Wallet implements Account {
-    int availableBalance =500;
 
-    @Override
-    public int limit() {
-        int limit = 50000;
+    int limit;
+    int balance = 500 ;
+
+    public int getLimit() {
         return limit;
     }
 
+    public int getBalance() {
+        return balance;
+    }
+
+    @Override
+    public int limit() {
+        limit = 500;
+        return limit;
+    }
 
     @Override
     public int withdraw(int amount) {
-        if(amount<=limit() && amount<=availableBalance){
-            availableBalance -= amount;
-            System.out.println("An amount of "+amount+" withdrawn successfully...");
+        if(amount<=limit && amount<=balance){
+            balance-=amount;
+            return balance;
         }
-        return availableBalance;
+        else if(amount>balance) {
+            System.out.println("Insufficient Balance...\n"+"Available Balance : "+balance);
+        }
+        else{
+            System.out.println("Withdraw Limit exceeded...");
+        }
+        return balance;
     }
 
     @Override
     public int deposit(int amount) {
-        if(amount<=limit()){
-            availableBalance += amount ;
-            System.out.println("An amount of "+amount+" has been deposited into your account Successfully...");
+        if(amount>=limit){
+            balance+=amount;
+            System.out.println("An amount of "+amount+" has been deposited in your account");
+            return balance;
         }
-        return availableBalance;
+        else{
+            System.out.println("Limited Exceeded... ");
+        }
+        return balance;
     }
 }
