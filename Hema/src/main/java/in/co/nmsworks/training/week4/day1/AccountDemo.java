@@ -15,12 +15,12 @@ public class AccountDemo {
         for (int transaction : transactions) {
             if( transaction < 0 )
             {
-                Integer balance = account.withdraw(Math.abs(transaction));
+                int balance = account.withdraw(Math.abs(transaction));
                 System.out.println("BALANCE = "+balance);
             }
             else if( transaction > 0)
             {
-                Integer balance = account.deposit(transaction);
+                int balance = account.deposit(transaction);
                 System.out.println("BALANCE = "+balance);
             }
             else

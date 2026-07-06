@@ -6,24 +6,12 @@ public class DefaultAccount implements Account {
     private Integer transactionLimit;
     private Integer balance;
 
-    public Integer getInitialBalance() {
-        return initialBalance;
-    }
-
     public void setInitialBalance(Integer initialBalance) {
         this.initialBalance = initialBalance;
     }
 
-    public Integer getTransactionLimit() {
-        return transactionLimit;
-    }
-
     public void setTransactionLimit(Integer transactionLimit) {
         this.transactionLimit = transactionLimit;
-    }
-
-    public Integer getBalance() {
-        return balance;
     }
 
     public void setBalance(Integer balance) {
