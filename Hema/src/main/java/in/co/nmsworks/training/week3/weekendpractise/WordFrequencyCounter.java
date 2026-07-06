@@ -90,7 +90,7 @@ public class WordFrequencyCounter {
     }
 
     private String cleanContent(String content) {
-        String cleanedContent = "";
+        String cleanedContent;
 
         cleanedContent = content.replace(",","");
         cleanedContent = cleanedContent.replace(".","");
@@ -105,7 +105,7 @@ public class WordFrequencyCounter {
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader("/home/nms-training/Downloads/Word_Frequency.txt")))
         {
-            String line = "";
+            String line;
 
             while ((line = bufferedReader.readLine()) != null)
             {
@@ -114,6 +114,7 @@ public class WordFrequencyCounter {
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
