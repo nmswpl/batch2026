@@ -98,7 +98,7 @@ public class ProcessEnterPrise {
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader("/home/nms-training/Downloads/annual-enterprise-survey-2025-financial-year-provisional-size-bands.csv")))
         {
-            String line = "";
+            String line ;
 
             bufferedReader.readLine();
 
@@ -107,18 +107,9 @@ public class ProcessEnterPrise {
                 line = line.replace("\"","");
                 String[] dataArray = line.split(",");
 
-//                for (String string : dataArray) {
-//                    System.out.print(string+"  - ");
-//                }
-//                System.out.println();
-
                 enterpriseSurveyList.add(new EnterpriseSurvey(Integer.parseInt(dataArray[0]),dataArray[1],dataArray[2],dataArray[3],dataArray[4],Long.parseLong(dataArray[5]),dataArray[6]));
-
-
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
