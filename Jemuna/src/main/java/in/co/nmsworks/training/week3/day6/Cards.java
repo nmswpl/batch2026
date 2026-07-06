@@ -3,16 +3,14 @@ package in.co.nmsworks.training.week3.day6;
 import java.util.*;
 
 public class Cards {
-    int noOfPlayers;
-
 
     public static void main(String[] args) {
 
-        String[] suite = {"H", "D", "S", "C"};
+        String[] suits = {"H", "D", "S", "C"};
         List<String> deck = new ArrayList<>();
-        for (String shape : suite) {
+        for (String suite : suits) {
             for (int i = 1; i <=13 ; i++) {
-                deck.add(shape+i);
+                deck.add(suite+i);
             }
         }
         Collections.shuffle(deck);
@@ -32,6 +30,7 @@ public class Cards {
             System.out.println(cardsPerPlayer.getKey()+" : "+cardsPerPlayer.getValue());
 
         }
+        scanner.close();
 
         }
     }
