@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Multiplex {
     private String movieName;
     private int availableTickets;
-    private int printSeatings = 1;
+    private int nextSeatNumber = 1;
 
     public Multiplex(String movieName, int availableTickets) {
         this.movieName = movieName;
@@ -36,15 +36,15 @@ public class Multiplex {
                 switch (choice)
                 {
                     case 1:
-                        screen1.bookTicket();
+                        screen1.bookTicket(scanner);
                         break;
 
                     case 2:
-                        screen2.bookTicket();
+                        screen2.bookTicket(scanner);
                         break;
 
                     case 3:
-                        screen3.bookTicket();
+                        screen3.bookTicket(scanner);
                         break;
 
                     default:
@@ -60,18 +60,17 @@ public class Multiplex {
         }
     }
 
-    private void bookTicket() {
+    private void bookTicket(Scanner scanner) {
         System.out.println("Number of Tickets :");
-        Scanner scanner = new Scanner(System.in);
         int noOfTickets = scanner.nextInt();
         if(availableTickets>=noOfTickets)
         {
             availableTickets-=noOfTickets;
             System.out.println("Tickets are available... Hava a good day...");
-            for (int i = printSeatings; i <= (noOfTickets+printSeatings-1); i++) {
+            for (int i = nextSeatNumber; i <= (noOfTickets+nextSeatNumber-1); i++) {
                 System.out.println(getMovieName()+"Seat no :"+i);
             }
-            printSeatings=printSeatings+noOfTickets;
+            nextSeatNumber=nextSeatNumber+noOfTickets;
         }
         else{
             System.out.println("Seats are unavailable.....\nHave a Good day......");
