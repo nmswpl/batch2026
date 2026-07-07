@@ -12,6 +12,28 @@ public class FileParsing {
         System.out.println("Text"+sampleText);
         fileParsing.writeSampleFile(sampleText);
         fileParsing.bufferedReaderAndWriter();
+        fileParsing.readFromFile1();
+    }
+
+    private void readFromFile1() {
+        String text = null;
+
+        try(FileReader reader = new FileReader("/home/nms-training/Downloads/SampleText.txt");
+        FileWriter writer = new FileWriter("/home/nms-training/Desktop/Read1.txt")) {
+            int ch ;
+            text = "";
+            while ((ch = reader.read()) != -1) {
+                text += (char) ch;
+
+
+            }
+            writer.write(text);
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

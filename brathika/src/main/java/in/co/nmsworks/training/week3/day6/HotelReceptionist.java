@@ -1,7 +1,6 @@
 package in.co.nmsworks.training.week3.day6;
 
 import java.util.*;
-
 public class HotelReceptionist {
     static  Map<String, Language> langauage = new HashMap<>();
     static List<Guest> guests = new ArrayList<>();

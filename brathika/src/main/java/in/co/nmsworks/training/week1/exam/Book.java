@@ -48,6 +48,16 @@ public class Book {
         this.price = price;
     }
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + bookId +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
     public void printValues(){
         System.out.println("Book Id: "+this.getBookId());
         System.out.println("Title: "+this.getTitle());

@@ -1,11 +1,14 @@
 package in.co.nmsworks.training.week1.exam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ExamSet2 {
     public static void main(String[] args) {
         findMedianOfTheArray();
         MobilePhone phone1 = new MobilePhone(101,"Sumsang","Galaxy S24",79999.0);
         MobilePhone phone2 = new MobilePhone(102,"Oppo","oppo f21 s pro",30000.0);
-        MobilePhone phone3 = new MobilePhone(103,"Iphone","17 pro",130000);
+        MobilePhone phone3 = new MobilePhone(102,"Iphone","17 pro",130000);
         MobilePhone phone4 = new MobilePhone(104,"vivo","vivo5",20000);
         MobilePhone phone5 = new MobilePhone(105,"Realme","Note 5+",150000);
         phone1.printDetails();
@@ -14,6 +17,12 @@ public class ExamSet2 {
         phone4.printDetails();
         phone5.printDetails();
         printHundredPosition(430);
+        List<MobilePhone> list = new ArrayList<>();
+        list.add(phone1);
+        list.add(phone2);
+        list.add(phone3);
+        list.add(phone4);
+        list.add(phone5);
     }
 
     private static void printHundredPosition(int number1) {

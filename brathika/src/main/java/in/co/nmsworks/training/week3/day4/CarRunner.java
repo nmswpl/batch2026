@@ -52,7 +52,7 @@ public class CarRunner {
 
     }
 
-    private List<CarInfo> readFromFile() {
+    public List<CarInfo> readFromFile() {
         List<CarInfo> carList = new ArrayList<>();
         try(Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/training","nms-training","");
             Statement statement = con.createStatement()) {

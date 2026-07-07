@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarProcessor{
+public class CarProcessor {
     public static void main(String[] args) {
         CarProcessor carProcessor = new CarProcessor();
         List<CarInfo> carList = carProcessor.readFromFile();
@@ -36,7 +36,7 @@ public class CarProcessor{
         return carList;
     }
 
-    public void write(List<CarInfo> cars) {
+    private void write(List<CarInfo> cars) {
         try(BufferedWriter writer = new BufferedWriter(new FileWriter("/home/nms-training/Desktop/CarFiles.txt"));
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/training","nms-training","");
             PreparedStatement statement = con.prepareStatement("insert into Car values(?,?,?,?,?)")) {
