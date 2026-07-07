@@ -1,0 +1,14 @@
+package in.co.nmsworks.training.week3.day6;
+
+public class Hindi implements Receptionist{
+
+    @Override
+    public void checkIn() {
+        System.out.println("The guest is welcomed in their Tamil language.");
+    }
+
+    @Override
+    public void checkOut() {
+        System.out.println("The guest is thanked and wished goodbye in their Tamil language.");
+    }
+}
