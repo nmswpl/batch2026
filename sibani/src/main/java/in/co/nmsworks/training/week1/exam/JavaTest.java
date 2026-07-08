@@ -5,23 +5,23 @@ import static sun.security.pkcs11.wrapper.Functions.getId;
 
 public class JavaTest {
     public static void main(String[] args) {
-//        System.out.println("Mean of the Array : " + meanOfArray());
-//        Scanner sc = new Scanner(System.in);
-//        System.out.println("Enter the mark :");
-//        int mark = sc.nextInt();
-//        findGrade(mark);
-//        sc.close();
+       System.out.println("Mean of the Array : " + meanOfArray());
+       Scanner sc = new Scanner(System.in);
+       System.out.println("Enter the mark :");
+       int mark = sc.nextInt();
+       findGrade(mark);
+       sc.close();
 
         Book bk1 = new Book(205,"Java Programming","James Gosling",250.0F);
         Book bk2 = new Book(206,"Python Programming","James",350.0F);
         Book bk3 = new Book(207,"C Programming","Zhang",450.0F);
         Book bk4 = new Book(208,"Intro to Java","Gosling",550.0F);
         Book bk5 = new Book(209,"Harry potter","J K Rowling",650.0F);
-//        bk1.printBookDetails(bk1);
-//        bk2.printBookDetails(bk2);
-//        bk3.printBookDetails(bk3);
-//        bk4.printBookDetails(bk4);
-//        bk1.printBookDetails(bk5);
+        bk1.printBookDetails(bk1);
+        bk2.printBookDetails(bk2);
+        bk3.printBookDetails(bk3);
+        bk4.printBookDetails(bk4);
+        bk1.printBookDetails(bk5);
 
 
         List<Book> bookList = new ArrayList<>();
@@ -54,28 +54,28 @@ public class JavaTest {
         }
         System.out.println("Contains All : " + bookList.containsAll(bookList.subList(0,3)));
         System.out.println("Equal  : " + bookList.equals(bookList.subList(0,4)));
-//        bookList.clear();
-//        System.out.println("Size of Book List : " + bookList.size());
+        bookList.clear();
+       System.out.println("Size of Book List : " + bookList.size());
         System.out.println();
 
 
 
-//        Set<Book> bookSet = new HashSet<>();
-//        bookSet.add(bk1);
-//        bookSet.add(bk2);
-//        bookSet.add(bk3);
-//        bookSet.add(bk4);
-//        bookSet.add(bk5);
-//        System.out.println("Size of Book Set : " + bookSet.size());
-//        System.out.println("Set of Book Elemnents");
-//        for (Book book : bookSet) {
-//            System.out.println(book);
-//        }
-//        System.out.println(bookSet.remove(bk5));
-//        System.out.println("Contains bk5 " + bookSet.contains(bk5));
-//        bookSet.add(bk5);
-//        System.out.println("Contains bk5 " + bookSet.contains(bk5));
-//        System.out.println("Is Empty : " + bookSet.isEmpty());
+        Set<Book> bookSet = new HashSet<>();
+        bookSet.add(bk1);
+        bookSet.add(bk2);
+        bookSet.add(bk3);
+        bookSet.add(bk4);
+        bookSet.add(bk5);
+        System.out.println("Size of Book Set : " + bookSet.size());
+        System.out.println("Set of Book Elemnents");
+        for (Book book : bookSet) {
+           System.out.println(book);
+        }
+       System.out.println(bookSet.remove(bk5));
+        System.out.println("Contains bk5 " + bookSet.contains(bk5));
+        bookSet.add(bk5);
+        System.out.println("Contains bk5 " + bookSet.contains(bk5));
+        System.out.println("Is Empty : " + bookSet.isEmpty());
 
         System.out.println();
 
@@ -94,11 +94,11 @@ public class JavaTest {
         System.out.println();
 
 
-        MapPractice(bk1, bk2, bk3, bk4, bk5);
+        mapPractice(bk1, bk2, bk3, bk4, bk5);
 
     }
 
-    private static void MapPractice(Book bk1, Book bk2, Book bk3, Book bk4, Book bk5) {
+    private static void mapPractice(Book bk1, Book bk2, Book bk3, Book bk4, Book bk5) {
         Map<Integer,Book> bookMap = new HashMap<>();
         bookMap.put(bk2.getId(), bk2);
         System.out.println(bookMap.put(bk1.getId(), bk1));
@@ -132,27 +132,28 @@ public class JavaTest {
         float mean = sum / arr.length;
         return mean;
     }
-    public static void findGrade(int mark){
+    public static char findGrade(int mark){
         if (mark > 100 || mark < 0) {
             System.out.println("Invalid Mark");
+            return 0;
         }
         if (mark > 90){
-            System.out.println("Grade is : S" );
+            return 'S';
         }
         else if (mark > 80){
-            System.out.println("Grade is : A" );
+            return 'A';
         }
         else if (mark > 70){
-            System.out.println("Grade is : B" );
+            return 'B';
         }
         else if (mark > 60){
-            System.out.println("Grade is : C" );
+            return 'C';
         }
         else if (mark > 50){
-            System.out.println("Grade is : D" );
+            return 'D';
         }
         else {
-            System.out.println("Grade is : F" );
+            return 'F';
         }
     }
 }

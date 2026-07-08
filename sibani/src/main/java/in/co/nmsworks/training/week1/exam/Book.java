@@ -54,4 +54,13 @@ public class Book {
         System.out.println("Price: " + book.getPrice());
     }
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }
