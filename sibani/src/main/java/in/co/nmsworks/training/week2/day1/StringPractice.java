@@ -15,7 +15,7 @@ public class StringPractice
         String str1 = "My name is Sibani";
         System.out.println("Output : " + reverseString(str1));
         convertFirstLetterToCaps("the quick brown fox jumps over the lazy dog");
-        removeleedingZero("0005640");
+        removeLeadingZero("0005640");
         removeDuplicates();
         vowelCountAndConsonantCount();
 
@@ -55,7 +55,7 @@ public class StringPractice
         System.out.println("Vowels: " + vowels + ", Consonants: " + consonants);
     }
 
-    private static void removeleedingZero(String str) {
+    private static void removeLeadingZero(String str) {
         int i =0;
         while (i < str.length() && str.charAt(i) == '0'){
             i++;
@@ -64,18 +64,18 @@ public class StringPractice
         System.out.println("After replacing leading zeros :" + str.substring(i));
     }
 
-    private static void convertFirstLetterToCaps(String s) {
-        String[] str2 = s.split(" ");
+    private static void convertFirstLetterToCaps(String string) {
+        String[] str2 = string.split(" ");
         for (String word : str2) {
-            String ans = word.substring(0,1).toUpperCase() + word.substring(1);
-            System.out.print(ans + " ");
+            String answer = word.substring(0,1).toUpperCase() + word.substring(1);
+            System.out.print(answer + " ");
         }
     }
 
     private static void printSentenceInNewLine(String str) {
         String[] str2 = str.split("\\.");
-        for (String s : str2) {
-            System.out.println(s);
+        for (String string : str2) {
+            System.out.println(string);
         }
     }
 
@@ -92,12 +92,7 @@ public class StringPractice
         for (int i = str1.length()-1; i>=0 ; i--) {
             str2 += str1.charAt(i);
         }
-        if (str2.equals(str1)) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return str2.equals(str1);
     }
     public static void printWordsInEvenLength(String str1) {
         String[] str2 = str1.split(" ");
