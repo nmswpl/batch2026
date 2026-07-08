@@ -2,19 +2,19 @@ package in.co.nmsworks.training.week2.day2;
 
 public class StringPracticeQuestions2 {
     public static void main(String[] args) {
-        StringPracticeQuestions2 sp = new StringPracticeQuestions2();
-//        sp.checkValidUsername("PriyankaKanagaraj");
-//        sp.checkValidUsername("Pri");
-//        sp.checkValidUsername("Priyanka");
-//        sp.checkValidMailId("@nmsworks.co.in");
-//        sp.hasWireless("this is wireless");
-//        sp.couponCode(" SAVE10 ");
-//        sp.couponCode("hello");
-//        sp.displayInitials("University College of Engineering");
-//        sp.decodePhoneNumber("9344683461");
 
-
+        StringPracticeQuestions2 stringPractice  = new StringPracticeQuestions2();
+        stringPractice.checkValidUsername("PriyankaKanagaraj");
+        stringPractice.checkValidUsername("Pri");
+        stringPractice.checkValidUsername("Priyanka");
+        stringPractice.checkValidMailId("@nmsworks.co.in");
+        stringPractice.hasWireless("this is wireless");
+        stringPractice.couponCode(" SAVE10 ");
+        stringPractice.couponCode("hello");
+        stringPractice.displayInitials("University College of Engineering");
+        stringPractice.decodePhoneNumber("9344683461");
     }
+
     public void checkValidUsername(String str){
         if(str.length()>=5 && str.length()<15){
             System.out.println("valid");
@@ -25,12 +25,6 @@ public class StringPracticeQuestions2 {
     }
 
     public void checkValidMailId(String str){
-//        if(str.endsWith("@nmsworks.co.in")){
-//            System.out.println("valid");
-//        }
-//        else{
-//            System.out.println("invalid");
-//        }
         String[] arr=str.split("@");
         for(String string:arr){
             System.out.println(string);
@@ -39,20 +33,16 @@ public class StringPracticeQuestions2 {
         if(arr.length !=2) {
             System.out.println("invalid !!");
         }
-//        if(arr[0].equals("")){
-//            System.out.println("invalid");
-//        }
+
         if(arr[1].equals("nmsworks.co.in")){
             System.out.println("Valid");
         }
         else{
             System.out.println("invalid");
         }
-
-
     }
-    public void hasWireless(String str){
-        if(str.contains("wireless")){
+    public void hasWireless(String string){
+        if(string.contains("wireless")){
             System.out.println("contains wireless");
         }
         else{
@@ -60,8 +50,8 @@ public class StringPracticeQuestions2 {
         }
     }
 
-    public void couponCode(String str){
-        String coupon = str.trim();
+    public void couponCode(String string){
+        String coupon = string.trim();
         if("SAVE10".equals(coupon)){
             System.out.println("matched");
         }
@@ -70,15 +60,15 @@ public class StringPracticeQuestions2 {
         }
     }
 
-    public void displayInitials(String str){
-        String[] words = str.split(" ");
+    public void displayInitials(String string){
+        String[] words = string.split(" ");
         for(String initial: words){
             System.out.print(initial.charAt(0));
         }
     }
 
-    public void decodePhoneNumber(String str){
-        char[] arr = str.toCharArray();
+    public void decodePhoneNumber(String string){
+        char[] arr = string.toCharArray();
         for (int i = 0; i < arr.length; i++) {
             if(i==0 || i==1 || i==8 || i==9){
                 System.out.print(arr[i]);
