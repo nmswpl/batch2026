@@ -12,17 +12,17 @@ public class StringPractice {
         printNoOfVowelsAndConsonants();
         capitaliseFirstLetterOfTheWord();
         printTheLongestWordInSentence();
-        PrintTheReversedString();
+        printTheReversedString();
         removeAllSpaceAndPrintString();
         removeDuplicateCharacter();
     }
 
     private static void removeDuplicateCharacter() {
-        String str = "aabbcc";
+        String string = "aabbcc";
         String answer = "";
 
-        for (int i = 0; i < str.length(); i++) {
-            char ch = str.charAt(i);
+        for (int i = 0; i < string.length(); i++) {
+            char ch = string.charAt(i);
             if (!answer.contains(String.valueOf(ch))) {
                 answer += ch;
             }
@@ -34,26 +34,26 @@ public class StringPractice {
     }
 
     private static void removeAllSpaceAndPrintString() {
-        String str = "the quick brown fox jumps over the lazy dog";
-        String answer = str.replace(" ","");
+        String string = "the quick brown fox jumps over the lazy dog";
+        String answer = string.replace(" ","");
         System.out.println("String after removing space is: "+answer);
     }
 
-    private static void PrintTheReversedString() {
+    private static void printTheReversedString() {
         String name = "brathika";
-        int n = name.length();
+        int length = name.length();
         String reverseString = "";
-        for (int i = n-1; i >=0; i--) {
+        for (int i = length-1; i >=0; i--) {
             reverseString += name.charAt(i);
         }
         System.out.println("The reversed string is: "+reverseString);
     }
 
     private static void printTheLongestWordInSentence() {
-        String str = "my name is brathika";
+        String string = "my name is brathika";
         String answer = "";
         int max = 0;
-        String[] arr = str.split(" ");
+        String[] arr = string.split(" ");
         for (String s : arr) {
             int n = s.length();
             if (n > max) {
@@ -65,8 +65,8 @@ public class StringPractice {
     }
 
     private static void capitaliseFirstLetterOfTheWord() {
-        String str = "the quick brown fox jumps over the lazy dog";
-        String[] sentence = str.split(" ");
+        String string = "the quick brown fox jumps over the lazy dog";
+        String[] sentence = string.split(" ");
         for (String s : sentence) {
             String word = s.substring(0 , 1).toUpperCase() + s.substring(1);
             System.out.print(word+" ");
@@ -75,13 +75,13 @@ public class StringPractice {
     }
 
     private static void printNoOfVowelsAndConsonants() {
-        String str = "Hello World";
-        String value = str.toLowerCase();
+        String string = "Hello World";
+        string = string.toLowerCase();
         int vowels = 0 , consonants = 0;
-        for (int i = 0; i < str.length() ; i++) {
-            if(str.charAt(i) == 'a' || str.charAt(i) == 'e' || str.charAt(i) == 'i' || str.charAt(i) == 'o' || str.charAt(i) == 'u') {
+        for (int i = 0; i < string.length() ; i++) {
+            if(string.charAt(i) == 'a' || string.charAt(i) == 'e' || string.charAt(i) == 'i' || string.charAt(i) == 'o' || string.charAt(i) == 'u') {
                 vowels ++;
-            } else if (str.charAt(i) == ' ') {
+            } else if (string.charAt(i) == ' ') {
                 continue;
             } else {
                 consonants ++;
@@ -92,26 +92,26 @@ public class StringPractice {
     }
 
     private static void printEachSentenceInNewLine() {
-        String str = "The early morning sun cast a golden hue over the quiet village, where the scent of blooming jasmine mingled with the crisp, cool air. As the first light of day filtered through the canopy of ancient oak trees, the streets began to stir with the soft chatter of locals preparing for the day ahead. Children darted around with laughter, their voices a cheerful contrast to the serene landscape. In the heart of the village, the old bakery's doors creaked open, releasing the warm, inviting aroma of freshly baked bread, promising a comforting start to the day for everyone within reach.";
-        String[] sentence = str.split(",");
+        String string = "The early morning sun cast a golden hue over the quiet village, where the scent of blooming jasmine mingled with the crisp, cool air. As the first light of day filtered through the canopy of ancient oak trees, the streets began to stir with the soft chatter of locals preparing for the day ahead. Children darted around with laughter, their voices a cheerful contrast to the serene landscape. In the heart of the village, the old bakery's doors creaked open, releasing the warm, inviting aroma of freshly baked bread, promising a comforting start to the day for everyone within reach.";
+        String[] sentence = string.split(",");
         for (String s : sentence) {
             System.out.println(s);
         }
     }
 
     private static void removeZeroAndPrintTheNumber() {
-        String str = "0005640";
+        String string = "0005640";
         int i = 0;
-        while ( i < str.length() && str.charAt(i) == '0'){
+        while ( i < string.length() && string.charAt(i) == '0'){
             i++;
         }
-        String answer = str.substring(i);
+        String answer = string.substring(i);
         System.out.println("The number after zero removed is: "+answer);
     }
 
     private static void printWordsWithEvenLength() {
-        String str = "This is a java language";
-        String[] arr = str.split(" ");
+        String string = "This is a java language";
+        String[] arr = string.split(" ");
         for (String s : arr) {
             if(s.length() % 2 == 0) {
                 System.out.println(s+" ");
@@ -120,25 +120,25 @@ public class StringPractice {
     }
 
     private static void checkForPalindrome() {
-        String str1 = "dad";
+        String string = "dad";
         String revere = "";
-        for (int i = str1.length() - 1; i >= 0; i--) {
-            revere += str1.charAt(i);
+        for (int i = string.length() - 1; i >= 0; i--) {
+            revere += string.charAt(i);
 
         }
-        if (str1.equals(revere)){
-            System.out.println(str1+" is a palindrome");
+        if (string.equals(revere)){
+            System.out.println(string+" is a palindrome");
         }
         else {
-            System.out.println(str1+" is not a palindrome");
+            System.out.println(string+" is not a palindrome");
         }
     }
 
     private static void reverseAndPrintTheString() {
-        String str = "India is my country";
-        String[] arr = str.split(" ");
-        for (int i = arr.length - 1; i >= 0; i--) {
-            System.out.print(arr[i]+" ");
+        String string = "India is my country";
+        String[] stringArray = string.split(" ");
+        for (int i = stringArray.length - 1; i >= 0; i--) {
+            System.out.print(stringArray[i]+" ");
         }
         System.out.println();
     }
