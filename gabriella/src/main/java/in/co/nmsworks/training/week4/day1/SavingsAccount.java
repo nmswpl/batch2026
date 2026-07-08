@@ -52,7 +52,7 @@ public class SavingsAccount implements Account{
 
     @Override
     public String toString() {
-        return "Wallet{" +
+        return "SavingsAccount{" +
                 "balance=" + balance +
                 ", limit=" + limit +
                 '}';
