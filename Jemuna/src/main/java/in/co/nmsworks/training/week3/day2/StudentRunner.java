@@ -1,11 +1,6 @@
 package in.co.nmsworks.training.week3.day2;
-
-import com.sun.javafx.collections.MappingChange;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class StudentRunner {
     public static void main(String[] args) {
