@@ -10,24 +10,21 @@ public class Runner {
         System.out.println(emp == emp2);
         System.out.println(emp.equals(emp2));
 
-        String txtname="priyanka";
-        System.out.println(txtname.endsWith("k"));;
-        System.out.println(txtname.startsWith("i"));;
-
-
-
+        String textname ="priyanka";
+        System.out.println(textname.endsWith("k"));
+        System.out.println(textname.startsWith("i"));
 
         String name = "NMSWorks";
         String company = "NMSWorks";
         System.out.println(name == company);
         System.out.println(name.equals(company));
 
-        Integer i1=5;
-        Integer i2=5;
-        System.out.println(i1==i2);
+        Integer integer1 =5;
+        Integer integer2=5;
+        System.out.println(integer1 == integer2);
 
-        int i3 = i1;
-        if(i1<=5){
+        int integer3 = integer1;
+        if(integer1 <=5){
             System.out.println("ok");
         }
     }
