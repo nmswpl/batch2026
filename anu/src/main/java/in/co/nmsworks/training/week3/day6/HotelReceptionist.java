@@ -85,5 +85,6 @@ public class HotelReceptionist {
             default:
                 System.out.println("Invalid Choice");
         }
+        sc.close();
     }
 }
