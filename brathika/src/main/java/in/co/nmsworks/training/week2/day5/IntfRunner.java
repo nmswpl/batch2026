@@ -5,10 +5,9 @@ public class IntfRunner {
 
 
        Dog d = new Dog();
-        //dog(d);
-
+        dog(d);
         Cat c = new Cat();
-        //cat(c);
+        cat(c);
         animalMethod(d);
         animalMethod(c);
         landMethod(d);
@@ -26,8 +25,8 @@ public class IntfRunner {
     }
 
     private static void landMethod(LandBased land) {
-        land.canClimb();
-        land.canWalk();
+        System.out.println(land.canClimb());
+        System.out.println(land.canWalk());
 
 
     }

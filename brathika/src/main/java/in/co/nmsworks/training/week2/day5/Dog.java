@@ -17,12 +17,12 @@ public class Dog implements Animal, LandBased{
     }
 
     @Override
-    public Boolean canWalk() {
+    public boolean canWalk() {
         return true;
     }
 
     @Override
-    public Boolean canClimb() {
+    public boolean canClimb() {
         return false;
     }
 }
