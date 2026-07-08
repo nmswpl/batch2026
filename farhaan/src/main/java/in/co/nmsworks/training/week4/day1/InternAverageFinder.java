@@ -9,12 +9,12 @@ public class InternAverageFinder {
 
     private void findAverage(Intern[] interns) {
         int sumOfSalary = 0;
-        for (int i = 0; i< interns.length;i++) {
-            if (interns[i].getSalary() != 0) {
-                sumOfSalary += interns[i].getSalary();
-            }
+        for (Intern intern : interns) {
+                if (intern.getSalary() != 0) {
+                    sumOfSalary += intern.getSalary();
+                }
         }
-        System.out.println("The Average Salary for the interns are :: " + (double) (sumOfSalary / interns.length));
+        System.out.println("The Average Salary for the " + interns.length + " interns are :: " + (double) (sumOfSalary / interns.length));
     }
 
     private Intern[] getInternDetails() {
