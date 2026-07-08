@@ -44,7 +44,6 @@ public class Vehicle {
                 "noOfWheels=" + noOfWheels +
                 ", colour='" + colour + '\'' +
                 ", engine=" + engine +
-
                 '}';
     }
 }

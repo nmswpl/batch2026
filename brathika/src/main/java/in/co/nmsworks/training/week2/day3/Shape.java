@@ -49,18 +49,23 @@ class Square extends Shape {
         System.out.println("Perimeter of Square is: "+(4 * length));
     }
 }
-class Reactangle extends Shape {
+class Rectangle extends Shape {
     private Integer length;
-    private Integer breath;
+    private Integer breadth;
+
+    public Rectangle(Integer length, Integer breath) {
+        this.length = length;
+        this.breadth = breath;
+    }
 
     @Override
     public void area() {
-        Float area = (float) length * breath;
+        Float area = (float) length * breadth;
         System.out.println("Area of Rectangle is: "+area);
     }
 
     @Override
     public void perimeter() {
-        System.out.println("Perimeter of Rectangle is: "+(2 * length + 2 * breath));
+        System.out.println("Perimeter of Rectangle is: "+(2 * length + 2 * breadth));
     }
 }

@@ -5,7 +5,7 @@ public class StringPractice2 {
         StringPractice2 sp = new StringPractice2();
         sp.checkValidUsername("Brathika");
         sp.checkValidEmail("@nmsworks.co.insanjeev");
-        sp.checkForProducrDescription("product is");
+        sp.checkForProductDescription("product is");
         sp.verifyCouponCode("  SAVE10   ");
         sp.printInitial("Univer call engine");
         sp.displayCensoredPhoneNumber("7603999862");
@@ -44,7 +44,7 @@ public class StringPractice2 {
         }
     }
 
-    private void checkForProducrDescription(String productIsWireless) {
+    private void checkForProductDescription(String productIsWireless) {
         if (productIsWireless.toLowerCase().contains("wireless")) {
             System.out.println("Product description does have wireless word");
         }

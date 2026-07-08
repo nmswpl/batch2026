@@ -1,19 +1,18 @@
 package in.co.nmsworks.training.week2.day3;
 
 import in.co.nmsworks.training.week2.day2.Trainee;
-import in.co.nmsworks.training.week2.day4.SchoolBag;
 
 public class Runner {
     public static void main(String[] args) {
-       /* Triangle shape1 = new Triangle(2,4,6);
+        Triangle shape1 = new Triangle(2,4,6);
         shape1.area();
         shape1.perimeter();
         Square shape2 = new Square(5);
         shape2.area();
         shape2.perimeter();
-        Reactangle shape3 = new Reactangle();
+        Rectangle shape3 = new Rectangle(3,4);
         shape3.area();
-        shape3.perimeter();*/
+        shape3.perimeter();
         String[] names = {"Arun", "Balaji", "Das", "Gopi", "Hari"};
         Trainee[] trainees = new Trainee[names.length];
         for (int i = 0; i < names.length; i++) {
@@ -32,15 +31,15 @@ public class Runner {
 
 
     private static void reportGeneration() {
-        SalesReport s1 = new SalesReport();
+        SalesReport salesReport = new SalesReport();
 
-        System.out.println(s1.generate());
-        InventoryReport r1 = new InventoryReport();
-        System.out.println(r1.generate());
+        System.out.println(salesReport.generate());
+        InventoryReport inventoryReport = new InventoryReport();
+        System.out.println(inventoryReport.generate());
     }
 
     private static void printManagerSalary() {
-        Manager m1 = new Manager("Arun",10000.0,10000.0);
-        System.out.println(m1.annualSalary());
+        Manager manager = new Manager("Arun",10000.0,10000.0);
+        System.out.println(manager.annualSalary());
     }
 }
