@@ -39,7 +39,7 @@ public class ExamQuestionsSet1 {
         for (int i : arr){
             sum += i;
         }
-        float mean = sum / 2;
+        float mean = sum / arr.length;
         System.out.println("Mean: " + mean);
     }
 }
