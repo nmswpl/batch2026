@@ -5,29 +5,37 @@ import static java.lang.Math.sqrt;
 
 public class JavaTask {
     public static void main(String[] args) {
-        checkGreater(2, 3, 4);
-        isPositiveOrNegative();
-        isAlphabet('a');
         Scanner sc = new Scanner(System.in);
+        System.out.println("Enter 3 numbers to check which is greater : ");
+        checkGreater(sc.nextInt(), sc.nextInt(), sc.nextInt());
+        System.out.println("Enter a number to check whether it is positive or negative : ");
+        isPositiveOrNegative(sc.nextInt());
+        isAlphabet('a');
         System.out.println("Enter a natural number :");
         int num = sc.nextInt();
         System.out.println( "Sum of " + num + " natural numbers is :" + sumOfNaturalNumbers(num));
-        findFactorial();
-        findFactorialUsingWhile();
+        System.out.println("Enter a number to chk factorial : ");
+        findFactorial(sc.nextInt());
+        System.out.println("Enter a number to chk factorial : ");
+        findFactorialUsingWhile(sc.nextInt());
         multiplicationTable(5);
         fibonacciSeries(10);
-        countInteger();
-        findPower();
-        findPowerUsingPow(2,3);
+        System.out.println();
+        System.out.println("Enter a number to count no of digits : ");
+        countInteger(sc.nextInt());
+        System.out.println("Enter base and power to check power value : ");
+        findPower(sc.nextInt(), sc.nextInt());
+        System.out.println("Enter base and power to check power value : ");
+        findPowerUsingPow(sc.nextInt(), sc.nextInt());
         System.out.println("Enter a natural number :");
         int number = sc.nextInt();
         System.out.println( number +  " is prime :" + isPrime(number));
         System.out.println("Enter a number :");
-        int num1 = sc.nextInt();
-        findFactors(num1);
+        findFactors(sc.nextInt());
+        System.out.println();
+        printAlphabet();
         System.out.println("Enter a number :");
-
-        System.out.println("Factorial using recursion is : " + fact(6));
+        System.out.println("Factorial using recursion is : " + fact(sc.nextInt()));
         sc.close();
     }
     public static void checkGreater(int a, int b, int c) {
@@ -39,17 +47,14 @@ public class JavaTask {
             System.out.println(c + " is greater among three numbers");
         }
     }
-    public static void isPositiveOrNegative(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a number : ");
-        int num = sc.nextInt();
+    public static void isPositiveOrNegative(int num){
         if (num >= 0) {
             System.out.println( num + " is positive");
         }
         else {
             System.out.println( num + " is negative");
         }
-        sc.close();
+
     }
     public static void isAlphabet(char ch){
         if (!Character.isAlphabetic(ch)){
@@ -66,28 +71,20 @@ public class JavaTask {
         }
         return sum;
     }
-    public static void findFactorial() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a natural number :");
-        int num = sc.nextInt();
+    public static void findFactorial(int num) {
         int fact = 1;
         for (int i = 1; i <= num; i++) {
             fact *= i;
         }
         System.out.println("Factorial of " + num + " is : " + fact);
-        sc.close();
     }
-    public static void findFactorialUsingWhile() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a natural number :");
-        int num = sc.nextInt();
+    public static void findFactorialUsingWhile(int num) {
         int fact = 1 , i =1;
         while ( i <= num) {
             fact *= i;
             i++;
         }
         System.out.println("Factorial of " + num + " using while loop is : " + fact);
-        sc.close();
     }
     public static void multiplicationTable(int num){
         System.out.println("Multiplication Table of " + num);
@@ -96,6 +93,7 @@ public class JavaTask {
         }
     }
     public static void fibonacciSeries(int num) {
+        System.out.println("Fibonacci Series of : " + num);
         int a =0, b=1;
         for (int i = 0; i < num; i++) {
             System.out.print(a + " ");
@@ -109,10 +107,7 @@ public class JavaTask {
             System.out.println(ch);
         }
     }
-    public static void countInteger() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a natural number :");
-        int num = sc.nextInt();
+    public static void countInteger(int num) {
         int count = 0;
         if(num == 0){
             count = 1;
@@ -124,20 +119,13 @@ public class JavaTask {
             }
         }
         System.out.println("No of digits is :"  + count);
-        sc.close();
     }
-    public static void findPower() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter Base number :");
-        int base = sc.nextInt();
-        System.out.println("Enter power :");
-        int power = sc.nextInt();
+    public static void findPower(int base, int power) {
         int ans =1;
         for (int i = 1; i <= power ; i++) {
              ans *= base;
         }
         System.out.println("Answer :" + ans);
-        sc.close();
     }
     public static void findPowerUsingPow(int base, int power) {
 
@@ -170,8 +158,5 @@ public class JavaTask {
         else{
             return num * fact(num -1);
         }
-
     }
-
-
 }
