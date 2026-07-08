@@ -58,22 +58,27 @@ public class FirstExamProblems {
 
     /* Hunderedth Position in a three digit no*/
     public void hundredthPosition(int number){
-        int quotient;
+        if(number < 0 ){
+            number = -1 * number ;
+        }
+        int quotient, remainder;
         int i =3;
         int hunderedthDigit = -1;
         String[] numberNames = {"Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
 
         System.out.println("\nNumber" + " = " + number);
-        while (i > 1) {
+        while (i > 0) {
             quotient = number / 10;
+            remainder = number % 10;
             number = quotient ;
-            hunderedthDigit = quotient;
+            hunderedthDigit = remainder;
             i--;
         }
 
-        // System.out.println("hunderedthDigit" + " = " + hunderedthDigit);
+        System.out.println("hunderedthDigit" + " = " + hunderedthDigit);
         System.out.println("hunderedthDigit" + " = " + numberNames[hunderedthDigit]);
-        }
+    }
+
 
         /* Print the array values*/
     public void printArray(int[] arr){
