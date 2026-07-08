@@ -2,28 +2,12 @@ package in.co.nmsworks.training.week4.day1;
 
 public class SavingsAccount implements Account {
     int transactionLimit ;
-    int initialBalance ;
-    int currentBalance = initialBalance;
+    int balance;
 
-    public int getTransactionLimit() {
-        return transactionLimit;
-    }
 
-    public void setTransactionLimit(int transactionLimit) {
+    public SavingsAccount(int transactionLimit, int balance) {
         this.transactionLimit = transactionLimit;
-    }
-
-    public int getInitialBalance() {
-        return initialBalance;
-    }
-
-    public void setInitialBalance(int initialBalance) {
-        this.initialBalance = initialBalance;
-    }
-
-    public SavingsAccount(int transactionLimit, int initialBalance) {
-        this.transactionLimit = transactionLimit;
-        this.initialBalance = initialBalance;
+        this.balance = balance;
     }
 
     @Override
@@ -34,31 +18,36 @@ public class SavingsAccount implements Account {
     @Override
     public int withdraw(int amount) {
         if(transactionLimit > amount) {
-            if (currentBalance > amount) {
-                System.out.println(" The amount " + amount  + " has been deposited");
-                currentBalance -= Math.abs(amount);
-                return currentBalance;
+            if (balance > (amount * -1)) {
+                System.out.println(" The amount " + amount  + " has been withdrawn");
+                balance -= (amount * -1);
+                return balance;
             } else {
                 System.out.println("There is not enough amount");
-                return currentBalance;
+                return balance;
             }
         }
         else {
             System.out.println("The amount exceeded transaction limit");
-            return currentBalance;
+            return balance;
         }
     }
 
     @Override
     public int deposit(int amount) {
         if (transactionLimit > amount) {
-            currentBalance += amount;
-            currentBalance += initialBalance;
+            balance += amount;
             System.out.println("The amount " + amount + " has been deposited");
-            return currentBalance;
+            return balance;
         } else {
             System.out.println("The amount exceeded transaction limit");
-            return currentBalance;
+
+            return balance;
         }
+    }
+
+    @Override
+    public int getBalance() {
+        return balance;
     }
 }

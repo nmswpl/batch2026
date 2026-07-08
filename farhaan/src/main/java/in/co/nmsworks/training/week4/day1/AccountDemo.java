@@ -14,7 +14,7 @@ public class AccountDemo {
     }
 
     private void transaction(Account account, int[] transactions) {
-        int balance = 0;
+        int balance;
         for (int transaction : transactions) {
             if(transaction < 0){
                  balance = account.withdraw(transaction);
