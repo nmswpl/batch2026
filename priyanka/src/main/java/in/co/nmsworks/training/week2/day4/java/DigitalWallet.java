@@ -5,11 +5,11 @@ public class DigitalWallet extends PocketItem {
 
     Coin coin;
 
-    public Coin getC() {
+    public Coin getCoin() {
         return coin;
     }
 
-    public void setC(Coin coin) {
+    public void setCoin(Coin coin) {
         this.coin = coin;
     }
 
