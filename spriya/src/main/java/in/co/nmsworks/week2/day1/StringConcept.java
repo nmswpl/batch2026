@@ -18,12 +18,12 @@ public class StringConcept {
     public static void reverseString() {
         String str = "India is my country";
 
-        String[] ans = str.split(" ");
+        String[] split = str.split(" ");
 
         System.out.println("---the String reversal ---");
-        int r = ans.length - 1;
+        int r = split.length - 1;
         while (r >= 0) {
-            System.out.print(ans[r] + " ");
+            System.out.print(split[r] + " ");
             r--;
         }
 
@@ -32,26 +32,26 @@ public class StringConcept {
     }
 
     public static void palindrome() {
-        String s = "dad";
-        int l = 0;
-        int r = s.length() - 1;
-        while (l < r) {
-            if (s.charAt(l) != s.charAt(r)) {
-                System.out.println("this String " + s + " is not a palindrome");
+        String string = "dad";
+        int left = 0;
+        int right = string.length() - 1;
+        while (left < right) {
+            if (string.charAt(left) != string.charAt(right)) {
+                System.out.println("this String " + string + " is not a palindrome");
                 break;
             }
-            l++;
-            r--;
+            left++;
+            right--;
         }
-        if (l == r) {
-            System.out.println("This String " + s + " is a palindrome");
+        if (left == right) {
+            System.out.println("This String " + string + " is a palindrome");
         }
         System.out.println(" ");
     }
 
     public static void evenLengthString() {
-        String s = "This is a java language";
-        String[] ans = s.split(" ");
+        String sequence = "This is a java language";
+        String[] ans = sequence.split(" ");
         System.out.println("---EVEN LENGTH STRING---");
         for (int i = 0; i < ans.length; i++) {
             if (ans[i].length() % 2 == 0) {
@@ -63,20 +63,32 @@ public class StringConcept {
     }
 
     public static void removeLeadingZero() {
-        String s = "000560";
+        String id = "0000";
+        int cnt = 0;
+        for (int i = 0; i < id.length(); i++) {
+            if (id.charAt(i) == '0') {
+                cnt++;
+            }
+
+        }
+        if (cnt == id.length()) {
+            System.out.println("The string contains only zeros .Cannot remove zeros");
+            return;
+
+        }
         System.out.println("---REMOVE LEADING ZEROS---");
         int i = 0;
-        while (s.charAt(i) == '0') {
+        while (id.charAt(i) == '0') {
 
             i++;
         }
-        System.out.println(s.substring(i));
+        System.out.println(id.substring(i));
         System.out.println(" ");
     }
 
     public static void printPara() {
-        String s = "The early morning sun cast a golden hue over the quiet village, where the scent of blooming jasmine mingled with the crisp, cool air. As the first light of day filtered through the canopy of ancient oak trees, the streets began to stir with the soft chatter of locals preparing for the day ahead. Children darted around with laughter, their voices a cheerful contrast to the serene landscape. In the heart of the village, the old bakery's doors creaked open, releasing the warm, inviting aroma of freshly baked bread, promising a comforting start to the day for everyone within reach. ";
-        String[] res = s.split("\\.");
+        String paragraph = "The early morning sun cast a golden hue over the quiet village, where the scent of blooming jasmine mingled with the crisp, cool air. As the first light of day filtered through the canopy of ancient oak trees, the streets began to stir with the soft chatter of locals preparing for the day ahead. Children darted around with laughter, their voices a cheerful contrast to the serene landscape. In the heart of the village, the old bakery's doors creaked open, releasing the warm, inviting aroma of freshly baked bread, promising a comforting start to the day for everyone within reach. ";
+        String[] res = paragraph.split("\\.");
         System.out.println("---PRINTING PARAGRAPH---");
         for (int i = 0; i < res.length; i++) {
             System.out.println(res[i]);
@@ -85,8 +97,8 @@ public class StringConcept {
     }
 
     public static void countVowelAndConsonant() {
-        String s = "Hello World";
-        String str = s.toLowerCase();
+        String sequence = "Hello World";
+        String str = sequence.toLowerCase();
         int countConsonant = 0;
         int countVowel = 0;
         System.out.println("---VOWEL AND CONSONANT COUNT---");
@@ -109,18 +121,18 @@ public class StringConcept {
         String str = "aabbcc";
         String newStr = "";
 
-        int l = 0;
-        int r = 1;
+        int left = 0;
+        int right = 1;
         System.out.println("---REMOVE DUPLICATES---");
-        while (l < str.length()) {
-            newStr += str.charAt(l);
+        while (left < str.length()) {
+            newStr += str.charAt(left);
 
-            while (r < str.length() && str.charAt(l) == str.charAt(r)) {
-                r++;
+            while (right < str.length() && str.charAt(left) == str.charAt(right)) {
+                right++;
             }
 
-            l = r;
-            r = l + 1;
+            left = right;
+            right = left + 1;
         }
 
         System.out.println("The String after removal of duplicates is: " + newStr);
@@ -131,13 +143,13 @@ public class StringConcept {
         System.out.println("---TITLE CASE---");
         String str = "the quick brown fox jumps over the lazy dog";
         String[] arr = str.split(" ");
-        String res = "";
+        String string = "";
         for (int i = 0; i < arr.length; i++) {
             String a = arr[i];
-            res += a.substring(0, 1).toUpperCase() + a.substring(1) + " ";
+            string += a.substring(0, 1).toUpperCase() + a.substring(1) + " ";
 
         }
-        System.out.println("The title Case res is : " + res);
+        System.out.println("The title Case res is : " + string);
         System.out.println(" ");
 
     }
@@ -163,16 +175,15 @@ public class StringConcept {
         String str = "Hello world!";
         System.out.println("---STRING REVERSAL---");
         char[] arr = str.toCharArray();
-        int l = 0;
-        int r = arr.length - 1;
-        while (l < r) {
-            char left = arr[l];
-            char right = arr[r];
-            char temp = arr[l];
-            arr[l] = arr[r];
-            arr[r] = temp;
-            l++;
-            r--;
+        int left = 0;
+        int right = arr.length - 1;
+        while (left < right) {
+
+            char temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            left++;
+            right--;
         }
         System.out.println(new String(arr));
         System.out.println(" ");
@@ -180,13 +191,13 @@ public class StringConcept {
 
     public static void removeSpace() {
         String str = "Hello World!";
-        String res = " ";
+        StringBuilder resultString = new StringBuilder(" ");
         System.out.println("---REMOVE SPACE---");
         String[] arr = str.split(" ");
         for (int i = 0; i < arr.length; i++) {
-            res += arr[i];
+            resultString.append(arr[i]);
         }
-        System.out.println("The String after removal of space is : " + res);
+        System.out.println("The String after removal of space is : " + resultString);
         System.out.println(" ");
     }
 }
