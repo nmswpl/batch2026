@@ -15,6 +15,6 @@ public class Phone implements BatteryPowered{
         System.out.println("The Phone battery after use: "+batteryPercentageAfterUse+"%");
         int remainingHours = batteryPercentageAfterUse/usagePerHour;
         System.out.println("Remaining hours battery can be used "+ remainingHours+ " hrs");
-        return remainingHours;
+        return batteryPercentageAfterUse;
     }
 }

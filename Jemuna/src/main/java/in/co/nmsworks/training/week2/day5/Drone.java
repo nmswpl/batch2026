@@ -16,6 +16,6 @@ public class Drone implements BatteryPowered{
         System.out.println("The Drone battery after use: "+afterBatteryPercentage+"%");
         int remainingBatteryPercentage = afterBatteryPercentage/usagePerHour;
         System.out.println("Remaining hours battery can be used "+ remainingBatteryPercentage + " hrs");
-        return remainingBatteryPercentage;
+        return afterBatteryPercentage;
     }
 }

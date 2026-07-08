@@ -2,8 +2,8 @@ package in.co.nmsworks.training.week4.day1;
 
 public class Wallet implements Account {
 
-    int limit = 50000;
-    int balance = 500 ;
+    private int limit = 50000;
+    private int balance = 500 ;
 
     public int getLimit() {
         return limit;
