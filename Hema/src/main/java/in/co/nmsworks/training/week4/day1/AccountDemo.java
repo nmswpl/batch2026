@@ -8,6 +8,11 @@ public class AccountDemo {
         accountDemo.transaction(new Wallet(500,2000),inputTransactions);
         accountDemo.transaction(new SavingsAccount(1000,1000),inputTransactions);
 
+        Wallet wallet = new Wallet(1000, 5000);
+        System.out.println(wallet.getBalance());
+        System.out.println(wallet.getInitialBalance());
+        System.out.println(wallet.getTransactionLimit());
+
     }
 
     public void transaction(Account account, int[] transactions)

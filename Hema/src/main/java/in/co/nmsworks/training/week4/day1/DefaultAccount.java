@@ -2,17 +2,29 @@ package in.co.nmsworks.training.week4.day1;
 
 public class DefaultAccount implements Account {
 
-    private Integer initialBalance;
-    private Integer transactionLimit;
-    private Integer balance ;
+    private int initialBalance = 0;
+    private int transactionLimit = 0;
+    private int balance = 0;
 
-    public DefaultAccount(Integer initialBalance, Integer transactionLimit, Integer balance) {
+    public DefaultAccount() {
+    }
+
+    public DefaultAccount(int initialBalance, int transactionLimit, int balance) {
         this.initialBalance = initialBalance;
         this.transactionLimit = transactionLimit;
         this.balance = balance;
     }
 
-    public DefaultAccount() {
+    public int getInitialBalance() {
+        return initialBalance;
+    }
+
+    public int getTransactionLimit() {
+        return transactionLimit;
+    }
+
+    public int getBalance() {
+        return balance;
     }
 
     public void setInitialBalance(Integer initialBalance) {
