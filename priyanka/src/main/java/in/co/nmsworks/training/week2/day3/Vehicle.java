@@ -1,20 +1,20 @@
 package in.co.nmsworks.training.week2.day3;
 
 public class Vehicle {
-    Engine e;
+    Engine engine;
 
-    public Engine getE() {
-        return e;
+    public Engine getEngine() {
+        return engine;
     }
 
-    public void setE(Engine e) {
-        this.e = e;
+    public void setEngine(Engine engine) {
+        this.engine = engine;
     }
 
     @Override
     public String toString() {
         return "Vehicle{" +
-                "e=" + e +
+                "engine=" + engine +
                 '}';
     }
 }

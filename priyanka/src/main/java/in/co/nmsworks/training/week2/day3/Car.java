@@ -35,8 +35,8 @@ public class Car extends Vehicle{
         return "Cars{" +
                 "noOfTyres=" + noOfTyres +
                 ", model='" + model + '\'' +
-                ", cc=" + e.getCc() +
-                ", fuel type=" + e.getFuelType() +
+                ", cc=" + engine.getCc() +
+                ", fuel type=" + engine.getFuelType() +
                 '}';
     }
 }
