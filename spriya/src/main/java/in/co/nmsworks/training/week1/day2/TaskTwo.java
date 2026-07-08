@@ -1,15 +1,16 @@
 package in.co.nmsworks.training.week1.day2;
+
 import java.util.Scanner;
 
 public class TaskTwo {
-    public static void main(String args[]){
-        Scanner sc=new Scanner(System.in);
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         System.out.println("Enter number:");
-        int n=sc.nextInt();
-        System.out.println("The number is:"+n);
+        int n = sc.nextInt();
+        System.out.println("The number is:" + n);
         add();
         multiply();
-        quotiendAndRemainder();
+        quotientAndRemainder();
         swapValue();
         evenOrOdd();
         vowelOrConsonant();
@@ -26,222 +27,302 @@ public class TaskTwo {
         findPrime();
         findFactor();
         checkAlpha();
-        int res=recursion(5);
-        System.out.println("The factorial using recursion is: "+res);
+        int res = recursion(5);
+        System.out.println("The factorial using recursion is: " + res);
         sc.close();
+    }
+
+    public static void add() {
+
+        try (Scanner sc = new Scanner(System.in)) {
+            System.out.println("Enter two numbers:");
+            int num1 = sc.nextInt();
+            int num2 = sc.nextInt();
+            System.out.println("The sum is:" + (num1 + num2));
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    public static void add(){
-        Scanner sc=new Scanner(System.in);
-        System.out.println("Enter two numbers:");
-        int n=sc.nextInt();
-        int m=sc.nextInt();
-        System.out.println("The sum is:"+(n+m));
+
     }
-    public static void multiply(){
-        float a=2.0f;
-        float b=3.0f;
-        System.out.println("The product is:"+(a*b));
+
+    public static void multiply() {
+        float num1 = 2.0f;
+        float num2 = 3.0f;
+        System.out.println("The product is:" + (num1 * num2));
     }
-    public static void quotiendAndRemainder(){
-        int a=20;
-        int b=3;
-        System.out.println("Quotient:"+(a/b));
-        System.out.println("Remainder:"+(a%b));
+
+    public static void quotientAndRemainder() {
+        int num1 = 20;
+        int num2 = 3;
+        System.out.println("Quotient:" + (num1 / num2));
+        System.out.println("Remainder:" + (num1 % num2));
     }
-    public static void swapValue(){
-        int a=10;
-        int b=20;
+
+    public static void swapValue() {
+        int num1 = 10;
+        int num2 = 20;
         System.out.println("--Before Swap--");
-        System.out.println("First number:"+a);
-        System.out.println("Second number:"+b);
-        int temp=a;
-        a=b;
+        System.out.println("First number:" + num1);
+        System.out.println("Second number:" + num2);
+
+        int temp = num1;
+        num1 = num2;
+        num2 = temp;
 
         System.out.println("--After Swap--");
-        System.out.println("First number:"+a);
-        System.out.println("Second number:"+b);
+        System.out.println("First number:" + num1);
+        System.out.println("Second number:" + num2);
     }
-    public static void evenOrOdd(){
-        Scanner sc=new Scanner(System.in);
-        System.out.println("Enter number to find even or odd:");
-        int n=sc.nextInt();
-        if(n%2==0){
-            System.out.println(n+"is even");
+
+    public static void evenOrOdd() {
+
+        try (Scanner sc = new Scanner(System.in)) {
+
+            System.out.println("Enter number to find even or odd:");
+            int num1 = sc.nextInt();
+            if (num1 % 2 == 0) {
+                System.out.println(num1 + "is even");
+            } else {
+                System.out.println(num1 + "is odd");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        else{
-            System.out.println(n+"is odd");
+
+
+    }
+
+    public static void vowelOrConsonant() {
+
+        char character = 'a';
+        if (character == 'a' || character == 'e' || character == 'i' || character == 'o' || character == 'u' || character == 'A' || character == 'E' || character == 'I' || character == 'O' || character == 'U') {
+            System.out.println(character + " is vowel");
+        } else {
+            System.out.println(character + " is consonant");
         }
     }
 
-    public static void vowelOrConsonant(){
-        char a='a';
-        if(a=='a'||a=='e'||a=='i'||a=='o'||a=='u'||a=='A'||a=='E'||a=='I'||a=='O'||a=='U'){
-            System.out.println(a+" is vowel");
-        }
-        else{
-            System.out.println(a+" is consonant");
+    public static void largest() {
+
+        int num1 = 10;
+        int num2 = 20;
+        int num3 = 30;
+
+        if (num1 > num2 && num1 > num3) {
+            System.out.println(num1 + "is largest number");
+        } else if (num2 > num1 && num2 > num3) {
+            System.out.println(num2 + " is largest number");
+        } else {
+            System.out.println(num3 + " is largest number");
         }
     }
-    public static void largest(){
-        int a=10;
-        int b=20;
-        int c=30;
-        if(a>b && a>c){
-            System.out.println(a+"is largest number");
-        }
-        else if(b>a && b>c ){
-            System.out.println(b+" is largest number");
-        }
-        else{
-            System.out.println(c+" is largest number");
+
+    public static void positiveOrNegative() {
+        int num = -10;
+
+        if (num < 0) {
+            System.out.println(num + " is negative");
+        } else {
+            System.out.println(num + " is positive");
         }
     }
-    public static void positiveOrNegative(){
-        int a=-10;
-        if(a<0){
-            System.out.println(a+" is negative");
-        }
-        else{
-            System.out.println(a+" is positive");
+
+    public static void sumOfNumbers() {
+
+        try (Scanner sc = new Scanner(System.in)) {
+
+
+            System.out.println("Enter number to find sum of first N natural numbers:");
+            int num = sc.nextInt();
+            int res = 0;
+            for (int i = 0; i <= num; i++) {
+                res += i;
+            }
+            System.out.println("Sum: " + res);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-   public static void sumOfNumbers(){
-        Scanner sc=new Scanner(System.in);
-       System.out.println("Enter number to find sum of first N natural numbers:");
-        int n=sc.nextInt();
-        int res=0;
-        for(int i=0;i<=n;i++){
-          res+=i;
+
+    public static void factorial() {
+
+
+        try (Scanner sc = new Scanner(System.in)) {
+
+
+            System.out.println("Enter number to find factorial");
+            int num = sc.nextInt();
+            int res = 1;
+
+            for (int i = num; i > 0; i--) {
+                res *= i;
+
+            }
+
+            System.out.println("Factorial of " + num + "is: " + res);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-       System.out.println("Sum: "+res);
-   }
-
-   public static void factorial(){
-        Scanner sc=new Scanner(System.in);
-       System.out.println("Enter number to find factorial");
-       int n=sc.nextInt();
-       int res=1;
-       for(int i=n;i>0;i--){
-           res*=i;
-
-       }
-       System.out.println("Factorial of "+n+"is: "+res);
-   }
-   public static void fact(){
-       Scanner sc=new Scanner(System.in);
-       System.out.println("Enter number to find factorial");
-       int n=sc.nextInt();
-       int res=1;
-       int i=n;
-       while (i > 0) {
-
-           res*=i;
-           i--;
-       }
-       System.out.println("Factorial of "+n+"is :"+res);
-   }
-   public static void multiplyTable(){
-        for(int i=1;i<=10;i++){
-            System.out.println("5 * "+i+" ="+(5*i));
-        }
-   }
-   public static void fibonacci(){
-       System.out.println("Fibonacci Series till 10 terms:");
-       int a=0;
-       int b=1;
-       System.out.print(a+","+b+",");
-       for(int i=0;i<8;i++){
-           int c=a+b;
-           a=b;b=c;
-           System.out.print(c+",");
-       }
-
-   }
-    public static void alpha(){
-int a=97;
-for(int i=0;i<26;i++){
-    char c=(char)a;
-    System.out.print(c+" ");
-    a++;
-}
     }
-    public static void countInteger(){
+
+    public static void fact() {
+
+
+        try (Scanner sc = new Scanner(System.in)) {
+
+
+            System.out.println("Enter number to find factorial");
+            int num = sc.nextInt();
+            int res = 1;
+            int i = num;
+            while (i > 0) {
+
+                res *= i;
+                i--;
+            }
+            System.out.println("Factorial of " + num + "is :" + res);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void multiplyTable() {
+        for (int i = 1; i <= 10; i++) {
+            System.out.println("5 * " + i + " =" + (5 * i));
+        }
+    }
+
+    public static void fibonacci() {
+        System.out.println("Fibonacci Series till 10 terms:");
+        int num1 = 0;
+        int num2 = 1;
+        System.out.print(num1 + "," + num2 + ",");
+        for (int i = 0; i < 8; i++) {
+            int c = num1 + num2;
+            num1 = num2;
+            num2 = c;
+            System.out.print(c + ",");
+        }
+
+    }
+
+    public static void alpha() {
+        int num = 97;
+
+        for (int i = 0; i < 26; i++) {
+            char c = (char) num;
+            System.out.print(c + " ");
+            num++;
+        }
+    }
+
+    public static void countInteger() {
         System.out.println("Enter number to count digits:");
-        Scanner sc=new Scanner(System.in);
-        int n=sc.nextInt();
-        int count=0;
-        while(n>0){
-            int res=n%10;
-            n/=10;
-            count++;
+
+        try (Scanner sc = new Scanner(System.in)) {
+
+
+            int num = sc.nextInt();
+            int count = 0;
+            while (num > 0) {
+                int res = num % 10;
+                num /= 10;
+                count++;
+            }
+            System.out.println("No of Digits:" + count);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        System.out.println("No of Digits:"+count);
     }
-    public static void powerOfNumber(){
+
+    public static void powerOfNumber() {
         System.out.println("Enter base number:");
-        Scanner sc=new Scanner(System.in);
-        int n=sc.nextInt();
-        System.out.println("Enter Power");
-        int m=sc.nextInt();
-        int res=1;
-        for(int i=0;i<m;i++){
-            res*=n;
+
+        try (Scanner sc = new Scanner(System.in)) {
+
+
+            int base = sc.nextInt();
+            System.out.println("Enter Power");
+            int power = sc.nextInt();
+            int res = 1;
+            for (int i = 0; i < power; i++) {
+                res *= base;
+            }
+            System.out.println("Answer: " + res);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        System.out.println("Answer: "+res);
     }
-    public static void findPrime(){
-        System.out.println("Enter a number:");
-        Scanner sc=new Scanner(System.in);
-        int n=sc.nextInt();
-        int i=2;
-        for(;i<=n;i++){
-            if( i!=n && n%i==0){
-                System.out.println(n+"is not a prime number");
-                break;
+
+
+    public static void findPrime() {
+        System.out.print("Enter a number: ");
+
+        try (Scanner sc = new Scanner(System.in)) {
+            int num = sc.nextInt();
+            if (num <= 1) {
+                System.out.println(num + " is not a prime number");
+                return;
             }
 
+            boolean isPrime = true;
+            for (int i = 2; i < num; i++) {
+                if (num % i == 0) {
+                    isPrime = false;
+                    break;
+                }
+            }
+            if (isPrime) {
+                System.out.println(num + " is a prime number");
+            } else {
+                System.out.println(num + " is not a prime number");
+            }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        if(i==n+1){
-            System.out.println(n+"is a prime number");
-        }
-
     }
-    public static void findFactor(){
+
+    public static void findFactor() {
         System.out.println("Factors of 60 are: ");
-        for(int i=1;i<=60;i++){
-            if(60%i==0){
-                System.out.print(i+" ");
+        for (int i = 1; i <= 60; i++) {
+            if (60 % i == 0) {
+                System.out.print(i + " ");
             }
         }
     }
-    public static void checkAlpha(){
-        Scanner sc=new Scanner(System.in);
-        System.out.println("Enter Alphabet:");
-       char ch=sc.next().charAt(0);
-       int b=(int )ch;
-       int c=b-97;
-       int d=b-65;
-if(c>=0 && c<=25)
-       {
-            System.out.println(ch +" is Alphabet");
-        }
-else if(d>=0&&d<=25){
-    System.out.println(ch +" is Alphabet");
-}
 
-        else{
-            System.out.println(ch +" is not Alphabet");
+
+    public static void checkAlpha() {
+
+        try (Scanner sc = new Scanner(System.in)) {
+
+            System.out.println("Enter Alphabet:");
+            char character = sc.next().charAt(0);
+
+            int num1 = (int) character;
+            int num2 = num1 - 97;
+            int num3 = num1 - 65;
+
+            if (num2 >= 0 && num2 <= 25) {
+                System.out.println(character + " is Alphabet");
+            } else if (num3 >= 0 && num3 <= 25) {
+                System.out.println(character + " is Alphabet");
+            } else {
+                System.out.println(character + " is not Alphabet");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public static int recursion(int n ){
+    public static int recursion(int number) {
 
-        if(n==0 || n==1){
-            return n;
-        }
-        else{
-            return n*recursion(n-1);
+        if (number == 0 || number == 1) {
+            return number;
+        } else {
+            return number * recursion(number - 1);
         }
 
 
