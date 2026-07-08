@@ -11,10 +11,10 @@ public class Phone implements BatteryPowered{
 
     @Override
     public int batteryAfterUse(float hours) {
-        int afterBatteryPercentage = (int) ( 100-(hours*batteryUsagePerHour()));
-        System.out.println("The Phone battery after use: "+afterBatteryPercentage+"%");
-        int remainingBatteryPercentage = afterBatteryPercentage/usagePerHour;
-        System.out.println("Remaining hours battery can be used "+ remainingBatteryPercentage);
-        return remainingBatteryPercentage;
+        int batteryPercentageAfterUse = (int) ( 100-(hours*batteryUsagePerHour()));
+        System.out.println("The Phone battery after use: "+batteryPercentageAfterUse+"%");
+        int remainingHours = batteryPercentageAfterUse/usagePerHour;
+        System.out.println("Remaining hours battery can be used "+ remainingHours+ " hrs");
+        return remainingHours;
     }
 }
