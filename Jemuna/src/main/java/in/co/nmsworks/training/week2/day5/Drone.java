@@ -2,10 +2,11 @@ package in.co.nmsworks.training.week2.day5;
 
 public class Drone implements BatteryPowered{
 
-    int usagePerHour = 20;
+    private int usagePerHour = 20;
 
     @Override
-    public int batteryUsagePerHour() {
+    public int batteryUsagePerHour()
+    {
         return usagePerHour;
     }
 
@@ -15,6 +16,6 @@ public class Drone implements BatteryPowered{
         System.out.println("The Drone battery after use: "+afterBatteryPercentage+"%");
         int remainingBatteryPercentage = afterBatteryPercentage/usagePerHour;
         System.out.println("Remaining hours battery can be used "+ remainingBatteryPercentage);
-        return 0;
+        return remainingBatteryPercentage;
     }
 }

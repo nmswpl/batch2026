@@ -11,7 +11,7 @@ public class DeviceUsage {
 
     }
 
-    static void printBatteryInfoAfterXHrsForDevice(BatteryPowered device, int noOfHrs){
+    public static void printBatteryInfoAfterXHrsForDevice(BatteryPowered device, int noOfHrs){
         device.batteryAfterUse(noOfHrs);
         device.batteryUsagePerHour();
 

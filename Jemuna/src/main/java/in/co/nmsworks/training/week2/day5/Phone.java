@@ -1,7 +1,7 @@
 package in.co.nmsworks.training.week2.day5;
 
 public class Phone implements BatteryPowered{
-    int usagePerHour = 10;
+    private int usagePerHour = 10;
 
 
     @Override
@@ -15,6 +15,6 @@ public class Phone implements BatteryPowered{
         System.out.println("The Phone battery after use: "+afterBatteryPercentage+"%");
         int remainingBatteryPercentage = afterBatteryPercentage/usagePerHour;
         System.out.println("Remaining hours battery can be used "+ remainingBatteryPercentage);
-        return 0;
+        return remainingBatteryPercentage;
     }
 }
