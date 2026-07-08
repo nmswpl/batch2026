@@ -2,10 +2,17 @@ package in.co.nmsworks.week2.day4;
 
 public class Container {
 
-    double maxWeight;
+    private double maxWeight;
 
+    public double getMaxWeight() {
+        return maxWeight;
+    }
 
-    public void open(){
-        System.out.println("\"Opening the container...\"");
+    public void setMaxWeight(double maxWeight) {
+        this.maxWeight = maxWeight;
+    }
+
+    public void open() {
+        System.out.println("Opening the container...");
     }
 }
