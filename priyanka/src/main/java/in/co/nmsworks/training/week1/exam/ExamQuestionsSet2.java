@@ -4,7 +4,7 @@ public class ExamQuestionsSet2 {
     public static void main(String[] args) {
         System.out.println("hello");
         medianOfArray();
-        hundredPosition(434);
+        hundredPosition(053);
     }
 
     public static void medianOfArray(){
@@ -60,10 +60,6 @@ public class ExamQuestionsSet2 {
 
             case 9:
                 System.out.println("Nine");
-                break;
-
-            case 0:
-                System.out.println("Zero");
                 break;
 
             default:
