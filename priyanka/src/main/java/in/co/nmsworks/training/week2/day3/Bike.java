@@ -24,10 +24,9 @@ public class Bike extends Vehicle{
         return model;
     }
 
-    public void setModel(String colour) {
-        this.model = colour;
+    public void setModel(String model) {
+        this.model = model;
     }
-
 
     @Override
     public String toString() {
