@@ -45,7 +45,7 @@ public class JDBCPractice {
 
     private void executeUpdateExample() {
         try(Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/training","nms-training","");
-            Statement stmnt = con.createStatement();){
+            Statement stmnt = con.createStatement()){
             int rowsAffected = stmnt.executeUpdate("insert into studentinfo(id, name, city) values(40, \"Sanjeev\", \"India\")");
             System.out.println("The affected rows are :: " + rowsAffected);
         }
@@ -57,7 +57,7 @@ public class JDBCPractice {
 
     private void executeQueryExample() {
         try(Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/training","nms-training","");
-            Statement stmnt = con.createStatement();)
+            Statement stmnt = con.createStatement())
         {
             ResultSet set = stmnt.executeQuery("select * from studentinfo");
             while(set.next()){

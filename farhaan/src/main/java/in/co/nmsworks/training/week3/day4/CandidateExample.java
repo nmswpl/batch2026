@@ -37,7 +37,7 @@ public class CandidateExample {
     List<Candidate> getCandidateList() {
         List<Candidate> candidateList = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("/home/nms-training/Downloads/StudentDetails.txt"))) {
-            String text = "";
+            String text;
             while((text = reader.readLine()) != null) {
                 String[] words = text.split(",");
                     Candidate c = new Candidate(words[0], Integer.parseInt(words[1]), words[2], words[3]);

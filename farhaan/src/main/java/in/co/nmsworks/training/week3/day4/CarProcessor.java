@@ -5,14 +5,13 @@ import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CarProcessor {
     public static void main(String[] args) {
         CarProcessor processor = new CarProcessor();
         CarRunner runner = new CarRunner();
-        List<CarInfo> list = new ArrayList<>();
+        List<CarInfo> list;
         list = runner.readCarInfo();
         System.out.println(list);
         processor.write(list);

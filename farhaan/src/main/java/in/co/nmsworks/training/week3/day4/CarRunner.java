@@ -1,8 +1,6 @@
 package in.co.nmsworks.training.week3.day4;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -23,7 +21,7 @@ public class CarRunner {
     }
 
     private void writeInFile(Map<String, List<CarInfo>> mapCar) {
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("/home/nms-training/Desktop/Cars.txt"));){
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("/home/nms-training/Desktop/Cars.txt"))){
             for (String s : mapCar.keySet()) {
                 writer.write(s + " ::  :: " + mapCar.get(s) + " \n");
             }
@@ -47,7 +45,6 @@ public class CarRunner {
 
     public List<CarInfo> readCarInfo() {
         try(Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/training", "nms-training", "");
-            BufferedReader reader = new BufferedReader(new FileReader("/home/nms-training/Desktop/CarInfo.sql"));
             PreparedStatement statement = con.prepareStatement("select * from CarInfo"))
         {
             ResultSet resultSet = statement.executeQuery();
