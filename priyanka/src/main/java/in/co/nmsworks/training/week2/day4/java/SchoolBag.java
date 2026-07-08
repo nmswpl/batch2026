@@ -1,9 +1,9 @@
 package in.co.nmsworks.training.week2.day4.java;
 
 public class SchoolBag extends Container {
-    public String brandName = "Skybags";
+    private String brandName = "Skybags";
 
-    TextBook t = new TextBook();
+    TextBook textBook = new TextBook();
 
     public String getBrandName() {
         return brandName;
@@ -13,23 +13,23 @@ public class SchoolBag extends Container {
         this.brandName = brandName;
     }
 
-    public TextBook getT() {
-        return t;
+    public TextBook getTextBook() {
+        return textBook;
     }
 
-    public void setT(TextBook t) {
-        this.t = t;
+    public void setT(TextBook textBook) {
+        this.textBook = textBook;
     }
 
     public void study(){
-        t.read();
+        textBook.read();
     }
 
     @Override
     public String toString() {
         return "SchoolBag{" +
                 "brandName='" + brandName + '\'' +
-                ", subject=" + t.getSubject() +
+                ", subject=" + textBook.getSubject() +
                 ", max weight="+ super.toString()+
                 '}';
     }
