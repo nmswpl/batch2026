@@ -3,33 +3,43 @@ package in.co.nmsworks.training.week1.day2;
 import java.util.Scanner;
 
 public class Day2Practice {
-    static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
-        checkGreaterNumber();
-        numberIsPositiveOrNegative();
-        checkForAlphabet();
-        sumOfNumbers();
-        factorialUsingForLoop();
-        factorialUsingWhileLoop();
-        printMultiplicationTable();
-        printFibanocciSeries();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter three numbers");
+        checkGreaterNumber(sc.nextInt(), sc.nextInt(), sc.nextInt());
+        System.out.println("Enter a number to check positive or negative");
+        numberIsPositiveOrNegative(sc.nextInt());
+        System.out.println("Enter a character to check it is a alphabet or not");
+        checkForAlphabet(sc.next().charAt(0));
+        System.out.println("Enter a number to find sum of n numbers");
+        sumOfNumbers(sc.nextInt());
+        System.out.println("Enter a number to find factorial using for loop");
+        factorialUsingForLoop(sc.nextInt());
+        System.out.println("Enter a number to find factorial using while loop");
+        factorialUsingWhileLoop(sc.nextInt());
+        System.out.println("Enter a number to print multiplacation table");
+        printMultiplicationTable(sc.nextInt());
+        System.out.println("Enter a number to print Fibanocci series");
+        printFibonacciSeries(sc.nextInt());
         printLowerCaseAlphabet();
-        countNoOfDigits();
-        findPowerOfNumber();
-        findPowerNumberUsingPowFunction();
-        checkForPrimeNumber();
-        factorsOfPositiveInteger();
+        System.out.println("Enter a number to find the number of digits");
+        countNoOfDigits(sc.nextInt());
+        System.out.println("Enter base values and power value to find power");
+        findPowerOfNumber(sc.nextInt(), sc.nextInt());
+        System.out.println("Enter base values and power value to find the power using power function");
+        findPowerNumberUsingPowFunction(sc.nextInt(), sc.nextInt());
+        System.out.println("Enter a number to check it is prime or not");
+        checkForPrimeNumber(sc.nextInt());
+        System.out.println("Enter a number to print factors of positive integers");
+        factorsOfPositiveInteger(sc.nextInt());
         System.out.println("Enter a number");
         int number1 = sc.nextInt();
         long answer = factorialUsingRecursion(number1);
         System.out.println("The factorial is "+answer);
+        sc.close();
     }
 
-    public static void checkGreaterNumber(){
-        System.out.println("Enter three numbers");
-        int number1 = sc.nextInt();
-        int number2 = sc.nextInt();
-        int number3 = sc.nextInt();
+    public static void checkGreaterNumber(int number1, int number2, int number3){
         if(number1 > number2 && number1 > number3){
             System.out.println(number1+" is Greater");
         }
@@ -41,9 +51,8 @@ public class Day2Practice {
         }
     }
 
-    public  static void numberIsPositiveOrNegative(){
-        System.out.println("Enter a number");
-        int number1 = sc.nextInt();
+    public  static void numberIsPositiveOrNegative(int number1){
+
         if(number1 > 0){
             System.out.println(number1+" is Positive");
         }
@@ -55,9 +64,7 @@ public class Day2Practice {
             System.out.println(number1+" is Zero");
         }
     }
-    public static void  checkForAlphabet(){
-        System.out.println("Enter a character");
-        char ch = sc.next().charAt(0);
+    public static void  checkForAlphabet(char ch){
         ch = Character.toUpperCase(ch);
         if(ch >= 'A' && ch <= 'Z'){
             System.out.println(ch+" is a Alphabet");
@@ -66,18 +73,15 @@ public class Day2Practice {
             System.out.println(ch+" is not a Alphabet");
         }
     }
-    public static void sumOfNumbers(){
+    public static void sumOfNumbers(int number1){
         System.out.println("Enter a numbers");
-        int number1 = sc.nextInt();
         int sum = 0;
         for (int i = 0; i <= number1; i++) {
             sum += i;
         }
         System.out.println("Sum of n numbers is: "+sum);
     }
-    public static void factorialUsingForLoop(){
-        System.out.println("Enter a numbers");
-        int number1 = sc.nextInt();
+    public static void factorialUsingForLoop(int number1){
         int fact = 1;
         for (int i = 1; i <= number1; i++) {
             fact *= i;
@@ -85,9 +89,8 @@ public class Day2Practice {
         }
         System.out.println("The factorial of"+number1+" is: "+fact);
     }
-    public static void factorialUsingWhileLoop(){
-        System.out.println("Enter a number");
-        int number1 = sc.nextInt();
+    public static void factorialUsingWhileLoop(int number1){
+
         int fact = 1;
         int i = 1;
         while(i <= number1){
@@ -96,17 +99,13 @@ public class Day2Practice {
         }
         System.out.println("The factorial of "+number1+" is: "+fact);
     }
-    public static void printMultiplicationTable(){
-        System.out.println("Enter a number");
-        int number1 = sc.nextInt();
-        for(int i = 1;i <= number1; i++){
+    public static void printMultiplicationTable(int number1){
+        for(int i = 1;i <= 10; i++){
             int product = i * number1;
             System.out.println(number1+" * "+i+" = "+product);
         }
     }
-    public static void printFibanocciSeries(){
-        System.out.println("Enter a number");
-        int number1 = sc.nextInt();
+    public static void printFibonacciSeries(int number1){
         int first = 0;
         int second = 1;
         System.out.println("Fibanocci of "+number1+" are: ");
@@ -125,38 +124,27 @@ public class Day2Practice {
         }
         System.out.println();
     }
-    public static void countNoOfDigits(){
-        int number1 = 12949;
-        int temp = number1;
+    public static void countNoOfDigits(int number1){
+        int temporaryNumber = number1;
         int count = 0;
         while(number1 > 0){
             count++;
             number1 /= 10;
         }
-        System.out.println("Number of digits in "+temp+" is "+count);
+        System.out.println("Number of digits in "+temporaryNumber+" is "+count);
     }
-    public static void findPowerOfNumber(){
-        System.out.println("Enter the base value");
-        int base = sc.nextInt();
-        System.out.println("Enter the power value");
-        int power = sc.nextInt();
+    public static void findPowerOfNumber(int base, int power){
         int answer = 1;
         for (int i = 0; i < power; i++) {
             answer *= base;
         }
         System.out.println("Answer = "+answer);
     }
-    public static void findPowerNumberUsingPowFunction(){
-        System.out.println("Enter the base value");
-        int base = sc.nextInt();
-        System.out.println("Enter the power value");
-        int power = sc.nextInt();
+    public static void findPowerNumberUsingPowFunction(int base, int power){
         int answer = (int)Math.pow(base, power);
         System.out.println("Answer = "+answer);
     }
-    public static void checkForPrimeNumber(){
-        System.out.println("Enter a number");
-        int number1 = sc.nextInt();
+    public static void checkForPrimeNumber(int number1){
         boolean isPrime = true;
         if(number1 < 2){
             isPrime = false;
@@ -173,9 +161,7 @@ public class Day2Practice {
             System.out.println("Number "+number1+" is not prime");
         }
     }
-    public static void factorsOfPositiveInteger(){
-        System.out.println("Enter a number");
-        int number1 = sc.nextInt();
+    public static void factorsOfPositiveInteger(int number1){
         System.out.print("Factors of "+number1+" are: ");
         for (int i = 1; i < number1; i++) {
             if (number1 % i == 0){
