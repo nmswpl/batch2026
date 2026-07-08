@@ -67,7 +67,7 @@ public class PractiseProblems {
 
         tempVariable = num1;
         num1 = num2;
-        num2 = temp;
+        num2 = tempVariable;
 
         System.out.println("After Swap");
         System.out.println("First Number : " + num1);
