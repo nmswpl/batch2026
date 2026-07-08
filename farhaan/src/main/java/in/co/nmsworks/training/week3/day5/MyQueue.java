@@ -2,7 +2,6 @@ package in.co.nmsworks.training.week3.day5;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class MyQueue {
     private List<Integer> queue = new ArrayList<>();

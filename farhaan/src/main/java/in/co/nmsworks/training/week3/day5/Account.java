@@ -5,20 +5,13 @@ import java.util.List;
 
 public class Account {
     private int balance;
-    private List<String> statement = new ArrayList<>();
+    private List<String> statements = new ArrayList<>();
 
-    public int getBalance() {
-        return balance;
-    }
-
-    public void setBalance(int balance) {
-        this.balance = balance;
-    }
 
     public void getStatement(){
         System.out.println("The Statement of the account is :: ");
-        for (String s : statement) {
-            System.out.println(s);
+        for (String statement : statements) {
+            System.out.println(statement);
         }
         System.out.println("________________________________________________________________________");
     }
@@ -31,7 +24,7 @@ public class Account {
     public void deposit(int amount) {
             balance += amount;
             System.out.println("The amount " + amount + " has been deposited");
-            statement.add("The amount " + amount + " has been deposited");
+            statements.add("The amount " + amount + " has been deposited");
         System.out.println("________________________________________________________________________");
     }
      public void withdrawal(int amount) {
@@ -41,7 +34,7 @@ public class Account {
          } else {
              balance -= amount;
              System.out.println("The amount " + amount + " has been withdrawed");
-             statement.add("The amount " + amount + " has been withdrawed");
+             statements.add("The amount " + amount + " has been withdrawed");
              System.out.println("________________________________________________________________________");
          }
      }

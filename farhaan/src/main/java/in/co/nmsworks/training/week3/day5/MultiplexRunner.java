@@ -28,6 +28,7 @@ public class MultiplexRunner {
 
             int choice = scanner.nextInt();
 
+
             switch (choice) {
 
                 case 1:
@@ -54,14 +55,14 @@ public class MultiplexRunner {
                     System.out.println("1 == Screen B");
                     System.out.println("2 == Screen C");
 
-                    screenNumber = scanner.nextInt();
+                    int selectedScreenNumber = scanner.nextInt();
 
-                    if (screenNumber >= 0 && screenNumber < screens.size()) {
+                    if (selectedScreenNumber >= 0 && selectedScreenNumber < screens.size()) {
 
                         System.out.print("Enter number of tickets : ");
                         int tickets = scanner.nextInt();
 
-                        multiplex.bookTicket(screens, screens.get(screenNumber), tickets);
+                        multiplex.bookTicket(screens, screens.get(selectedScreenNumber), tickets);
 
                     } else {
                         System.out.println("Invalid Screen.");

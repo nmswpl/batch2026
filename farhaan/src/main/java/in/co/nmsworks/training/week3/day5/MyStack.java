@@ -1,7 +1,6 @@
 package in.co.nmsworks.training.week3.day5;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class MyStack {
@@ -10,14 +9,6 @@ public class MyStack {
     public MyStack() {
     }
 
-
-    public List<Integer> getStack() {
-        return stack;
-    }
-
-    public void setStack(List<Integer> stack) {
-        this.stack = stack;
-    }
 
     public void size(){
         System.out.println("The size of stack is :: " + stack.size());

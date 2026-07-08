@@ -1,13 +1,8 @@
 package in.co.nmsworks.training.week3.day5;
 
-import java.util.*;
-
 public class Card {
     private String cardType;
     private int cardNumber;
-
-    public Card() {
-    }
 
     @Override
     public String toString() {

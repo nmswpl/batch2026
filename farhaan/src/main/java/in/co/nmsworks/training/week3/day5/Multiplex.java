@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Multiplex {
 
-    public int checkAvailability(List<Screen> screens, Screen screen) {
+    public void checkAvailability(List<Screen> screens, Screen screen) {
 
         if (checkScreen(screens, screen)) {
 
@@ -12,14 +12,11 @@ public class Multiplex {
 
             if (availableSeats > 0) {
                 System.out.println("Available Seats : " + availableSeats);
-                return availableSeats;
             } else {
                 System.out.println("No seats available.");
-                return 0;
             }
         } else {
             System.out.println("Screen not found.");
-            return 0;
         }
     }
 

@@ -16,16 +16,9 @@ public class Screen {
         return seatCapacity;
     }
 
-    public void setSeatCapacity(int seatCapacity) {
-        this.seatCapacity = seatCapacity;
-    }
 
     public String getScreenName() {
         return screenName;
-    }
-
-    public void setScreenName(String screenName) {
-        this.screenName = screenName;
     }
 
     public int getFilledSeats() {
