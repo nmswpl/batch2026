@@ -47,10 +47,10 @@ public class WordFrequencyCounter {
         }
 
         Collections.sort(descendingFrequency, Collections.reverseOrder());
-        for (Integer i : descendingFrequency) {
-            System.out.println("words with frequency " + i);
+        for (Integer frequency : descendingFrequency) {
+            System.out.println("words with frequency " + frequency);
             for (String string : wordToFrequency.keySet()) {
-                if (Objects.equals(wordToFrequency.get(string), i)) {
+                if (Objects.equals(wordToFrequency.get(string), frequency)) {
                     System.out.println(string);
                 }
             }

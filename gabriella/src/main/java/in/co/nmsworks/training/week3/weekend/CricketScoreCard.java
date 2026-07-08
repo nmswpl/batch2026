@@ -20,8 +20,8 @@ public class CricketScoreCard {
             System.out.println("TEAM: " + teamName);
             Integer teamTotalRuns = 0;
             Integer teamTotalBalls = 0;
-            for (String string : team ){
-                String[] splitString = string.split(",", 3);
+            for (String teamDetails : team ){
+                String[] splitString = teamDetails.split(",", 3);
                 String spaces = "";
                 for (int i = 0; i < 30-splitString[0].length(); i++){
                     spaces += " ";
