@@ -14,6 +14,7 @@ public class Wallet implements Account {
     public int deposit(int amount) {
         if (amount > limit()) {
             System.out.println("exceeds transaction limit.");
+            return balance;
         }
         balance += amount;
         return balance;
@@ -23,6 +24,7 @@ public class Wallet implements Account {
     public int withdraw(int amount) {
         if (amount > limit()) {
             System.out.println(" exceeds transaction limit.");
+            return  balance ;
         }
         balance -= amount;
         return balance;
