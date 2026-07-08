@@ -12,9 +12,9 @@ public class PatternProblem {
         pp.fullPyramid(5);
     }
 
-    private void fullPyramid(int number1) {
-        for (int i = 0; i < number1; i++) {
-            for (int j = number1; j > i ; j--) {
+    private void fullPyramid(int row) {
+        for (int i = 0; i < row; i++) {
+            for (int j = row; j > i ; j--) {
                 System.out.print(" ");
             }
             for (int j = 0; j <= i; j++) {
@@ -27,22 +27,22 @@ public class PatternProblem {
         }
     }
 
-    private void invertedLeftAlignedTriangle(int number1) {
-        for (int i = 0; i < number1; i++) {
+    private void invertedLeftAlignedTriangle(int row) {
+        for (int i = 0; i < row; i++) {
             for(int j = 0; j < i; j++) {
                 System.out.print("  ");
             }
-            for (int j = i; j < number1; j++) {
+            for (int j = i; j < row; j++) {
                 System.out.print("* ");
             }
             System.out.println();
         }
     }
 
-    private void leftAlignedTriangle(int number1) {
+    private void leftAlignedTriangle(int row) {
 
-        for (int i = 1; i <= number1 ; i++) {
-            for (int j = number1; j > i; j--) {
+        for (int i = 1; i <= row ; i++) {
+            for (int j = row; j > i; j--) {
                 System.out.print("  ");
 
             }
@@ -54,8 +54,8 @@ public class PatternProblem {
         }
     }
 
-    private void rightTriangle(int number1) {
-        for (int i = 0; i <= number1; i++) {
+    private void rightTriangle(int row) {
+        for (int i = 0; i <= row; i++) {
 
             for (int j = 0; j < i; j++) {
                 System.out.print("* ");
@@ -64,8 +64,8 @@ public class PatternProblem {
         }
     }
 
-    private void invertedRightTriangle(int number1) {
-        for (int i = number1; i >= 0; i--) {
+    private void invertedRightTriangle(int row) {
+        for (int i = row; i >= 0; i--) {
 
             for (int j = 0; j < i; j++) {
                 System.out.print("* ");
