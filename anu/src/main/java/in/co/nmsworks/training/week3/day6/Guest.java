@@ -5,7 +5,7 @@ public class Guest {
     private int id=101;
     Receptionist language;
 
-    public Guest(int i, String name, Receptionist language) {
+    public Guest(int id, String name, Receptionist language) {
         this.id =id;
         this.name=name;
         this.language=language;
@@ -32,7 +32,4 @@ public class Guest {
         return language;
     }
 
-    public void setLanguage(Receptionist language) {
-        this.language = language;
-    }
 }
