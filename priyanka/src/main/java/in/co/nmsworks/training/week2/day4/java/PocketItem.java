@@ -1,7 +1,7 @@
 package in.co.nmsworks.training.week2.day4.java;
 
 public class PocketItem {
-    public String color = "browm";
+    private String color = "brown";
 
     public String getColor() {
         return color;
