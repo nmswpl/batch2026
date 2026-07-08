@@ -37,7 +37,7 @@ public class Savings implements Account {
 
     @Override
     public int deposit(int amount) {
-        if(amount>=limit){
+        if(amount<=limit){
             balance+=amount;
             System.out.println("An amount of "+amount+" has been deposited in your account");
             return balance;
