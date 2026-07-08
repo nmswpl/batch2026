@@ -12,7 +12,7 @@ public class CandidateDetailsParser {
         List<Candidate> candidateObjArr = new ArrayList<>();
         for (String candidate : candidateList) {
             String[] candidateCompleteInfo = candidate.split(",");
-            candiateObjArr.add(new Candidate(candidateCompleteInfo[0] , Integer.parseInt(candidateCompleteInfo[1]), candidateCompleteInfo[2], candidateCompleteInfo[3]));
+            candidateObjArr.add(new Candidate(candidateCompleteInfo[0] , Integer.parseInt(candidateCompleteInfo[1]), candidateCompleteInfo[2], candidateCompleteInfo[3]));
         }
         System.out.println("candidateObjArr : " + candidateObjArr.size());
 
