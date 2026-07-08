@@ -12,7 +12,7 @@ public class CardRunner {
         List<Card> cards = getNewDeck();
         Map<Integer,List<String>> playersCard = new HashMap<>();
         Collections.shuffle(cards);
-        Integer index = 0;
+        int index = 0;
         for (Card card : cards) {
             int personIndex = index % noOfPersons;
             List<String> playerCardList = playersCard.get(personIndex);
@@ -32,7 +32,7 @@ public class CardRunner {
         String[] shape = {"H", "D", "S", "C"};
         List<Card> cards = new ArrayList<>();
         for (String card : shape) {
-            for (int i = 0; i < 13; i++) {
+            for (int i = 1; i <= 13; i++) {
                 cards.add(new Card(card,i));
             }
         }

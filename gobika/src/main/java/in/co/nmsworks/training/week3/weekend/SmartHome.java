@@ -29,7 +29,7 @@ public class SmartHome {
     }
 
     private void generateElectricityBill(List<DeviceDetails> devices) {
-        Integer totalEnergyConsumed = 0;
+        int totalEnergyConsumed = 0;
         for (String log : logs) {
             System.out.println(log);
         }
@@ -41,7 +41,7 @@ public class SmartHome {
         }
         System.out.println("____________________________________________________________________________");
         System.out.println("Total Energy Consumed : "+ totalEnergyConsumed);
-        System.out.println("Electricity Bill : "+ totalEnergyConsumed/10);
+        System.out.println("Electricity Bill : "+ (totalEnergyConsumed / 100.0) * 10);
     }
 
 

@@ -16,43 +16,42 @@ public class AnnualEnterpriseSurvey {
     }
 
     private void splitSurvey(List<String> surveyList) {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/training","nms-training","")){
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/training","nms-training","");
+             PreparedStatement countStatement = connection.prepareStatement("INSERT INTO countData values (?, ?, ?, ?, ?, ?)");
+             PreparedStatement amountStatement = connection.prepareStatement("INSERT INTO amountData values (?, ?, ?, ?, ?, ?)")){
             for (String survey : surveyList) {
                 String[] surveyValues = survey.split(",");
                 int year = Integer.parseInt(surveyValues[0]);
-                String industry_code = surveyValues[1];
-                String industry_name = surveyValues[2];
-                String rme_size = surveyValues[3];
+                String industryCode = surveyValues[1];
+                String industryName = surveyValues[2];
+                String rmeSize = surveyValues[3];
                 String variable = surveyValues[4];
                 String value = surveyValues[5];
 
                 if ("COUNT".equals(surveyValues[6])){
-                    try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO countData values (?, ?, ?, ?, ?, ?)")){
-                        preparedStatement.setInt(1,year);
-                        preparedStatement.setString(2,industry_code);
-                        preparedStatement.setString(3,industry_name);
-                        preparedStatement.setString(4,rme_size);
-                        preparedStatement.setString(5,variable);
-                        preparedStatement.setString(6,value);
-                        preparedStatement.executeUpdate();
+                    countStatement.setInt(1,year);
+                    countStatement.setString(2, industryCode);
+                    countStatement.setString(3, industryName);
+                    countStatement.setString(4, rmeSize);
+                    countStatement.setString(5,variable);
+                    countStatement.setString(6,value);
+                    countStatement.executeUpdate();
                     }
-                }
                 else {
-                    try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO amountData values (?, ?, ?, ?, ?, ?)")){
-                        preparedStatement.setInt(1,year);
-                        preparedStatement.setString(2,industry_code);
-                        preparedStatement.setString(3,industry_name);
-                        preparedStatement.setString(4,rme_size);
-                        preparedStatement.setString(5,variable);
-                        preparedStatement.setString(6,value);
-                        preparedStatement.executeUpdate();
-                    }
+                    amountStatement.setInt(1,year);
+                    amountStatement.setString(2, industryCode);
+                    amountStatement.setString(3, industryName);
+                    amountStatement.setString(4, rmeSize);
+                    amountStatement.setString(5,variable);
+                    amountStatement.setString(6,value);
+                    amountStatement.executeUpdate();
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+
     }
 
     private List<String> listOfSurvey() {
