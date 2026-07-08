@@ -5,5 +5,4 @@ interface Account {
     int limit();
     int withdraw(int amount);
     int deposit(int amount);
-
 }
