@@ -2,9 +2,9 @@ package in.co.nmsworks.training.week2.day2;
 
 public class ObjectPractice {
     public static void main(String[] args) {
-        ObjectPractice ob = new ObjectPractice();
-        ob.compareCustomer();
-        ob.printTraineeDetails();
+        ObjectPractice objectPractice = new ObjectPractice();
+        objectPractice.compareCustomer();
+        objectPractice.printTraineeDetails();
 
     }
 
