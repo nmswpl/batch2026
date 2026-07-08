@@ -4,7 +4,16 @@ public class DefaultAccount implements Account {
 
     private Integer initialBalance;
     private Integer transactionLimit;
-    private Integer balance;
+    private Integer balance ;
+
+    public DefaultAccount(Integer initialBalance, Integer transactionLimit, Integer balance) {
+        this.initialBalance = initialBalance;
+        this.transactionLimit = transactionLimit;
+        this.balance = balance;
+    }
+
+    public DefaultAccount() {
+    }
 
     public void setInitialBalance(Integer initialBalance) {
         this.initialBalance = initialBalance;
