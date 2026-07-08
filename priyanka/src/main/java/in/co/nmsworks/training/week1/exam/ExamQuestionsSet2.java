@@ -1,5 +1,7 @@
 package in.co.nmsworks.training.week1.exam;
 
+import java.util.Arrays;
+
 public class ExamQuestionsSet2 {
     public static void main(String[] args) {
         System.out.println("hello");
@@ -9,16 +11,17 @@ public class ExamQuestionsSet2 {
 
     public static void medianOfArray(){
 
-        int[] arr = {1,2,3,4,5,6};
-        if(arr.length % 2 ==0){
-            float mid1 = arr[arr.length/2 -1];
-            float mid2 = arr[(arr.length/2)];
+        int[] array = {10,2,30,5,50};
+        if(array.length % 2 ==0){
+            float mid1 = array[array.length/2 -1];
+            float mid2 = array[(array.length/2)];
             float median = (mid1 + mid2) / 2;
             System.out.println("Median: "+ median);
         }
         else{
-            int median = arr.length/2;
-            System.out.println(arr[median]);
+            Arrays.sort(array);
+            int median = array.length/2;
+            System.out.println(array[median]);
         }
     }
     public static void hundredPosition(int number){
