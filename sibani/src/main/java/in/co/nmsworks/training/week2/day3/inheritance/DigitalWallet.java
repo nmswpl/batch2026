@@ -16,7 +16,11 @@ public class DigitalWallet extends PocketItem{
     }
 
     void makePayment(){
-        coin.spend();
+        if (coin == null) {
+            System.out.println("Coin is not initialized. It is null");
+        } else {
+            coin.spend();
+        }
     }
 
     @Override
