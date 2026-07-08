@@ -7,7 +7,7 @@ public abstract class Bank {
     public void calculateYearlyInterest(double principalAmount){
         double rate = getRateOfInterest();
         double interestYear = principalAmount* year *rate;
-        System.out.println("The interset per year "+interestYear);
+        System.out.println("The interest per year "+interestYear);
 
     }
 
