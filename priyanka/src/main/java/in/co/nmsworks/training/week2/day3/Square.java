@@ -1,19 +1,19 @@
 package in.co.nmsworks.training.week2.day3;
 
 public class Square extends Shape{
-    private Integer a ;
+    private Integer side;
 
     public Square(Integer a) {
-        this.a = a;
+        this.side = a;
     }
 
     @Override
     public void printArea() {
-        System.out.println("The area of square is "+ a*a);
+        System.out.println("The area of square is "+ side * side);
     }
 
     @Override
     public void printPerimeter() {
-        System.out.println("The perimeter of square is "+ 4*a);
+        System.out.println("The perimeter of square is "+ 4* side);
     }
 }
