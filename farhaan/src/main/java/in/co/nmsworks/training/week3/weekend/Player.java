@@ -9,12 +9,6 @@ public class Player {
     private Integer totalRuns;
     private List<Integer> runScored;
 
-    public Player(String team, String name, Integer totalRuns) {
-        this.team = team;
-        this.name = name;
-        this.totalRuns = totalRuns;
-    }
-
     public Player(String name, String team) {
         this.team = team;
         this.name = name;
@@ -38,9 +32,6 @@ public class Player {
         return team;
     }
 
-    public void setTeam(String team) {
-        this.team = team;
-    }
 
     public String getName() {
         return name;

@@ -32,7 +32,7 @@ public class Receptionist {
             int choice = sc.nextInt();
             sc.nextLine();
 
-            Guest guest = null;
+            Guest guest;
 
             if (choice == 1) {
                 System.out.print("Enter Name: ");

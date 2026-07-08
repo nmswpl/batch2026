@@ -50,23 +50,8 @@ public abstract class ElectricalDevice {
         return powerRating;
     }
 
-    public void setPowerRating(int powerRating) {
-        this.powerRating = powerRating;
-    }
-
-    public boolean isOn() {
-        return isOn;
-    }
-
-    public void setOn(boolean on) {
-        isOn = on;
-    }
 
     public int getCycleCount() {
         return cycleCount;
-    }
-
-    public void setCycleCount(int cycleCount) {
-        this.cycleCount = cycleCount;
     }
 }

@@ -49,7 +49,7 @@ public class CricketScoreCard {
 
     private void getPlayers() {
         try(BufferedReader reader = new BufferedReader(new FileReader("/home/nms-training/Downloads/cricket_match_data.txt"))) {
-            String line = "";
+            String line;
             reader.readLine();
             while((line = reader.readLine()) != null){
                 String[] details =  line.split(",");
