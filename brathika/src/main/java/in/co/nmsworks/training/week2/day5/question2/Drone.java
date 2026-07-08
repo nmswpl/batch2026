@@ -8,7 +8,7 @@ public class Drone implements BatteryPowered{
 
     @Override
     public int batteryAfterUse(float hours) {
-        int remainingBattery = 100 - batteryUsagePerHour() * (int)hours;
-        return  remainingBattery;
+        double remainingBattery = 100 - batteryUsagePerHour() * hours;
+        return  (int) remainingBattery;
     }
 }

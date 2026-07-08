@@ -10,6 +10,7 @@ public class DeviceUsage {
         printBatteryInfoAfterXHrsForDevice(drone,3);
     }
 
+
     private static void printBatteryInfoAfterXHrsForDevice(BatteryPowered batteryPowered, int noOfHours) {
         int usagePerHour = batteryPowered.batteryUsagePerHour();
         System.out.println("Battery Used Per Hour: "+usagePerHour+"%");
