@@ -2,8 +2,8 @@ package in.co.nmsworks.training.week4.day1;
 
 public class Detail {
     private int year;
-    private String industry_code_ANZSIC;
-    private String industry_name_ANZSIC;
+    private String industryCodeAnzsic;
+    private String industryNameAnzsic;
     private String rme_size_grp;
     private String variable;
     private String value;
@@ -15,8 +15,8 @@ public class Detail {
 
     public Detail(int year, String industry_code_ANZSIC, String industry_name_ANZSIC, String rme_size_grp, String variable, String value, String unit) {
         this.year = year;
-        this.industry_code_ANZSIC = industry_code_ANZSIC;
-        this.industry_name_ANZSIC = industry_name_ANZSIC;
+        this.industryCodeAnzsic = industry_code_ANZSIC;
+        this.industryNameAnzsic = industry_name_ANZSIC;
         this.rme_size_grp = rme_size_grp;
         this.variable = variable;
         this.value = value;
@@ -27,12 +27,12 @@ public class Detail {
         return year;
     }
 
-    public String getIndustry_code_ANZSIC() {
-        return industry_code_ANZSIC;
+    public String getIndustryCodeAnzsic() {
+        return industryCodeAnzsic;
     }
 
-    public String getIndustry_name_ANZSIC() {
-        return industry_name_ANZSIC;
+    public String getIndustryNameAnzsic() {
+        return industryNameAnzsic;
     }
 
     public String getRme_size_grp() {
