@@ -1,6 +1,6 @@
 package in.co.nmsworks.training.week2.day3;
 
-public class salesReport extends Report {
+public class SalesReport extends Report {
     @Override
     public String header() {
         return "Taramani Sales Report";
