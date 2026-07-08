@@ -9,19 +9,19 @@ public class CandidateDetailsParser {
 
 
     public static void printDetails(List<String> candidateList) {
-        List<Candidate> candiateObjArr = new ArrayList<>();
+        List<Candidate> candidateObjArr = new ArrayList<>();
         for (String candidate : candidateList) {
             String[] candidateCompleteInfo = candidate.split(",");
             candiateObjArr.add(new Candidate(candidateCompleteInfo[0] , Integer.parseInt(candidateCompleteInfo[1]), candidateCompleteInfo[2], candidateCompleteInfo[3]));
         }
-        System.out.println("candiateObjArr : " + candiateObjArr.size());
+        System.out.println("candidateObjArr : " + candidateObjArr.size());
 
         System.out.println("Candiate Details : ");
-        for (Candidate candiate : candiateObjArr) {
-            System.out.println("Name : "+ candiate.getName());
-            System.out.println("ID : "+ candiate.getId());
-            System.out.println("College Name : "+ candiate.getCollege());
-            System.out.println("Department : "+ candiate.getDept());
+        for (Candidate candidate : candidateObjArr) {
+            System.out.println("Name : "+ candidate.getName());
+            System.out.println("ID : "+ candidate.getId());
+            System.out.println("College Name : "+ candidate.getCollege());
+            System.out.println("Department : "+ candidate.getDept());
             System.out.println();
         }
 
@@ -31,13 +31,13 @@ public class CandidateDetailsParser {
 
     public List<String> collectDetails(String filePath) {
         BufferedReader readerObj = null;
-        String candiateDetail;
+        String candidateDetail;
         List<String> candidateDetailsList = new ArrayList<>();
         try {
             readerObj = new BufferedReader(new FileReader(filePath));
-            while ((candiateDetail = readerObj.readLine()) != null) {
-                candidateDetailsList.add(candiateDetail);
-                System.out.println("details : " + candiateDetail);
+            while ((candidateDetail = readerObj.readLine()) != null) {
+                candidateDetailsList.add(candidateDetail);
+                System.out.println("details : " + candidateDetail);
             }
 
         } catch (Exception e) {
