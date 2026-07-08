@@ -1,9 +1,9 @@
 package in.co.nmsworks.training.week2.day6;
 
-public class TrainingExcercise {
+public class TrainingExercise {
 
     public static void main(String[] args) {
-        TrainingExcercise obj = new TrainingExcercise();
+        TrainingExercise obj = new TrainingExercise();
         obj.evenNoInDescendingOrder(601,700);
         obj.printGrade(80);
 
@@ -50,22 +50,31 @@ public class TrainingExcercise {
 
     }
 
-    public void checkPrimeOrNot(int number) {
+    public void checkPrimeOrNot(int originalNumber) {
         int flag = 0 ;
         int count = 0 ;
-        for (int i = 2; i < number; i++) {
-            if(number % i == 0 ){
-                flag = 1 ;
-                count ++;
-            }
-        }
-
-        if(flag == 0 ){
-            System.out.println("The number " + number + " is a prime no");
+        int number = originalNumber; 
+        if(number == 1 || number == 0 ){
+            System.out.println("The number " + number + " is neither prime nor composite");
         }
         else{
-            System.out.println("The number " + number + " is not a prime no");
-            System.out.println("It is divisible by " + count + " numbers");
+            if(number < 0 ){
+                number = -1 * number ; 
+            }
+            for (int i = 2; i < number; i++) {
+                if(number % i == 0 ){
+                    flag = 1 ;
+                    count ++;
+                }
+            }
+
+            if(flag == 0 ){
+                System.out.println("The number " + originalNumber + " is a prime no");
+            }
+            else{
+                System.out.println("The number " + originalNumber + " is not a prime no");
+                System.out.println("It is divisible by " + count + " numbers");
+            }
         }
     }
 
