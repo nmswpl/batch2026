@@ -53,4 +53,14 @@ public class Phone {
         System.out.println("Model = " + phone.getModel());
         System.out.println("Price = " + phone.getPrice());
     }
+
+    @Override
+    public String toString() {
+        return "Phone{" +
+                "id=" + id +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

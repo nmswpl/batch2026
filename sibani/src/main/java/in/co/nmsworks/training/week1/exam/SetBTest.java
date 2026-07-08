@@ -15,35 +15,35 @@ public class SetBTest {
         ph3.printDetails(ph3);
         ph4.printDetails(ph4);
         ph5.printDetails(ph5);
-        printHundredthPosition();
+        printHundredthPosition(567);
     }
 
-    private static void printHundredthPosition() {
-        int num = 567;
+    private static void printHundredthPosition(int num) {
         if (num <99  || num >1000){
-            System.out.println("Invalid Output");
+            System.out.println("Invalid Input");
         }
         else {
             int digit = num /100;
-            String[] values = {"Zero","One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
-            System.out.println("Hundredth Position : " + values[digit]);
+            String[] values = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
+            System.out.println("Hundredth Position : " + values[digit - 1]);
 
         }
     }
 
     private static void findMedian(int[] arr) {
-
-        float median = 0, sum =0;
-        int n = arr.length;
-
-            if(n % 2 == 0) {
-                sum = arr[n/2]+ arr[n/2 -1];
+        if (arr == null){
+            System.out.println("Empty array");
+        } else {
+            float median = 0, sum = 0;
+            int n = arr.length;
+            if (n % 2 == 0) {
+                sum = arr[n / 2] + arr[n / 2 - 1];
                 median = sum / 2;
+            } else {
+                median = arr[n / 2];
             }
-            else {
-                median = arr[n/2];
-            }
-        System.out.println("Median : " + median);
+            System.out.println("Median : " + median);
+        }
     }
 
 }
