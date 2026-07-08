@@ -15,8 +15,8 @@ public class StringPracticeQuestions2 {
         stringPractice.decodePhoneNumber("9344683461");
     }
 
-    public void checkValidUsername(String str){
-        if(str.length()>=5 && str.length()<15){
+    public void checkValidUsername(String string){
+        if(string.length()>=5 && string.length()<15){
             System.out.println("valid");
         }
         else{
@@ -24,22 +24,28 @@ public class StringPracticeQuestions2 {
         }
     }
 
-    public void checkValidMailId(String str){
-        String[] arr=str.split("@");
-        for(String string:arr){
-            System.out.println(string);
-        }
+    public void checkValidMailId(String input){
+        if(input.contains("@")){
+            String[] array = input.split("@");
+            for(String string: array){
+                System.out.println(string);
+            }
 
-        if(arr.length !=2) {
-            System.out.println("invalid !!");
-        }
+            if(array.length !=2) {
+                System.out.println("invalid !!");
+            }
 
-        if(arr[1].equals("nmsworks.co.in")){
-            System.out.println("Valid");
+            if(array[1].equals("nmsworks.co.in")){
+                System.out.println("Valid");
+            }
+            else{
+                System.out.println("invalid");
+            }
         }
         else{
-            System.out.println("invalid");
+            System.out.println("Invalid mailId");
         }
+
     }
     public void hasWireless(String string){
         if(string.contains("wireless")){

@@ -3,8 +3,8 @@ package in.co.nmsworks.training.week2.day3;
 public class Square extends Shape{
     private Integer side;
 
-    public Square(Integer a) {
-        this.side = a;
+    public Square(Integer side) {
+        this.side = side;
     }
 
     @Override
