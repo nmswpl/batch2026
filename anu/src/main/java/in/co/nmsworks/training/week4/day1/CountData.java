@@ -9,13 +9,17 @@ import java.sql.PreparedStatement;
 public class CountData {
 
     public static void main(String[] args) {
+
         new CountData().readValueFromDb();
     }
 
     private void readValueFromDb() {
-
-        try (BufferedReader br = new BufferedReader(new FileReader("/home/nms-training/Downloads/annual-enterprise-survey-2025-financial-year-provisional-size-bands.csv"));
-             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/training", "nms-training", "");
+        String filePath = "/home/nms-training/Downloads/annual-enterprise-survey-2025-financial-year-provisional-size-bands.csv";
+        String url = "jdbc:mysql://localhost:3306/training";
+        String userName = "nam-training";
+        String userPassword ="";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath));
+             Connection conn = DriverManager.getConnection(url,userName,userPassword);
              PreparedStatement psCount = conn.prepareStatement("INSERT INTO CountData VALUES (?,?,?,?,?,?)");
              PreparedStatement psAmount = conn.prepareStatement("INSERT INTO AmountData VALUES (?,?,?,?,?,?)"))
         {
