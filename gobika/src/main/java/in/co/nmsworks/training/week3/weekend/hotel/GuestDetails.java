@@ -1,4 +1,4 @@
-package in.co.nmsworks.training.week3.weekend;
+package in.co.nmsworks.training.week3.weekend.hotel;
 
 public class GuestDetails {
     private String name;

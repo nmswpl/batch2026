@@ -21,7 +21,7 @@ public class SmartRemote extends BasicRemote{
 
     public void setChannelNumber(int channelNumber) {
         if (channelNumber < 0 || channelNumber > 999){
-            System.err.println("Reject : Invalid channel number");
+            System.out.println("Reject : Invalid channel number");
         }
         else {
             this.channelNumber = channelNumber;

@@ -6,17 +6,17 @@ public class EmployeeRunner {
         Employee emp2 = new Employee(1,"Gobika", "Developer",30000, "Amazon");
 
 
-        System.out.println(emp.getCOMPANYNAME());
-        System.out.println(emp2.getCOMPANYNAME());
+        System.out.println(emp.getCompanyName());
+        System.out.println(emp2.getCompanyName());
 
         System.out.println(emp);
-//        System.out.println(emp.getName());
+        System.out.println(emp.getName());
 
-//        String name = "NMSWorks";
-//        String company = "NMSWorks";
-//
-//        System.out.println(name == company );
-//        System.out.println(name.equals(company));
+        String name = "NMSWorks";
+        String company = "NMSWorks";
+
+        System.out.println(name == company );
+        System.out.println(name.equals(company));
 
 
         Integer i1 = 5;

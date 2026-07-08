@@ -7,10 +7,10 @@ public class Employee {
     private  String name;
     private  String dept;
     private  long salary;
-    private final String COMPANYNAME;
+    private final String companyName;
 
-    public String getCOMPANYNAME() {
-        return COMPANYNAME;
+    public String getCompanyName() {
+        return companyName;
     }
 
 
@@ -19,7 +19,7 @@ public class Employee {
         this.name = name;
         this.dept = dept;
         this.salary = salary;
-        this.COMPANYNAME = companyName;
+        this.companyName = companyName;
     }
 
     public int getId() {
@@ -53,7 +53,7 @@ public class Employee {
                 ", name='" + name + '\'' +
                 ", dept='" + dept + '\'' +
                 ", salary=" + salary +
-                ", companyName='" + COMPANYNAME + '\'' +
+                ", companyName='" + companyName + '\'' +
                 '}';
     }
 

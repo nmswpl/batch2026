@@ -10,11 +10,11 @@ public class BookRunner {
         Book b4 = new Book(104, "Java Programming", "James Gosling", 450);
         Book b5 = new Book(105, "Java Programming", "James Gosling", 450);
 
-//        b1.display();
-//        b2.display();
-//        b3.display();
-//        b4.display();
-//        b5.display();
+        b1.display();
+        b2.display();
+        b3.display();
+        b4.display();
+        b5.display();
         System.out.println("List .....");
         List<Book> bookList = new ArrayList<>();
         bookList.add(b1);
@@ -29,7 +29,7 @@ public class BookRunner {
         System.out.println("Check the list is empty :: " + bookList.isEmpty());
         System.out.println("Last Index of the Object :: " +bookList.lastIndexOf(b3));
         System.out.println("Sublist : "+bookList.subList(1,3));
-//        System.out.println("Set object "+bookList.set(2,b4));
+
         System.out.println("Remove from a list : "+ bookList.remove(b4));
 
 
@@ -59,8 +59,6 @@ public class BookRunner {
         System.out.println("Get Method in Set : " + bookSet.contains(b3));
         System.out.println("Remove object : "+bookSet.remove(b3));
         System.out.println("Equal  : "+ bookSet.equals(bookList.subList(1,2)));
-//        bookSet.clear();
-//        System.out.println("Set size :: "+bookSet.size());
         System.out.println(bookSet.retainAll(bookSet));
 
         for (Book book : bookSet) {
