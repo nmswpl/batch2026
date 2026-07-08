@@ -7,13 +7,13 @@ public class AbstractRunner {
 
     private static void bank() {
         SBI sbi = new SBI();
-        sbi.calculateyearlyInterset(2000);
+        sbi.calculateYearlyInterest(2000);
 
         IOB iob = new IOB();
-        iob.calculateyearlyInterset(3000);
+        iob.calculateYearlyInterest(3000);
 
         KVB kvb = new KVB();
-        kvb.calculateyearlyInterset(4000);
+        kvb.calculateYearlyInterest(4000);
 
     }
 }
