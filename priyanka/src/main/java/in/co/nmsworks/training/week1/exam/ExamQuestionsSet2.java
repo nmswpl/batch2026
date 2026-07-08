@@ -4,7 +4,7 @@ public class ExamQuestionsSet2 {
     public static void main(String[] args) {
         System.out.println("hello");
         medianOfArray();
-        hundredPosition(053);
+        hundredPosition(453);
     }
 
     public static void medianOfArray(){
