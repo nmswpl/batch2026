@@ -1,25 +1,24 @@
 package in.co.nmsworks.training.week2.day4.java;
 
-import in.co.nmsworks.training.week2.day1.StirngPracticeQuestions;
 
 public class DigitalWallet extends PocketItem {
 
-    Coin c;
+    Coin coin;
 
     public Coin getC() {
-        return c;
+        return coin;
     }
 
-    public void setC(Coin c) {
-        this.c = c;
+    public void setC(Coin coin) {
+        this.coin = coin;
     }
 
-    public DigitalWallet(Coin c) {
-        this.c = new Coin(c.getDenomination());
+    public DigitalWallet(Coin coin) {
+        this.coin = new Coin(coin.getDenomination());
     }
 
     public void makePayment(){
-        c.spend();
+        coin.spend();
     }
 
 
