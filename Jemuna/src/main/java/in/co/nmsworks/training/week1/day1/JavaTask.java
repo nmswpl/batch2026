@@ -18,33 +18,34 @@ public class JavaTask {
     {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the number: ");
-        int a = scanner.nextInt();
-        System.out.println("You entered: " + a);
+        int number = scanner.nextInt();
+        System.out.println("You entered: " + number);
+        scanner.close();
     }
 
     public static void taskTwo()
     {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the Two number: ");
-        int a = scanner.nextInt();
-        int b= scanner.nextInt();
-        int c;
-        c=a+b;
-        System.out.println("The sum is:"+c);
+        int number1 = scanner.nextInt();
+        int number2= scanner.nextInt();
+        int result =number1+number2;
+        System.out.println("The sum is:"+result);
+        scanner.close();
     }
 
     public static void taskThree(){
-        float a=1;
-        float b=3;
-        float c=a*b;
-        System.out.println("The product is "+c);
+        float number1=1;
+        float number2=3;
+        float result=number1*number2;
+        System.out.println("The product is "+result);
 
     }
     public static void taskFour(){
-        int a=36;
-        int b=6;
-        System.out.println("Quotient = "+ a/b);
-        System.out.println("Remainder = "+ a%b);
+        int number1=36;
+        int number2=6;
+        System.out.println("Quotient = "+ number1/number2);
+        System.out.println("Remainder = "+ number1%number2);
 
     }
 
@@ -56,18 +57,18 @@ public class JavaTask {
 
 
     public static void taskSix(){
-        double a=1.2;
-        double b=2.45;
+        double number1=1.2;
+        double number2 =2.45;
         System.out.println("Before Swapping");
-        System.out.println("The value of a: "+a);
-        System.out.println("The value of b: "+b);
-        double c;
-        c=a;
-        a=b;
-        b=c;
+        System.out.println("The value of a: "+number1);
+        System.out.println("The value of b: "+number2);
+        double temp;
+        temp=number1;
+        number1=number2;
+        number2=temp;
         System.out.println("After Swapping");
-                System.out.println("The value of a: "+a);
-        System.out.println("The value of b: "+b);
+        System.out.println("The value of a: "+number1);
+        System.out.println("The value of b: "+number2);
 
     }
 
@@ -85,14 +86,15 @@ public class JavaTask {
         scanner.close();
     }
 
-    public static void taskEight()
-    {
-        char a='a';
-        if (a=='a' || a=='e' || a=='i' || a=='o' || a=='u' || a=='A' || a=='E' || a=='I' || a=='O' || a=='U'){
-            System.out.println(a+" is a vowel");
+    public static void taskEight(){
+        char ch='a';
+        if (ch=='a' || ch=='e' || ch=='i' || ch=='o' || ch=='u' || ch=='A' || ch=='E' || ch=='I' || ch=='O' || ch=='U')
+        {
+            System.out.println(ch+" is a vowel");
         }
-        else{
-            System.out.println(a+" is a consonant");
+        else
+        {
+            System.out.println(ch+" is a consonant");
         }
     }
 
