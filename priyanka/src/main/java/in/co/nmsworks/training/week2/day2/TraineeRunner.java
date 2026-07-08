@@ -13,12 +13,12 @@ public class TraineeRunner {
         Trainee t5 = new Trainee("mno");
         System.out.println(t5);
 
-        Trainee[] traineeArray = {t1, t2, t3, t4, t5};
-        Trainee[] arr = new Trainee[5];
+
+        Trainee[] traineeArray = new Trainee[5];
         for (int i = 0; i < traineeArray.length; i++) {
-            arr[i]=new Trainee("Name"+(i+1));
+            traineeArray[i]=new Trainee("Name"+(i+1));
         }
-        for (Trainee trainee : arr) {
+        for (Trainee trainee : traineeArray) {
             System.out.println(trainee);
         }
     }
