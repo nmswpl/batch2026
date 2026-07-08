@@ -1,6 +1,7 @@
 package in.co.nmsworks.training.week3.weekendpractise;
 
 public class ElectronicDevice {
+
     private String deviceName;
     private String state;
     private Integer powerRating;
@@ -56,7 +57,7 @@ public class ElectronicDevice {
 
     @Override
     public String toString() {
-        return "ElectonicDevice{" +
+        return "ElectronicDevice{" +
                 "deviceName='" + deviceName + '\'' +
                 ", state='" + state + '\'' +
                 ", powerRating=" + powerRating +
