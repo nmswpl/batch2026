@@ -11,31 +11,31 @@ public class Exam {
         Book book3 = new Book(3, "Pythom Programmin", "James Gosling", 500.0);
         Book book4 = new Book(4, "English Dictionary", "Oxfard University", 500.0);
         Book book5 = new Book(5, "C++ Programming", "James Gosling", 350.0);
-//        book1.printValues();
-//        book2.printValues();
-//        book3.printValues();
-//        book4.printValues();
-//        book5.printValues();
-//        printGrade(79);
+        book1.printValues();
+        book2.printValues();
+        book3.printValues();
+        book4.printValues();
+        book5.printValues();
+        printGrade(79);
 
-//        List<Book> list = new ArrayList<>();
-//        list.add(book1);
-//        list.add(book2);
-//        list.add(book3);
-//        list.add(book4);
-//        list.add(book5);
-//        System.out.println("List");
-//        System.out.println("Size of List: "+list.size());
-////         System.out.println(list);
-//        for (Book book : list) {
-//            System.out.println(book);
-//        }
-//        System.out.println("Index of 3rd position "+list.get(3));
-//        System.out.println("List contains "+list.contains(book1));
-//        System.out.println("List Index "+list.indexOf(book2));
-//        System.out.println("Is Empty "+list.isEmpty());
-//        System.out.println("Last index: "+list.lastIndexOf(book4));
-//        System.out.println("Sub List: "+list.subList(2,4));
+        List<Book> list = new ArrayList<>();
+        list.add(book1);
+        list.add(book2);
+        list.add(book3);
+        list.add(book4);
+        list.add(book5);
+        System.out.println("List");
+        System.out.println("Size of List: "+list.size());
+//         System.out.println(list);
+        for (Book book : list) {
+            System.out.println(book);
+        }
+        System.out.println("Index of 3rd position "+list.get(3));
+        System.out.println("List contains "+list.contains(book1));
+        System.out.println("List Index "+list.indexOf(book2));
+        System.out.println("Is Empty "+list.isEmpty());
+        System.out.println("Last index: "+list.lastIndexOf(book4));
+        System.out.println("Sub List: "+list.subList(2,4));
         Set<Book> bookset = new HashSet<>();
 
         bookset.add(book1);
@@ -109,29 +109,28 @@ public class Exam {
             sum += arr[i];
 
         }
-        int mean = sum / arr.length;
+        double mean = (double) sum / arr.length;
         System.out.println("Mean of the array is: "+mean);
     }
 
-    public static void printGrade(int number1){
-
-        if (number1 > 100) {
+    public static void printGrade(int mark){
+        if (mark < 0) {
+            System.out.println("Enter a valid number");
+        }
+        if (mark > 100) {
             System.out.println("Mark is invald");
-        } else if (number1 >= 91 ) {
+        } else if (mark >= 91 ) {
             System.out.println("Your grade is S");
-        } else if (number1 >= 81 ){
+        } else if (mark >= 81 ){
             System.out.println("Your grade is A");
-        } else if (number1 >= 71 ) {
+        } else if (mark >= 71 ) {
             System.out.println("Your grade is B");
-        } else if (number1 >= 61 ) {
+        } else if (mark >= 61 ) {
             System.out.println("Your grade is C");
-        } else if (number1 >= 51 ) {
+        } else if (mark >= 51 ) {
             System.out.println("Your grade is D");
         }else {
             System.out.println("Your grade is F");
         }
-
-
-
     }
 }
