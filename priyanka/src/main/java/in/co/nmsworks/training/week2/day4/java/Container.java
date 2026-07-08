@@ -1,7 +1,7 @@
 package in.co.nmsworks.training.week2.day4.java;
 
 public class Container {
-    public double maxWeight=20;
+    private double maxWeight=20;
 
     public void open(){
         System.out.println("Opening the container...");
