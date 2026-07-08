@@ -9,35 +9,35 @@ import java.util.HashMap;
 
 public class BookMain {
     public static void main(String[] args) {
-        Book b1 = new Book();
-        b1.setId(101);
-        b1.setTitle("Java Programming");
-        b1.setAuthor("James Gosling");
-        b1.setPrice(450.0);
+        Book book1 = new Book();
+        book1.setId(101);
+        book1.setTitle("Java Programming");
+        book1.setAuthor("James Gosling");
+        book1.setPrice(450.0);
 
-        Book b2 = new Book();
-        b2.setId(102);
-        b2.setTitle("Computer");
-        b2.setAuthor("Charles Babbage");
-        b2.setPrice(550.0);
+        Book book2 = new Book();
+        book2.setId(102);
+        book2.setTitle("Computer");
+        book2.setAuthor("Charles Babbage");
+        book2.setPrice(550.0);
 
-        Book b3 = new Book();
-        b3.setId(103);
-        b3.setTitle("The Silent Patient");
-        b3.setAuthor("Alicia Berenson");
-        b3.setPrice(600.0);
+        Book book3 = new Book();
+        book3.setId(103);
+        book3.setTitle("The Silent Patient");
+        book3.setAuthor("Alicia Berenson");
+        book3.setPrice(600.0);
 
-        Book b4 = new Book();
-        b4.setId(104);
-        b4.setTitle("Ikigai");
-        b4.setAuthor("Japanese author");
-        b4.setPrice(900.0);
+        Book book4 = new Book();
+        book4.setId(104);
+        book4.setTitle("Ikigai");
+        book4.setAuthor("Japanese author");
+        book4.setPrice(900.0);
 
-        Book b5 = new Book();
-        b5.setId(105);
-        b5.setTitle("America");
-        b5.setAuthor("Avengers");
-        b5.setPrice(950.0);
+        Book book5 = new Book();
+        book5.setId(105);
+        book5.setTitle("America");
+        book5.setAuthor("Avengers");
+        book5.setPrice(950.0);
 
 //        System.out.println(b1.getID());
 //        System.out.println(b1.getTitle());
@@ -45,12 +45,12 @@ public class BookMain {
 //        System.out.println(b1.getPrice());
 
         List<Book> list = new ArrayList<>();
-        list.add(b1);
-        list.add(b2);
-        list.add(b3);
-        list.add(b4);
-        list.add(b5);
-        list.add(b5);
+        list.add(book1);
+        list.add(book2);
+        list.add(book3);
+        list.add(book4);
+        list.add(book5);
+        list.add(book5);
 //        System.out.println("---LIST---");
 //        System.out.println(" ");
 //        // System.out.println(list.toString());
@@ -135,7 +135,7 @@ public class BookMain {
 //       map.put(105,b5);
 
         for (Book book : list) {
-            map.put(book.getID(),book);
+            map.put(book.getId(),book);
         }
 
 

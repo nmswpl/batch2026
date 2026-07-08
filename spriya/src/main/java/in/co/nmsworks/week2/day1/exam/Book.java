@@ -6,7 +6,7 @@ public class Book {
     private String author;
     private double price;
 
-    public int getID() {
+    public int getId() {
         return id;
     }
 
