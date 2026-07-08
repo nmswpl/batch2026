@@ -49,7 +49,7 @@ public class MobilePhone {
         this.price = price;
     }
 
-//    public void mobliePhoneDetails(MobilePhone phone){
+//    public void mobilePhoneDetails(MobilePhone phone){
 //        System.out.println("ID: " +phone.getId());
 //        System.out.println("BRAND: " + phone.getBrand());
 //        System.out.println("MODEL: " + phone.getModel());
@@ -57,7 +57,7 @@ public class MobilePhone {
 //    }
 
 
-    public void mobliePhoneDetails(){
+    public void mobilePhoneDetails(){
         System.out.println("ID: " +this.id);
         System.out.println("BRAND: " + this.brand);
         System.out.println("MODEL: " + this.model);
