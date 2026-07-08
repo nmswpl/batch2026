@@ -6,23 +6,23 @@ import java.io.FileReader;
 public class ParagraphAnalysis {
     public static void main(String[] args) {
         ParagraphAnalysis analysis = new ParagraphAnalysis();
-        analysis.analyse();
+        analysis.getAndPrintCounts();
     }
 
-    private void analyse() {
+    private void getAndPrintCounts() {
         try(BufferedReader reader = new BufferedReader(new FileReader("/home/nms-training/Downloads/Word_Frequency.txt"))){
-            String line = "";
+            String line;
             String text = "";
-            int[] arr = new int[3];
+            int[] resultArray = new int[3];
             while((line = reader.readLine()) != null){
                 text += line;
             }
-            arr[0] = getStatementsCount(text);
-            arr[1] = getWordsCount(text);
-            arr[2] = getLettersCount(text);
-            for (int i =0; i< arr.length; i++) {
-                System.out.println(arr[i]);
-            }
+            resultArray[0] = getStatementsCount(text);
+            resultArray[1] = getWordsCount(text);
+            resultArray[2] = getLettersCount(text);
+            System.out.println("The Total Statements Count are :: " + resultArray[0]);
+            System.out.println("The Total Words Count are :: " + resultArray[1]);
+            System.out.println("The Total Letters Count are :: " + resultArray[2]);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -30,21 +30,18 @@ public class ParagraphAnalysis {
     }
 
     private int getLettersCount(String text) {
-        int letterCount = 0;
+        int letterCount;
         letterCount = text.length();
         return letterCount;
     }
 
     private int getWordsCount(String text) {
         String[] splits = text.split(" ");
-        int wordsCount = splits.length;
-        return wordsCount;
-
+        return splits.length;
     }
 
     private int getStatementsCount(String text) {
         String[] splits = text.split("\\.");
-        int statementsCount = splits.length;
-        return statementsCount;
+        return splits.length;
     }
 }
