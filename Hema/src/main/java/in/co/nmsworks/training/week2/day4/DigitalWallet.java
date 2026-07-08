@@ -8,11 +8,11 @@ public class DigitalWallet extends PocketItem{
         this.coin = coin;
     }
 
-    public Coin getCoin2() {
+    public Coin getCoin() {
         return coin;
     }
 
-    public void setCoin2(Coin coin) {
+    public void setCoin(Coin coin) {
         this.coin = coin;
     }
 
