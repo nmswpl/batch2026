@@ -1,7 +1,7 @@
 package in.co.nmsworks.training.week2.day3;
 
 public class Engine {
-    private String fuleType;
+    private String fuelType;
     private int cc;
 
     public Engine() {
@@ -9,15 +9,15 @@ public class Engine {
 
     public Engine(int cc, String fuleType) {
         this.cc = cc;
-        this.fuleType = fuleType;
+        this.fuelType = fuleType;
     }
 
-    public String getFuleType() {
-        return fuleType;
+    public String getFuelType() {
+        return fuelType;
     }
 
-    public void setFuleType(String fuleType) {
-        this.fuleType = fuleType;
+    public void setFuelType(String fuelType) {
+        this.fuelType = fuelType;
     }
 
     public int getCc() {
@@ -31,7 +31,7 @@ public class Engine {
     @Override
     public String toString() {
         return "Engine{" +
-                "fuleType='" + fuleType + '\'' +
+                "fuelType='" + fuelType + '\'' +
                 ", cc=" + cc +
                 '}';
     }
