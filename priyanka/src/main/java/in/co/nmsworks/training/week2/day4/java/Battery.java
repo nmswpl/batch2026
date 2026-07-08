@@ -1,8 +1,8 @@
 package in.co.nmsworks.training.week2.day4.java;
 
 public class Battery{
-    public String brand;
-    public int power;
+    private String brand;
+    private int power;
 
     public String getBrand() {
         return brand;
