@@ -23,6 +23,10 @@ public class ExamQuestionsSet2 {
     }
     public static void hundredPosition(int number){
         int hundredValue= number / 100;
+        if(number<100 || number>999){
+            System.out.println("Only three digits number is allowed");
+            return;
+        }
         switch(hundredValue){
             case 1:
                 System.out.println("One");
@@ -61,6 +65,9 @@ public class ExamQuestionsSet2 {
             case 0:
                 System.out.println("Zero");
                 break;
+
+            default:
+                System.out.println("Invalid number");
         }
     }
 }
