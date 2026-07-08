@@ -34,7 +34,7 @@ public class MultiplexRunner {
                         Integer screen = scanner.nextInt();
                         multiplex.setScreen(screen);
                         System.out.println("Enter No. of Tickets....");
-                        multiplex.bookTicket(scanner.nextInt());
+                        multiplex.bookTicket(screen, scanner.nextInt());
                         break;
 
                     case 3:

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyStack {
-    List<Integer> stack = new ArrayList<>();
+    private List<Integer> stack = new ArrayList<>();
 
     public void push(Integer element){
         stack.add(element);
@@ -16,14 +16,19 @@ public class MyStack {
         }
         else {
             Integer topElement = stack.get(stack.size()-1);
-            stack.remove(topElement);
+            stack.remove(stack.size()-1);
             System.out.println(topElement);
         }
 
     }
 
     public void top(){
-        System.out.println(stack.get(stack.size()-1));
+        if (stack.isEmpty()){
+            System.out.println("Stack is Empty");
+        }
+        else {
+            System.out.println(stack.get(stack.size()-1));
+        }
     }
 
     public void size(){

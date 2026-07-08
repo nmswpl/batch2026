@@ -6,7 +6,7 @@ import java.util.Map;
 public class Multiplex {
     private Integer screen ;
     private static Integer seatNo = 0;
-    Map<Integer,Integer> screenToCapacity = new HashMap<>();
+    private Map<Integer,Integer> screenToCapacity = new HashMap<>();
     public void setScreen(Integer screen) {
         this.screen = screen;
     }
@@ -23,7 +23,7 @@ public class Multiplex {
         }
     }
 
-    public void bookTicket(Integer noOfTickets){
+    public void bookTicket(Integer screen, Integer noOfTickets){
         if ( noOfTickets < checkAvailable(screen)){
             System.out.println("Ticket booked ...");
             for (int i = 0; i < noOfTickets; i++) {

@@ -15,15 +15,19 @@ public class MyQueue {
             System.out.println("Queue is Empty");
         }
         else {
-            Integer firstElement = queue.get(0);
-            queue.remove(firstElement);
+            Integer firstElement = queue.remove(0);
             System.out.println(firstElement);
         }
 
     }
 
     public void peek(){
-        System.out.println(queue.get(0));
+        if (queue.isEmpty()){
+            System.out.println("Queue is Empty");
+        }
+        else {
+            System.out.println(queue.get(0));
+        }
     }
 
     public void size(){

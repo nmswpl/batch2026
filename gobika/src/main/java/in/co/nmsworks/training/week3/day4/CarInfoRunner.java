@@ -16,13 +16,11 @@ public class CarInfoRunner {
     public static void main(String[] args) {
         CarInfoRunner carInfoRunner = new CarInfoRunner();
         List<CarInfo> carInfoList = carInfoRunner.carDbToList();
-//        System.out.println(carInfoList);
 
         Map<String, List<String>> manufacturerToCars = carInfoRunner.getManufacturerToCars(carInfoList);
-//        System.out.println(manufacturerToCars);
+        System.out.println(manufacturerToCars);
 
-//        carInfoRunner.writeManufacturersToFile(manufacturerToCars);
-
+        carInfoRunner.writeManufacturersToFile(manufacturerToCars);
 
         ActiveCars activeCars = new ActiveCars();
         activeCars.write(carInfoList);
@@ -34,9 +32,7 @@ public class CarInfoRunner {
 
 
     private void writeManufacturersToFile(Map<String, List<String>> manufacturerToCars) {
-        BufferedWriter bufferedWriter = null;
-        try {
-            bufferedWriter = new BufferedWriter(new FileWriter("/home/nms-training/Desktop/Manufacturer.txt"));
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("/home/nms-training/Desktop/Manufacturer.txt"))){
             for (Map.Entry<String, List<String>> manufacturer : manufacturerToCars.entrySet()){
                 bufferedWriter.write("Manufacturer : "+manufacturer.getKey() +"\nCarsList :" + manufacturer.getValue()+ "\n") ;
                 bufferedWriter.write("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -44,13 +40,6 @@ public class CarInfoRunner {
             bufferedWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
-            try {
-                bufferedWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -72,10 +61,11 @@ public class CarInfoRunner {
         List<CarInfo> carInfoList = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/training","nms-training","");
              PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM CarInfo");) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                CarInfo carInfo = new CarInfo(resultSet.getInt("id"),resultSet.getString("name"),resultSet.getString("Manufacturer"),resultSet.getInt("YearOfProduction"),resultSet.getString("Status"));
-                carInfoList.add(carInfo);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    CarInfo carInfo = new CarInfo(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("Manufacturer"), resultSet.getInt("YearOfProduction"), resultSet.getString("Status"));
+                    carInfoList.add(carInfo);
+                }
             }
 
         } catch (SQLException e) {

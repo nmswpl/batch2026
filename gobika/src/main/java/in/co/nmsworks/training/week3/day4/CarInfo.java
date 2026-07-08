@@ -3,7 +3,7 @@ package in.co.nmsworks.training.week3.day4;
 public class CarInfo {
     private Integer id;
     private String name;
-    private String Manufacturer;
+    private String manufacturer;
     private Integer yearOfProduction;
     private String status;
 
@@ -12,7 +12,7 @@ public class CarInfo {
     public CarInfo(Integer id, String name, String manufacturer, Integer yearOfProduction, String status) {
         this.id = id;
         this.name = name;
-        Manufacturer = manufacturer;
+        this.manufacturer = manufacturer;
         this.yearOfProduction = yearOfProduction;
         this.status = status;
     }
@@ -34,11 +34,11 @@ public class CarInfo {
     }
 
     public String getManufacturer() {
-        return Manufacturer;
+        return manufacturer;
     }
 
     public void setManufacturer(String manufacturer) {
-        Manufacturer = manufacturer;
+        manufacturer = manufacturer;
     }
 
     public Integer getYearOfProduction() {
@@ -62,7 +62,7 @@ public class CarInfo {
         return "CarInfo{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", Manufacturer='" + Manufacturer + '\'' +
+                ", Manufacturer='" + manufacturer + '\'' +
                 ", yearOfProduction=" + yearOfProduction +
                 ", status='" + status + '\'' +
                 '}';

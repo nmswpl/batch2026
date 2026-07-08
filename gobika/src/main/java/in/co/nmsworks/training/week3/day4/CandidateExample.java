@@ -38,31 +38,19 @@ public class CandidateExample {
     }
 
     private List<Candidate> getCandidateFromFile() {
-        BufferedReader bufferedReader = null;
         List<Candidate> candidateList = new ArrayList<>();
-        try {
-            bufferedReader = new BufferedReader(new FileReader("/home/nms-training/Downloads/StudentDetails.txt"));
+        try (BufferedReader bufferedReader =  new BufferedReader(new FileReader("/home/nms-training/Downloads/StudentDetails.txt"))){
             String line = "";
             while ((line = bufferedReader.readLine()) != null) {
                 String[] candidate = line.split(",");
-                Candidate candidate1 = null;
-                for (String s : candidate) {
-                    candidate1 = new Candidate(candidate[0], Integer.parseInt(candidate[1]), candidate[2], candidate[3]);
-                }
-                candidateList.add(candidate1);
+                Candidate candidateObj = new Candidate(candidate[0], Integer.parseInt(candidate[1]), candidate[2], candidate[3]);
+                candidateList.add(candidateObj);
             }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
-            try {
-                bufferedReader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         for (Candidate candidate : candidateList) {
             System.out.println(candidate);

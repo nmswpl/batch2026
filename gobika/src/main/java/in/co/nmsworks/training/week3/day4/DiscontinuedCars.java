@@ -8,9 +8,7 @@ import java.util.List;
 public class DiscontinuedCars implements CarProcessor{
     @Override
     public void write(List<CarInfo> cars) {
-        BufferedWriter bufferedWriter = null;
-        try {
-            bufferedWriter = new BufferedWriter(new FileWriter("/home/nms-training/Desktop/Discontinued.txt"));
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("/home/nms-training/Desktop/Discontinued.txt"))){
             bufferedWriter.write("ID   |  NAME   |  MANUFACTURER  |  YEAR OF PRODUCTION");
             for (CarInfo car : cars) {
                 if (car.getStatus().equals("Discontinued")){
@@ -20,13 +18,6 @@ public class DiscontinuedCars implements CarProcessor{
             bufferedWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
-            try {
-                bufferedWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

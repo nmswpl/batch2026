@@ -45,10 +45,8 @@ public class Movies {
     }
 
     private List<String> readMovies() {
-        BufferedReader bufferedReader = null;
         List<String> moviesList = new ArrayList<>();
-        try {
-            bufferedReader = new BufferedReader(new FileReader("/home/nms-training/Downloads/MovieNameAndYear.txt"));
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("/home/nms-training/Downloads/MovieNameAndYear.txt"))){
             String movies = "";
             while ((movies = bufferedReader.readLine()) != null) {
                 String[] movieArray = movies.split(",");
@@ -60,13 +58,6 @@ public class Movies {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
-            try {
-                bufferedReader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     return moviesList;
     }

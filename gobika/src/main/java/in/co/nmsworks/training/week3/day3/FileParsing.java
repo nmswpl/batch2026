@@ -5,11 +5,11 @@ import java.io.*;
 public class FileParsing {
     public static void main(String[] args) {
         FileParsing fileParsing = new FileParsing();
-//        fileParsing.writeToFile();
-//        fileParsing.readFromFile();
-//        String txt = fileParsing.readFromSampleTxt();
-//        fileParsing.writeToSampleFile(txt);
-//        fileParsing.readAndWriteBuffer();
+        fileParsing.writeToFile();
+        fileParsing.readFromFile();
+        String txt = fileParsing.readFromSampleTxt();
+        fileParsing.writeToSampleFile(txt);
+        fileParsing.readAndWriteBuffer();
         fileParsing.tryWithResource();
     }
 
@@ -32,12 +32,8 @@ public class FileParsing {
     }
 
     private void readAndWriteBuffer() {
-        BufferedReader bufferedReader = null;
-        BufferedWriter bufferedWriter = null;
-
-        try {
-            bufferedReader = new BufferedReader(new FileReader("/home/nms-training/Downloads/SampleText.txt"));
-            bufferedWriter = new BufferedWriter(new FileWriter("/home/nms-training/Desktop/SampleBufferOutput.txt"));
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("/home/nms-training/Downloads/SampleText.txt"));
+             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("/home/nms-training/Desktop/SampleBufferOutput.txt"));){
             String line = bufferedReader.readLine();
             String[] newLine = line.split("\\.");
             for (String sentence : newLine) {
@@ -49,18 +45,6 @@ public class FileParsing {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
-            try {
-                bufferedReader.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            try {
-                bufferedWriter.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
