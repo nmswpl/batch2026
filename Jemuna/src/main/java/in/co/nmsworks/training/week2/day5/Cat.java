@@ -10,7 +10,7 @@ class Cat implements Animal,LandBased{
     }
 
     @Override
-    public boolean canwalk() {
+    public boolean canWalk() {
         System.out.println("Cat can walk");
         return true;
     }

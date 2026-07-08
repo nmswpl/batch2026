@@ -9,7 +9,7 @@ class Dog implements Animal,LandBased{
     }
 
     @Override
-    public boolean canwalk() {
+    public boolean canWalk() {
         System.out.println("Dog can walk");
         return true;
     }

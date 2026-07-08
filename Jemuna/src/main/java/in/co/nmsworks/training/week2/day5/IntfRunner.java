@@ -14,8 +14,6 @@ public class IntfRunner {
         paymentGatewayMethod(paypal,3000);
         paymentGatewayMethod(creditCardPayment,8000);
 
-        //dogMethod(dog);
-        //catMethod(cat);
         animalMethod(dog);
         animalMethod(cat);
         landMethod(dog);
@@ -29,7 +27,7 @@ public class IntfRunner {
 
     private static void landMethod(LandBased landBased) {
         landBased.canClimb();
-        landBased.canwalk();
+        landBased.canWalk();
         landBased.eat();
         landBased.makeSound();
     }
@@ -44,7 +42,7 @@ public class IntfRunner {
         cat.eat();
         cat.makeSound();
         cat.canClimb();
-        cat.canwalk();
+        cat.canWalk();
         cat.play();
     }
 
@@ -52,7 +50,7 @@ public class IntfRunner {
         dog.eat();
         dog.makeSound();
         dog.canClimb();
-        dog.canwalk();
+        dog.canWalk();
         dog.smell();
     }
 }
