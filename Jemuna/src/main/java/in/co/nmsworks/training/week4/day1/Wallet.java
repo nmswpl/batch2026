@@ -19,16 +19,16 @@ public class Wallet implements Account {
     }
 
     @Override
-    public int withdraw(int amount) {
+    public int withdrawn(int amount) {
         if(amount<=limit() && amount<=balance){
             balance-=amount;
-            System.out.println("An amount of "+amount+" has been withdraw\nAvailable Balance : "+balance);
+            System.out.println("An amount of "+amount+" has been withdrawn\nAvailable Balance : "+balance);
         }
         else if(amount>balance) {
             System.out.println("Insufficient Balance...\n"+"Available Balance : "+balance);
         }
         else{
-            System.out.println("Withdraw Limit exceeded...");
+            System.out.println("Withdrawn Limit exceeded...");
         }
         return balance;
     }

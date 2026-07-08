@@ -19,7 +19,7 @@ public class AccountDemo {
                 account.deposit(transaction);
             }
             else{
-                account.withdraw(Math.abs(transaction));
+                account.withdrawn(Math.abs(transaction));
             }
         }
 

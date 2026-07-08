@@ -2,8 +2,8 @@ package in.co.nmsworks.training.week4.day1;
 
 public class Savings implements Account {
 
-    int limit = 50000 ;
-    int balance = 500 ;
+    private final int limit = 50000 ;
+    private int balance = 500 ;
 
     public int getLimit() {
         return limit;
@@ -19,18 +19,18 @@ public class Savings implements Account {
     }
 
     @Override
-    public int withdraw(int amount) {
-        if(amount < limit() && amount < balance){
+    public int withdrawn(int amount) {
+        if(amount <= getLimit() && amount <= getBalance()){
             balance -= amount;
-            System.out.println("An amount of "+amount+" has been withdraw\nAvailable Balance : "+balance);
+            System.out.println("An amount of "+amount+" has been withdrawn\nAvailable Balance : "+getBalance());
         }
-        else if(amount>balance) {
-            System.out.println("Insufficient Balance...\n"+"Available Balance : "+balance);
+        else if(amount>=balance) {
+            System.out.println("Insufficient Balance...\n"+"Available Balance : "+getBalance());
         }
         else{
-            System.out.println("Withdraw Limit exceeded...");
+            System.out.println("Withdrawn Limit exceeded...");
         }
-        return balance;
+        return getBalance();
     }
 
     @Override
@@ -38,11 +38,10 @@ public class Savings implements Account {
         if(amount<=limit()){
             balance+=amount;
             System.out.println("An amount of "+amount+" has been deposited in your account\nAvailable Balance : "+balance);
-            return balance;
         }
         else{
             System.out.println("Deposit Limit Exceeded... ");
         }
-        return balance;
+        return getBalance();
     }
 }
