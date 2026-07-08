@@ -3,7 +3,7 @@ package in.co.nmsworks.training.week2.day4.java;
 public class SchoolBag extends Container {
     private String brandName = "Skybags";
 
-    TextBook textBook = new TextBook();
+    private TextBook textBook = new TextBook();
 
     public String getBrandName() {
         return brandName;
@@ -17,7 +17,7 @@ public class SchoolBag extends Container {
         return textBook;
     }
 
-    public void setT(TextBook textBook) {
+    public void setTextBook(TextBook textBook) {
         this.textBook = textBook;
     }
 

@@ -22,11 +22,12 @@ public class ExamQuestionsSet2 {
         }
     }
     public static void hundredPosition(int number){
-        int hundredValue= number / 100;
         if(number<100 || number>999){
             System.out.println("Only three digits number is allowed");
             return;
         }
+
+        int hundredValue= number / 100;
         switch(hundredValue){
             case 1:
                 System.out.println("One");
