@@ -2,41 +2,34 @@ package in.co.nmsworks.training.week2.day5;
 
 public class IntfRunner {
     public static void main(String[] args) {
-        //  Dog dog = new Dog();
-        // dogMethod(dog);
+         Dog dog = new Dog();
+         dogMethod(dog);
 
 
-        //  Cat cat = new Cat();
-        // catMethod(cat);
+         // Cat cat = new Cat();
+         // catMethod(cat);
 
-//        Animal cat = new Cat();
-//        // cat.play() not visible
-//        Animal dinosour = new Animal(){
-//            public void eat(){
-//                System.out.println("Dinosour eats");
-//            }
-//            public void makeSound(){
-//                System.out.println("Dinosour makes sound");
-//            }
-//        };
-//
-//        dinosour.makeSound();
+        Animal cat = new Cat();
+        // cat.play() // not visible
+        Animal dinosour = new Animal(){
+            public void eat(){
+                System.out.println("Dinosour eats");
+            }
+            public void makeSound(){
+                System.out.println("Dinosour makes sound");
+            }
+        };
 
-
-//        animalMethod(dog);
-//        animalMethod(cat);
-//
-//        dog.smell();
-//        cat.play();
-//
-//        landBased(dog);
+       dinosour.makeSound();
 
 
-//        A objA = new B();
-//        objA.methodOfA();
-//        objA.show();
-//        objA.methodOfB();
+       animalMethod(dog);
+       animalMethod(cat);
 
+       dog.smell();
+       // cat.play();
+
+       landBased(dog);
 
     }
 
