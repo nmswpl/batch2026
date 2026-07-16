@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Telephone {
-    Map<String, Contact> contactMap = new HashMap<>();
+    private Map<String, Contact> contactMap = new HashMap<>();
 
     public void addContact(Contact userContact){
         contactMap.put(userContact.getName(), userContact);
