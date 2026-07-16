@@ -44,16 +44,16 @@ public class ScoreFileReader {
     }
 
 
-    public List<Cricketer> groupTeamMemebers(List<Cricketer> cricketers, String teamName){
-        List<Cricketer> teamMemebersList = new ArrayList<>();
+    public List<Cricketer> groupTeamMembers(List<Cricketer> cricketers, String teamName){
+        List<Cricketer> teamMembersList = new ArrayList<>();
 
         for (Cricketer cricketer : cricketers) {
             if(teamName.equals(cricketer.getTeam())){
-                teamMemebersList.add(cricketer);
+                teamMembersList.add(cricketer);
             }
         }
 
-        return teamMemebersList;
+        return teamMembersList;
     }
 
 }
