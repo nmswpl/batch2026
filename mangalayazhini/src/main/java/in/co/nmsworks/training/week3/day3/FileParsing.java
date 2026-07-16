@@ -14,8 +14,9 @@ public class FileParsing {
     }
 
     private void readFromFile(String path) {
+        FileReader readerObj = null; 
         try {
-            FileReader readerObj = new FileReader(path);
+            readerObj = new FileReader(path);
             int ch;
             while((ch = readerObj.read()) != -1){
                char c = (char) ch;
@@ -28,21 +29,45 @@ public class FileParsing {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        finally{
+            try{
+                if(readerObj != null){
+                    readerObj.close();
+                } 
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        
 
+        
 
     }
 
     private void writeToFile(String path) {
         String text = "My name is Mangala Yazhini and I am coming from Cuddalore District.";
 
+        FileWriter writerObj = null ; 
         try {
-            FileWriter writerObj = new FileWriter(path,true);
+            writerObj = new FileWriter(path,true);
             writerObj.write(text);
             writerObj.flush();
-//          writerObj.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        finally{
+
+            try{
+                if(writerObj != null){
+                    writerObj.close();
+                }
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        
 
 
     }
