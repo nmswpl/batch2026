@@ -5,11 +5,11 @@ import java.util.*;
 public class MyStack {
 
     Integer top = -1;
-    Integer n = 100;
-    Integer[] stack = new Integer[n];
+    Integer MAX_LIMIT = 100;
+    Integer[] stack = new Integer[MAX_LIMIT];
 
     public void push(Integer value){
-        if(top < n){
+        if(top < MAX_LIMIT-1){
             top++;
             stack[top] = value;
         }
