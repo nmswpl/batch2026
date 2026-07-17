@@ -3,7 +3,7 @@ package in.co.nmsworks.training.week3.day5;
 public abstract class Appliance {
     private String name;
     private Integer powerRatings;
-    private Boolean isOn = false;
+    private boolean isOn = false;
     private Integer switchPressed = 0 ;
 
     public Appliance(String name, Integer powerRatings) {
@@ -33,7 +33,7 @@ public abstract class Appliance {
 
     public void switchOn(){
 
-        if(isOn == true){
+        if(isOn){
             System.out.println("The appliance is already On");
         }
         else{
@@ -44,7 +44,7 @@ public abstract class Appliance {
 
     }
     public void switchOff(){
-        if(isOn == false){
+        if(!isOn){
             System.out.println("The appliance is already Off");
         }
         else{
