@@ -6,18 +6,25 @@ import java.util.List;
 public class MyQueue {
     Integer front = -1;
     Integer rear = -1;
-
-    Integer[] queue = new Integer[10];
+    Integer MAX = 10; 
+    Integer[] queue = new Integer[MAX];
 
    void enqueue(Integer value){
-       if(front == -1 && rear == -1){
-           front++;
-           rear++;
-       }else{
-           rear++;
+       if(rear == MAX-1) {
+           System.out.println("Queue is full !");
+           return; 
        }
-       queue[rear] = value;
-       System.out.println("front : " + front + " rear : " + rear);
+       else{
+           if(front == -1 && rear == -1){
+               front++;
+               rear++;
+           }else{
+               rear++;
+           }
+           queue[rear] = value;
+           System.out.println("front : " + front + " rear : " + rear);
+       }
+       
    }
 
    Integer dequeue(){
